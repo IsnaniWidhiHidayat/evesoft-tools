@@ -86,8 +86,8 @@ namespace Evesoft.Ads.Admob
         #endregion
 
         #region constructor
-        internal AdmobConfig(){}
-        internal AdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
+        public AdmobConfig(){}
+        public AdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
         {
             this.bannerID          = bannerID;
             this.interstitialID    = interstitialID;

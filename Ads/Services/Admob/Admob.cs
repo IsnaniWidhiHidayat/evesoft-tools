@@ -72,13 +72,29 @@ namespace Evesoft.Ads.Admob
         #endregion
         
         #region iAdsService
-        public event Action<iAdsService> onBannerLeaveApp, 
-        onBannerOpening,onBannerClosed,onBannerFailed,onBannerLoad, 
-        onInterstitialOpening,onInterstitialRequested,onInterstitialLoaded, 
-        onInterstitialLeaveApp, onInterstitialFailed,onInterstitialClosed, 
-        onRewardVideoStart,onRewardVideoOpening,onRewardVideoRequested,
-        onRewardVideoLoaded,onRewardVideoLeaveApp,onRewardVideoFailed, 
-        onRewardedVideo,onRewardFailedToShow,onRewardVideoClosed;
+    
+        public event Action<iAdsService> onInited;
+        public event Action<iAdsService> onBannerRequested;
+        public event Action<iAdsService> onBannerLeaveApp;
+        public event Action<iAdsService> onBannerOpening;
+        public event Action<iAdsService> onBannerClosed;
+        public event Action<iAdsService, string> onBannerLoadFailed;
+        public event Action<iAdsService> onBannerLoaded;
+        public event Action<iAdsService> onInterstitialOpening;
+        public event Action<iAdsService> onInterstitialRequested;
+        public event Action<iAdsService> onInterstitialLoaded;
+        public event Action<iAdsService, string> onInterstitialLoadFailed;
+        public event Action<iAdsService> onInterstitialLeaveApp;
+        public event Action<iAdsService> onInterstitialClosed;
+        public event Action<iAdsService> onRewardVideoStart;
+        public event Action<iAdsService> onRewardVideoOpening;
+        public event Action<iAdsService> onRewardVideoLoaded;
+        public event Action<iAdsService> onRewardVideoRequested;
+        public event Action<iAdsService, string> onRewardVideoLoadFailed;
+        public event Action<iAdsService> onRewardVideoLeaveApp;
+        public event Action<iAdsService> onRewardedVideo;
+        public event Action<iAdsService> onRewardFailedToShow;
+        public event Action<iAdsService> onRewardVideoClosed;
 
         public bool isBannerLoaded => _isBannerLoaded;
         public bool isRewardLoaded => _rewardVideoAd.IsNull()? false : _rewardVideoAd.IsLoaded();
@@ -213,7 +229,7 @@ namespace Evesoft.Ads.Admob
         {
             if(!_inited)
                 return;
-                
+
             if (_rewardVideoAd == null)
                 return;
 
@@ -274,6 +290,7 @@ namespace Evesoft.Ads.Admob
         {
             _inited = true;
             RequestBanner();
+            onInited?.Invoke(this);
         }
         
         private void OnBannerLeaveApp(object sender, EventArgs e)
@@ -297,14 +314,19 @@ namespace Evesoft.Ads.Admob
         private void OnBannerFailed(object sender, AdFailedToLoadEventArgs e)
         {
             _isBannerLoaded = false;
-            "{0} - {1}".LogErrorFormat(this.GetType(),nameof(onBannerFailed));
-            onBannerFailed?.Invoke(this);
+            "{0} - {1}".LogErrorFormat(this.GetType(),nameof(onBannerLoadFailed));
+            onBannerLoadFailed?.Invoke(this,e.Message);
         }
         private void OnBannerLoad(object sender, EventArgs e)
         {
             _isBannerLoaded = true;
-            "{0} - {1}".LogFormat(this.GetType(),nameof(onBannerLoad));
-            onBannerLoad?.Invoke(this);
+            "{0} - {1}".LogFormat(this.GetType(),nameof(onBannerLoaded));
+            onBannerLoaded?.Invoke(this);
+        }
+        private void OnBannerRequested()
+        {
+           "{0} - {1}".LogFormat(this.GetType(),nameof(onBannerRequested));
+            onBannerRequested?.Invoke(this);
         }
 
         private void OnInterstitialOpening(object sender, EventArgs e)
@@ -329,8 +351,8 @@ namespace Evesoft.Ads.Admob
         }
         private void OnInterstitialFailed(object sender, AdFailedToLoadEventArgs e)
         {
-            "{0} - {1}".LogErrorFormat(this.GetType(),nameof(onInterstitialFailed));
-            onInterstitialFailed?.Invoke(this);   
+            "{0} - {1}".LogErrorFormat(this.GetType(),nameof(onInterstitialLoadFailed));
+            onInterstitialLoadFailed?.Invoke(this,e.Message);   
         }
         private void OnInterstitialClosed(object sender, EventArgs e)
         {
@@ -355,8 +377,8 @@ namespace Evesoft.Ads.Admob
         }
         private void OnRewardFailedLoad(object sender, AdErrorEventArgs e)
         {
-            "{0} - {1} - {2}".LogErrorFormat(this.GetType(),nameof(onRewardVideoFailed),e.Message);
-            onRewardVideoFailed?.Invoke(this);   
+            "{0} - {1} - {2}".LogErrorFormat(this.GetType(),nameof(onRewardVideoLoadFailed),e.Message);
+            onRewardVideoLoadFailed?.Invoke(this,e.Message);   
         }
         private void OnRewarded(object sender, Reward e)
         {

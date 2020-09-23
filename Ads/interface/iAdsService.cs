@@ -5,22 +5,24 @@ namespace Evesoft.Ads
     public interface iAdsService 
     {
         #region Events
+        event Action<iAdsService> onInited;
+        event Action<iAdsService> onBannerRequested;
         event Action<iAdsService> onBannerLeaveApp;
         event Action<iAdsService> onBannerOpening;
         event Action<iAdsService> onBannerClosed;
-        event Action<iAdsService> onBannerFailed;
-        event Action<iAdsService> onBannerLoad;
+        event Action<iAdsService,string> onBannerLoadFailed;
+        event Action<iAdsService> onBannerLoaded;
         event Action<iAdsService> onInterstitialOpening;
         event Action<iAdsService> onInterstitialRequested;
         event Action<iAdsService> onInterstitialLoaded;
-        event Action<iAdsService> onInterstitialFailed;
+        event Action<iAdsService,string> onInterstitialLoadFailed;
         event Action<iAdsService> onInterstitialLeaveApp;
         event Action<iAdsService> onInterstitialClosed;
         event Action<iAdsService> onRewardVideoStart;
         event Action<iAdsService> onRewardVideoOpening;
         event Action<iAdsService> onRewardVideoLoaded;
         event Action<iAdsService> onRewardVideoRequested;
-        event Action<iAdsService> onRewardVideoFailed;
+        event Action<iAdsService,string> onRewardVideoLoadFailed;
         event Action<iAdsService> onRewardVideoLeaveApp;
         event Action<iAdsService> onRewardedVideo;
         event Action<iAdsService> onRewardFailedToShow;
