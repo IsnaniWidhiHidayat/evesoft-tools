@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public static class LoginOptionsFactory
     {

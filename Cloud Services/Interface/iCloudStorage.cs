@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public interface iCloudStorage
     {

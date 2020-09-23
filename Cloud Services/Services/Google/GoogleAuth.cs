@@ -6,21 +6,21 @@ using System;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     [Serializable,HideReferenceObjectPicker]
     public class GoogleAuth : iCloudAuth
     {
         #region private
-        private iUser _currentUser;
+        private iUserAuth _currentUser;
         private bool _inited;
         #endregion
 
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
-        [ShowInInspector] public iUser currentUser => _currentUser;
+        [ShowInInspector] public iUserAuth currentUser => _currentUser;
         
-        public async Task<(iUser,Exception)> Login(IDictionary<string, object> options)
+        public async Task<(iUserAuth,Exception)> Login(IDictionary<string, object> options)
         {
             try 
             {
@@ -31,7 +31,7 @@ namespace RollingGlory.FaceApp
                     return (_currentUser,null);
     
                 var googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-                _currentUser = new User()
+                _currentUser = new UserAuth()
                 {
                     authType = AuthType.Google,
                     id       = googleUser.UserId,

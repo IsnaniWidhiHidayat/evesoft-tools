@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Firebase;
 using UnityEngine;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
-    public static class FirebaseDependencies
+    internal static class FirebaseDependencies
     {
         #region private
         private static bool _isChecking,_isChecked;

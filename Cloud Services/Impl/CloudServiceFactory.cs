@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Evesoft;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public static class CloudServiceFactory
     {

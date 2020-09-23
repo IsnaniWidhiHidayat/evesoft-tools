@@ -1,6 +1,6 @@
 using System;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public interface iCloudDatabaseReference
     {

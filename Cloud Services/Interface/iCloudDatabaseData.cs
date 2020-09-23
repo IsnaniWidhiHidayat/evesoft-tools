@@ -1,4 +1,4 @@
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public interface iCloudDatabaseData
     {

@@ -6,21 +6,21 @@ using Facebook.Unity;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace  RollingGlory.FaceApp
+namespace  Evesoft.CloudService
 {
     [Serializable,HideReferenceObjectPicker]
     public class FacebookAuth : iCloudAuth
     {
         #region private
-        private iUser _currentUser;
+        private iUserAuth _currentUser;
         private bool _inited;
         #endregion
 
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
-        [ShowInInspector] public iUser currentUser => _currentUser;
+        [ShowInInspector] public iUserAuth currentUser => _currentUser;
 
-        public async Task<(iUser,Exception)> Login(IDictionary<string, object> options)
+        public async Task<(iUserAuth,Exception)> Login(IDictionary<string, object> options)
         {
             try 
             {
@@ -112,7 +112,7 @@ namespace  RollingGlory.FaceApp
                     }
                     else
                     {
-                        _currentUser = new User()
+                        _currentUser = new UserAuth()
                         {
                             id = id,
                             authType = AuthType.Facebook,
@@ -126,7 +126,7 @@ namespace  RollingGlory.FaceApp
                 }
                 else
                 {
-                    return (default(iUser),new Exception(errorMessage));
+                    return (default(iUserAuth),new Exception(errorMessage));
                 }     
             } 
             catch (System.Exception ex) 

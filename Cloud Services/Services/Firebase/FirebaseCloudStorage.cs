@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Net;
 using Sirenix.OdinInspector;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudStorage : iCloudStorage

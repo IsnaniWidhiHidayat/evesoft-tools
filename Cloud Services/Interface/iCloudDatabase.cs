@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     public interface iCloudDatabase
     {

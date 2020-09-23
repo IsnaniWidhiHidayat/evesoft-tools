@@ -1,6 +1,6 @@
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
-    public interface iUser 
+    public interface iUserAuth 
     {
         string id{get;}
         string name{get;}

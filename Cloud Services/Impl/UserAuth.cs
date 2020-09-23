@@ -2,10 +2,10 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     [Serializable,HideMonoScript,HideReferenceObjectPicker]
-    public class User : iUser ,IDisposable
+    public class UserAuth : iUserAuth ,IDisposable
     {
         #region private
         [SerializeField]

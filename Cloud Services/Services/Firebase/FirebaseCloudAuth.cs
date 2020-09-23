@@ -7,7 +7,7 @@ using Firebase;
 using System;
 using Sirenix.OdinInspector;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudAuth : iCloudAuth
@@ -15,14 +15,14 @@ namespace RollingGlory.FaceApp
         #region private
         private bool _inited;
         private bool _initing;
-        private iUser _currentUser;
+        private iUserAuth _currentUser;
         private FirebaseAuth _auth;
         #endregion
 
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
-        [ShowInInspector] public iUser currentUser => _currentUser;
-        public async Task<(iUser,Exception)> Login(IDictionary<string, object> options)
+        [ShowInInspector] public iUserAuth currentUser => _currentUser;
+        public async Task<(iUserAuth,Exception)> Login(IDictionary<string, object> options)
         {
             try 
             {
@@ -49,7 +49,7 @@ namespace RollingGlory.FaceApp
                         var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
                         var accessToken  = await firebaseUser.TokenAsync(false);
                         
-                        _currentUser = new User()
+                        _currentUser = new UserAuth()
                         {
                             id       = firebaseUser.UserId,
                             authType = authtype,
@@ -68,7 +68,7 @@ namespace RollingGlory.FaceApp
                         var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
                         token  = await firebaseUser.TokenAsync(false);
                         
-                        _currentUser = new User()
+                        _currentUser = new UserAuth()
                         {
                             id       = firebaseUser.UserId,
                             authType = authtype,

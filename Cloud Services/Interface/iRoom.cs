@@ -1,18 +1,21 @@
+﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
-    public interface iRoom
+    public class iRoom
     {
-        event Action<iRoom> onUpdated;
-        
-        string id{get;}
-        string name{get;}
-        string message{get;}
-        iRoomCreator creator{get;}
-        iRoomTemplate template{get;}
-        IList<iRoomPhoto> photos{get;}
+        // Start is called before the first frame update
+        void Start()
+        {
+            
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            
+        }
     }
 }

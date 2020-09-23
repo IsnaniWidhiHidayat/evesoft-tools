@@ -7,7 +7,7 @@ using UnityEngine;
 using System;
 using Sirenix.OdinInspector;
 
-namespace RollingGlory.FaceApp
+namespace Evesoft.CloudService
 {
     [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudDatabase : iCloudDatabase
