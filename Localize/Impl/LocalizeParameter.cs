@@ -27,7 +27,7 @@ namespace EveSoft.Localize
         #endregion
 
         #region Field
-        [HorizontalGroup("h1", Width = 50)]
+        [HorizontalGroup("h1", Width = 60)]
         [HideLabel]
         [ShowInInspector]
         internal ParameterType type

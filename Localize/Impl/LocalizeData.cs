@@ -42,8 +42,7 @@ namespace EveSoft.Localize
 
         [ValidateInput("IsValidKey", "$message")]
         [DisableInPlayMode]
-        [SerializeField]
-        [LabelWidth(70)]
+        [SerializeField,HideLabel,SuffixLabel("Key",true)]
         internal string key;
 
         [MultiLineProperty(2)]
