@@ -1,4 +1,4 @@
-﻿namespace EveSoft.Localize
+﻿namespace Evesoft.Localize
 {
     internal enum ParameterType
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace EveSoft.Ads
+namespace Evesoft.Ads
 {
     public interface iAdsService 
     {
@@ -36,6 +36,7 @@ namespace EveSoft.Ads
         void ShowRewardVideo();             
         void HideBanner();
         
+        void RequestBanner();
         void RequestInterstitial();      
         void RequestRewardVideo();     
     }

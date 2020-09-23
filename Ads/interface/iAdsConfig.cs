@@ -1,18 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
-namespace EveSoft.Ads
+namespace Evesoft.Ads
 {
     public interface iAdsConfig
     {
-        string appId{get;set;}      
-        string bannerID{get;set;}       
-        string interstitialID{get;}
-        string rewardID{get;set;}
-        bool tagForChild{get;set;}
-        AdsGender gender{get;set;}
-        AdPosition bannerPosition{get;set;}
-        Vector2Int customPosition{get;set;}
-        string[] keywords{get;set;}
+        IDictionary<string,object> configs{get;}
+        T GetConfig<T>(string key);
     }
 }
 

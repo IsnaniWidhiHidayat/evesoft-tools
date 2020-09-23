@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace EveSoft.Editor
+namespace Evesoft.Editor
 {
     public static class DirectoryProject
     {

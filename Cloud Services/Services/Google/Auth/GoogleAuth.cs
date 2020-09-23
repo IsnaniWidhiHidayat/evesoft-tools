@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google;
-using EveSoft;
+using Evesoft;
 using System;
 using UnityEngine;
 using Sirenix.OdinInspector;

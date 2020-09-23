@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class DisposeExtend
     {

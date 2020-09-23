@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
 
-namespace EveSoft.Http
+namespace Evesoft.Http
 {
     public static class HttpRequestText
     {

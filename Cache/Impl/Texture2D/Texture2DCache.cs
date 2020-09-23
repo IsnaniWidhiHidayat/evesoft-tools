@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Cache
+namespace Evesoft.Cache
 {
     [Serializable]
     public class Texture2DCache : iCache<Texture2DCacheData>,IDisposable

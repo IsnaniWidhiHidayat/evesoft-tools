@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using System;
 
-namespace EveSoft.Input
+namespace Evesoft.Input
 {
     [HideMonoScript]
     [AddComponentMenu(Menu.input + "/" + nameof(SwipeInput))]

@@ -8,7 +8,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 
-namespace EveSoft.Editor
+namespace Evesoft.Editor
 {
     [Serializable]
     public class SceneLoader

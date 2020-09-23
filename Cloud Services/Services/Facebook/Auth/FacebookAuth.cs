@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using EveSoft;
+using Evesoft;
 using Facebook.Unity;
 using UnityEngine;
 using Sirenix.OdinInspector;

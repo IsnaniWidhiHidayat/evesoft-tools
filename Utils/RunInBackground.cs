@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Utils
+namespace Evesoft.Utils
 {
     [HideMonoScript]
     [AddComponentMenu(Menu.utils + "/RunInBackground")]

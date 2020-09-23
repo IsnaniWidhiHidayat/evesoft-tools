@@ -3,9 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using EveSoft.Cache;
+using Evesoft.Cache;
 
-namespace EveSoft.Http
+namespace Evesoft.Http
 {
     public static class HttpRequestTexture2D
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Input
+namespace Evesoft.Input
 {
     [HideMonoScript]
     [AddComponentMenu(Menu.input + "/" + nameof(MouseDelta))]

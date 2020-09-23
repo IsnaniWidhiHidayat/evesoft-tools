@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace EveSoft.Utils
+namespace Evesoft.Utils
 {
     public static class GradientFactory 
     {

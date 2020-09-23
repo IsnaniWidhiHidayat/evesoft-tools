@@ -3,7 +3,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class Encrypt
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace EveSoft.Cache
+namespace Evesoft.Cache
 {
     public interface iRequester<T> 
     {

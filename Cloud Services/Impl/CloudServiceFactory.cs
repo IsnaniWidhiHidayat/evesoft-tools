@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using EveSoft;
+using Evesoft;
 
 namespace RollingGlory.FaceApp
 {

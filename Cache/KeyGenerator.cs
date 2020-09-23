@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace EveSoft.Cache
+namespace Evesoft.Cache
 {
     public struct KeyGenerator : IDisposable
     {

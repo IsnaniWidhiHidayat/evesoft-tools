@@ -2,7 +2,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Utils
+namespace Evesoft.Utils
 {
     public abstract class Singleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour
     {

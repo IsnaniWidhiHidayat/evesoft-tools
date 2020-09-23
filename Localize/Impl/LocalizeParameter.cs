@@ -2,7 +2,7 @@
 using System;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
     [Serializable]
     internal class LocalizeParameter

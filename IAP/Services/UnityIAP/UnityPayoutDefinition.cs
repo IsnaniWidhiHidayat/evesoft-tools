@@ -1,4 +1,4 @@
-namespace EveSoft.IAP.Unity
+namespace Evesoft.IAP.Unity
 {
     public class UnityPayoutDefinition : iPayoutDefinition
     {

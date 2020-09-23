@@ -1,4 +1,4 @@
-namespace EveSoft
+namespace Evesoft
 {
     public static class Menu
     {

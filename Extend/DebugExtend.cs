@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityDebug = UnityEngine.Debug;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class DebugExtend
     {

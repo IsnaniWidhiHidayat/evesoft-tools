@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace EveSoft.IAP.Unity
+namespace Evesoft.IAP.Unity
 {
     public class UnityIAP : iIAPService, IStoreListener,IDisposable
     {

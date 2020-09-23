@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using System;
 
-namespace EveSoft.Input
+namespace Evesoft.Input
 {
     [HideMonoScript,RequireComponent(typeof(Camera))]
     [AddComponentMenu(Menu.input + "/" + nameof(PinchZoom))]

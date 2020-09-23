@@ -2,7 +2,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
     [HideMonoScript]
     [AddComponentMenu(Menu.localize + "/LocalizeChanger")]
@@ -67,7 +67,7 @@ namespace EveSoft.Localize
         {
             #if UNITY_EDITOR
             if (database.IsNull())
-                database = EveSoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
+                database = Evesoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
             #endif
 
             if (!database.IsNull())

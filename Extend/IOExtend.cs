@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class IOExtend
     {

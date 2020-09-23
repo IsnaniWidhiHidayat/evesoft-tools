@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Views
+namespace Evesoft.Views
 {
     [HideMonoScript,RequireComponent(typeof(Image))]
     [AddComponentMenu(Menu.views + "/" + nameof(ImageView))]

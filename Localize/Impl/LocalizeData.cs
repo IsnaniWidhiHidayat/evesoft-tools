@@ -2,10 +2,10 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
     [HideMonoScript]
-    [CreateAssetMenu(menuName = "EveSoft/Localize/LocalizeData")]
+    [CreateAssetMenu(menuName = nameof(Evesoft) + "/" + nameof(Evesoft.Localize) + "/" + nameof(LocalizeData))]
     [System.Serializable]
     public class LocalizeData : ScriptableObject
     {
@@ -69,7 +69,7 @@ namespace EveSoft.Localize
                 if (database == null)
                     return string.Empty;
 
-                SystemLanguage language = database.language;
+                var language = database.language;
                 for (int i = 0; i < localizes.Count; i++)
                 {
                     if (localizes[i].language == language)

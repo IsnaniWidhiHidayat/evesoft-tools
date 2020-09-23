@@ -1,7 +1,7 @@
 using  UnityEngine;
 using   UnityEngine.UI;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class UIExtend
     {

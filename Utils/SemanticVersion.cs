@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using System;
 
-namespace EveSoft.Utils
+namespace Evesoft.Utils
 {
     [Serializable]
     public class SemanticVersion:IComparable<SemanticVersion>

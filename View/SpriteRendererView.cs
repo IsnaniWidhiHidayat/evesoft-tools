@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace EveSoft.Views
+namespace Evesoft.Views
 {
     [HideMonoScript,RequireComponent(typeof(SpriteRenderer))]
     [AddComponentMenu(Menu.views + "/" + nameof(SpriteRendererView))]

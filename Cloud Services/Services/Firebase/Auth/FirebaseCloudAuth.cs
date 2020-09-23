@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Auth;
-using EveSoft;
+using Evesoft;
 using UnityEngine;
 using Firebase;
 using System;

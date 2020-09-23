@@ -3,7 +3,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Newtonsoft.Json;
 
-namespace EveSoft.Cache
+namespace Evesoft.Cache
 {
     [Serializable]
     public class Texture2DCacheData : IDisposable

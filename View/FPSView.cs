@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector; 
 
-namespace EveSoft.Views
+namespace Evesoft.Views
 {
     [HideMonoScript]
     [AddComponentMenu(Menu.views + "/" + nameof(FPSView))]

@@ -9,9 +9,9 @@ using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 #endif
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
-    [CreateAssetMenu(menuName = "EveSoft/Localize/LocalizeDatabase")]
+    [CreateAssetMenu(menuName = nameof(Evesoft) + "/" + nameof(Evesoft.Localize) + "/" + nameof(LocalizeDatabase))]
     [HideMonoScript]
 
     public class LocalizeDatabase : ScriptableObject
@@ -21,7 +21,7 @@ namespace EveSoft.Localize
         [UnityEditor.MenuItem("Tools/EveSoft/Localize/Database")]
         private static void ShowTools()
         {
-            var database = EveSoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
+            var database = Evesoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
             if (database != null)
                 OdinEditorWindow.InspectObject(database);
         }
@@ -149,6 +149,8 @@ namespace EveSoft.Localize
             {
                 this.localize.Add(data);
             }
+
+            this.SetObjectDirty();
         }
         internal void RemoveData(LocalizeData data)
         {
@@ -158,6 +160,8 @@ namespace EveSoft.Localize
             {
                 this.localize.Remove(data);
             }
+
+            this.SetObjectDirty();
         }
         public string GetLocalize(string key)
         {

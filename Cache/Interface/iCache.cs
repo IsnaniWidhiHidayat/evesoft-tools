@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EveSoft.Cache
+namespace Evesoft.Cache
 {
     public interface iCache<T>
     {

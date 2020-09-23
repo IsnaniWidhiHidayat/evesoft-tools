@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Views
+namespace Evesoft.Views
 {
     [HideMonoScript,RequireComponent(typeof(Collider2D))]
     [AddComponentMenu(Menu.views + "/" + nameof(Collider2DView))]

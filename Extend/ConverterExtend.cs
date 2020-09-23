@@ -3,7 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class ConverterExtend
     {
@@ -143,6 +143,17 @@ namespace EveSoft
         public static string ToStringDate(this DateTime dateTime, string format = dateFormat)
         {
             return dateTime.ToString(format);
+        }
+        public static bool To<T>(this object obj, out T result)
+        {
+            if (obj is T)
+            {
+                result = (T)obj;
+                return true;
+            }
+
+            result = default(T);
+            return false;
         }
     }
 }

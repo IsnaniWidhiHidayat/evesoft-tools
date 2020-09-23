@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace EveSoft.MeshCombiner
+namespace Evesoft.MeshCombiner
 {
     public static class MeshCombiner
     {

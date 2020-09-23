@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EveSoft.IAP
+namespace Evesoft.IAP
 {
     public static class IAPServiceFactory
     {

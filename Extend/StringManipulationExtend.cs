@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class StringManipulationExtend
     {

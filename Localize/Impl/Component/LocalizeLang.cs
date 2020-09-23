@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
     [System.Serializable]
     public class UnityEventLanguage : UnityEvent

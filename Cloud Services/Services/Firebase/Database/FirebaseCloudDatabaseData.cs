@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using EveSoft;
+using Evesoft;
 using Firebase.Database;
 using Sirenix.OdinInspector;
 

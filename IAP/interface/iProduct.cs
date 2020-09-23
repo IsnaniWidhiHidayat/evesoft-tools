@@ -1,4 +1,4 @@
-namespace EveSoft.IAP
+namespace Evesoft.IAP
 {
     public interface iProduct
     {

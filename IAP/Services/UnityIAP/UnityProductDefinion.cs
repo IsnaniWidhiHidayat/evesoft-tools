@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.IAP.Unity
+namespace Evesoft.IAP.Unity
 {
     [Serializable, HideReferenceObjectPicker]
     public class UnityProductDefinion : iProductDefinion

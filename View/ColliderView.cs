@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Views
+namespace Evesoft.Views
 {
     [RequireComponent(typeof(Collider))]
     [AddComponentMenu(Menu.views + "/" + nameof(ColliderView))]

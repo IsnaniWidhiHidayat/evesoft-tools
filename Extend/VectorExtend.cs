@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class VectorExtend
     {

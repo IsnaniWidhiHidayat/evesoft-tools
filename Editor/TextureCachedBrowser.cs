@@ -2,10 +2,10 @@
 using Sirenix.OdinInspector;
 using UnityEditor;
 using System.Collections.Generic;
-using EveSoft;
+using Evesoft;
 using UnityEngine;
 
-namespace EveSoft.Cache.Editor
+namespace Evesoft.Cache.Editor
 {
     public class TextureCachedBrowser : OdinEditorWindow
     {

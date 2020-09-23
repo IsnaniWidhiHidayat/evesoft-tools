@@ -1,4 +1,4 @@
-namespace EveSoft.Ads
+namespace Evesoft.Ads.Admob
 {
     public enum AdPosition
     {

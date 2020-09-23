@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Database;
-using EveSoft;
+using Evesoft;
 using UnityEngine;
 using System;
 using Sirenix.OdinInspector;

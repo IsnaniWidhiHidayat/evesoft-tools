@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace EveSoft.Localize
+namespace Evesoft.Localize
 {
     [System.Serializable]
     public class LocalizeString

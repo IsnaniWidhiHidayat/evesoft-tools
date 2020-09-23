@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Storage;
-using EveSoft;
+using Evesoft;
 using UnityEngine;
 using System.Threading;
 using UnityEngine.Networking;

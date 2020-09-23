@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class JsonExtend
     {

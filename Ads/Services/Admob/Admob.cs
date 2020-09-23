@@ -1,36 +1,43 @@
-﻿using GoogleMobileAds.Api;
-using System;
+﻿using System;
 using Sirenix.OdinInspector;
+using GoogleMobileAds.Api;
+using UnityEngine;
 
-namespace EveSoft.Ads.Admob
+namespace Evesoft.Ads.Admob
 {
     [HideMonoScript]
     public class Admob : iAdsService,IDisposable
     {
         #region private
-        private iAdsConfig _config;
+        private string _bannerID,_interstitialID,_rewardID;
+        private bool _tagForChild;
+        private AdsGender _gender;
+        private AdPosition _bannerPosition;
+        private Vector2Int _customPosition;
+        private string[] _keywords;
+
         private BannerView _bannerView;
         private InterstitialAd _interstitialAd;
         private RewardedAd _rewardVideoAd;
         private bool _isBannerLoaded;
+        private bool _inited;
         #endregion
 
         #region Constructor
         public Admob(iAdsConfig config)
         {
-            this._config = config;     
-            MobileAds.Initialize(config.appId);
-
-            //Banner
-            _bannerView = _config.bannerPosition == AdPosition.Custom? new BannerView(_config.bannerID,AdSize.SmartBanner,_config.customPosition.x,_config.customPosition.y) : new BannerView(_config.bannerID,AdSize.SmartBanner,(GoogleMobileAds.Api.AdPosition)((int)_config.bannerPosition));
-            _bannerView.OnAdLoaded += OnBannerLoad;
-            _bannerView.OnAdFailedToLoad += OnBannerFailed;
-            _bannerView.OnAdClosed += OnBannerClosed;
-            _bannerView.OnAdOpening += OnBannerOpening;
-            _bannerView.OnAdLeavingApplication += OnBannerLeaveApp;
-        }            
+            _bannerID = config.GetConfig<string>(AdmobConfig.BANNER_ID);
+            _interstitialID = config.GetConfig<string>(AdmobConfig.INTERSTITIAL_ID);
+            _rewardID = config.GetConfig<string>(AdmobConfig.REWARD_ID);
+            _tagForChild = config.GetConfig<bool>(AdmobConfig.TAG_FOR_CHILD);
+            _gender = config.GetConfig<AdsGender>(AdmobConfig.GENDER);
+            _bannerPosition = config.GetConfig<AdPosition>(AdmobConfig.BANNER_POSITION);
+            _customPosition = config.GetConfig<Vector2Int>(AdmobConfig.CUSTOM_POSITION);
+            _keywords = config.GetConfig<string[]>(AdmobConfig.KEY_WORDS);
+            MobileAds.Initialize(OnInited);   
+        }
         #endregion
-        
+
         #region IDisposable
         public void Dispose()
         {
@@ -77,33 +84,30 @@ namespace EveSoft.Ads.Admob
         public bool isRewardLoaded => _rewardVideoAd.IsNull()? false : _rewardVideoAd.IsLoaded();
         public bool isInterstitialLoaded => _interstitialAd.IsNull() ? false : _interstitialAd.IsLoaded();
 
-        public void ShowBanner()
+        public void RequestBanner()
         {
-            if(_config.bannerID.IsNullOrEmpty())
+            if(!_inited)
                 return;
 
-            if(!_bannerView.IsNull() && _isBannerLoaded) 
-            {           
-                _bannerView.Show();
-            }
-            else
-            {    
-                //Request Banner
-                var request = RequestAd(_config.gender, _config.tagForChild, _config.keywords);
-                _bannerView.LoadAd(request);
-            }
-        }
-        public void HideBanner()
-        {
-            if (_bannerView.IsNull())
+            if(_bannerID.IsNullOrEmpty())
                 return;
 
-            _bannerView.Hide();
+            if(_bannerView.IsNull())
+            {
+                _bannerView                         = _bannerPosition == AdPosition.Custom? new BannerView(_bannerID,AdSize.SmartBanner,_customPosition.x,_customPosition.y) : new BannerView(_bannerID,AdSize.SmartBanner,(GoogleMobileAds.Api.AdPosition)((int)_bannerPosition));
+                _bannerView.OnAdLoaded              += OnBannerLoad;
+                _bannerView.OnAdFailedToLoad        += OnBannerFailed;
+                _bannerView.OnAdClosed              += OnBannerClosed;
+                _bannerView.OnAdOpening             += OnBannerOpening;
+                _bannerView.OnAdLeavingApplication  += OnBannerLeaveApp;
+            }
         }
-       
         public void RequestInterstitial()
         {
-            if (_config.interstitialID.IsNullOrEmpty())
+            if(!_inited)
+                return;
+
+            if (_interstitialID.IsNullOrEmpty())
                 return;
 
             if(!_interstitialAd.IsNull())
@@ -117,8 +121,8 @@ namespace EveSoft.Ads.Admob
 
             if(!isInterstitialLoaded)
             {   
-                var request = RequestAd(_config.gender, _config.tagForChild, _config.keywords);    
-                _interstitialAd = new InterstitialAd(_config.interstitialID);
+                var request = RequestAd(_gender, _tagForChild, _keywords);    
+                _interstitialAd = new InterstitialAd(_interstitialID);
                 _interstitialAd.OnAdClosed += OnInterstitialClosed;
                 _interstitialAd.OnAdFailedToLoad += OnInterstitialFailed;
                 _interstitialAd.OnAdLeavingApplication += OnInterstitialLeaveApp;
@@ -135,7 +139,10 @@ namespace EveSoft.Ads.Admob
         }
         public void RequestRewardVideo()
         {
-            if (_config.rewardID.IsNullOrEmpty())
+            if(!_inited)
+                return;
+
+            if (_rewardID.IsNullOrEmpty())
                 return;
 
             if (!_rewardVideoAd.IsNull())
@@ -150,8 +157,8 @@ namespace EveSoft.Ads.Admob
 
             if (!isRewardLoaded)
             {
-                var request = RequestAd(_config.gender, _config.tagForChild, _config.keywords);
-                _rewardVideoAd = new RewardedAd(_config.rewardID);
+                var request = RequestAd(_gender, _tagForChild, _keywords);
+                _rewardVideoAd = new RewardedAd(_rewardID);
                 _rewardVideoAd.OnAdLoaded += OnRewardLoaded;
                 _rewardVideoAd.OnAdFailedToLoad += OnRewardFailedLoad;
                 _rewardVideoAd.OnAdOpening += OnRewardOpening;
@@ -167,8 +174,35 @@ namespace EveSoft.Ads.Admob
                 OnRewardLoaded(_rewardVideoAd, null);
             }
         }
+        
+        public void ShowBanner()
+        {   
+            if(!_inited)
+                return;
+
+            if(_bannerView.IsNull())
+                return;
+
+            if(_isBannerLoaded) 
+                _bannerView.Show();
+            else
+                _bannerView.LoadAd(RequestAd(_gender, _tagForChild, _keywords));
+        }
+        public void HideBanner()
+        {
+            if(!_inited)
+                return;
+
+            if (_bannerView.IsNull())
+                return;
+
+            _bannerView.Hide();
+        }    
         public void ShowInterstitial()
         {
+            if(!_inited)
+                return;
+            
             if (_interstitialAd == null)
                 return;
 
@@ -177,6 +211,9 @@ namespace EveSoft.Ads.Admob
         }     
         public void ShowRewardVideo()
         {
+            if(!_inited)
+                return;
+                
             if (_rewardVideoAd == null)
                 return;
 
@@ -233,6 +270,12 @@ namespace EveSoft.Ads.Admob
         #endregion
 
         #region CallBack
+        private void OnInited(InitializationStatus status)
+        {
+            _inited = true;
+            RequestBanner();
+        }
+        
         private void OnBannerLeaveApp(object sender, EventArgs e)
         {
             _isBannerLoaded = false;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace EveSoft
+namespace Evesoft
 {
     public static class StringCheckExtend
     {
