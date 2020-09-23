@@ -5,9 +5,7 @@ using UnityEngine;
 
 namespace Evesoft.Ads.Admob
 {   
-    [HideMonoScript]
-    [Serializable]
-    [CreateAssetMenu(menuName = "Evesoft/Ads/Admob/Config")]
+    [Serializable,HideReferenceObjectPicker]
     public class AdmobConfig : iAdsConfig
     {
         #region const
@@ -19,26 +17,37 @@ namespace Evesoft.Ads.Admob
         public const string BANNER_POSITION = nameof(BANNER_POSITION);
         public const string CUSTOM_POSITION = nameof(CUSTOM_POSITION);
         public const string KEY_WORDS = nameof(KEY_WORDS);
+
+        const string grpBanner = "Banner";
+        const string grpInstantitial = "Instantitial";
+        const string grpRewardVideo = "Reward Video";
+        const string grpRequest   = "Request";
         #endregion
 
         #region field
-        [SerializeField] 
-        private string _bannerID,_interstitialID,_rewardID;
+        [FoldoutGroup(grpBanner),LabelText("ID")]
+        public string bannerID;
 
-        [SerializeField] 
-        private bool _tagForChild;
+        [FoldoutGroup(grpInstantitial),LabelText("ID")]
+        public string interstitialID;
 
-        [SerializeField] 
-        private AdsGender _gender;
-
-        [SerializeField] 
-        private AdPosition _bannerPosition;
-
-        [SerializeField,ShowIf(nameof(_bannerPosition),AdPosition.Custom)] 
-        private Vector2Int _customPosition;
+        [FoldoutGroup(grpRewardVideo),LabelText("ID")]
+        public string rewardID;
         
-        [SerializeField] 
-        private string[] _keywords;
+        [FoldoutGroup(grpRequest)]
+        public bool tagForChild;
+
+        [FoldoutGroup(grpRequest)]
+        public AdsGender gender;
+
+        [FoldoutGroup(grpBanner),LabelText("Position")]
+        public AdPosition bannerPosition;
+
+        [SerializeField,ShowIf(nameof(bannerPosition),AdPosition.Custom),FoldoutGroup(grpBanner)] 
+        public Vector2Int customPosition;
+
+        [FoldoutGroup(grpRequest)]
+        public string[] keywords = new string[0];
         #endregion
 
         #region private
@@ -53,14 +62,14 @@ namespace Evesoft.Ads.Admob
                 if(_configs.IsNull())
                 {
                     _configs = new Dictionary<string,object>();
-                    _configs[BANNER_ID]         = _bannerID;
-                    _configs[INTERSTITIAL_ID]   = _interstitialID;
-                    _configs[REWARD_ID]         = _rewardID;
-                    _configs[TAG_FOR_CHILD]     = _tagForChild;
-                    _configs[GENDER]            = _gender;
-                    _configs[BANNER_POSITION]   = _bannerPosition;
-                    _configs[CUSTOM_POSITION]   = _customPosition;
-                    _configs[KEY_WORDS]         = _keywords;
+                    _configs[BANNER_ID]         = bannerID;
+                    _configs[INTERSTITIAL_ID]   = interstitialID;
+                    _configs[REWARD_ID]         = rewardID;
+                    _configs[TAG_FOR_CHILD]     = tagForChild;
+                    _configs[GENDER]            = gender;
+                    _configs[BANNER_POSITION]   = bannerPosition;
+                    _configs[CUSTOM_POSITION]   = customPosition;
+                    _configs[KEY_WORDS]         = keywords;
                 }
 
                 return _configs;
@@ -80,13 +89,13 @@ namespace Evesoft.Ads.Admob
         internal AdmobConfig(){}
         internal AdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
         {
-            this._bannerID          = bannerID;
-            this._interstitialID    = interstitialID;
-            this._rewardID          = rewardID;
-            this._tagForChild       = tagForChild;
-            this._bannerPosition    = bannerPosition;
-            this._customPosition    = customPosition;
-            this._keywords          = keywords;
+            this.bannerID          = bannerID;
+            this.interstitialID    = interstitialID;
+            this.rewardID          = rewardID;
+            this.tagForChild       = tagForChild;
+            this.bannerPosition    = bannerPosition;
+            this.customPosition    = customPosition;
+            this.keywords          = keywords;
         }
         #endregion
     }
