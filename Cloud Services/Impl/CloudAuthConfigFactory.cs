@@ -2,23 +2,17 @@ namespace Evesoft.CloudService
 {
     public static class CloudAuthConfigFactory
     {
-        public static iCloudAuthConfig CreateGoogleAuthOptions(string webclientid)
+        public static iCloudAuthConfig CreateGoogleAuthConfig(string webclientid)
         {
-            var config = new GoogleSignIn.GoogleAuthConfig(webclientid);
-            config.configs[nameof(CloudService)] = CloudAuthType.GoogleSignIn;
-            return config;
+            return new GoogleSignIn.GoogleAuthConfig(webclientid);
         }
-        public static iCloudAuthConfig CreateFacebookAuthOptions()
+        public static iCloudAuthConfig CreateFacebookAuthConfig()
         {
-            var config = new Facebook.FacebookAuthConfig();
-            config.configs[nameof(CloudService)] = CloudAuthType.Facebook;
-            return config;
+            return new Facebook.FacebookAuthConfig();
         }
-        public static iCloudAuthConfig CreateFirebaseAuthOptions()
+        public static iCloudAuthConfig CreateFirebaseAuthConfig()
         {
-            var config = new Firebase.FirebaseCloudAuthConfig();
-            config.configs[nameof(CloudService)] = CloudAuthType.Firebase;       
-            return config;
+            return new Firebase.FirebaseCloudAuthConfig();
         }
     }
 }

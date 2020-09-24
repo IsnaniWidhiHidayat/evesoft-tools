@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.Ads
 {
-    public static class AdServiceFactory
+    public static class AdsServiceFactory
     {
         private static IDictionary<string,iAdsService> adServices = new Dictionary<string, iAdsService>();
 

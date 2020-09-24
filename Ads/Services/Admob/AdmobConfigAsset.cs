@@ -26,7 +26,6 @@ namespace Evesoft.Ads.Admob
         }
 
         #region iAdsConfig
-        public IDictionary<string, object> configs => config.configs;
         public T GetConfig<T>(string key)
         {
             return config.GetConfig<T>(key);

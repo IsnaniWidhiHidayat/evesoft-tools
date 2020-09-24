@@ -102,7 +102,28 @@ namespace Evesoft.Ads.UnityAds
         #region constructor
         public UnityAds(iAdsConfig config)
         {
-            _gameID             = config.GetConfig<string>(UnityAdsConfig.GAME_ID);
+            //set gameID
+            switch(Application.platform)
+            {
+                case RuntimePlatform.Android:
+                {
+                    _gameID  = config.GetConfig<string>(UnityAdsConfig.GAME_ID_PLAYSTORE);
+                    break;
+                }
+
+                case RuntimePlatform.IPhonePlayer:
+                {
+                    _gameID  = config.GetConfig<string>(UnityAdsConfig.GAME_ID_APPSTORE);
+                    break;
+                }
+
+                default:
+                {
+                    _gameID  = config.GetConfig<string>(UnityAdsConfig.GAME_ID_PLAYSTORE);
+                    break;
+                }
+            }
+
             _bannerID           = config.GetConfig<string>(UnityAdsConfig.BANNER_ID);
             _interstitialID     = config.GetConfig<string>(UnityAdsConfig.INTERSTITIAL_ID);
             _rewardID           = config.GetConfig<string>(UnityAdsConfig.REWARD_ID);

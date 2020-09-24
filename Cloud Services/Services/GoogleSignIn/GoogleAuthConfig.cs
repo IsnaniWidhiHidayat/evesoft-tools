@@ -11,28 +11,11 @@ namespace Evesoft.CloudService.GoogleSignIn
         internal const string WEB_CLIENT_ID = nameof(WEB_CLIENT_ID);
         #endregion
 
-        #region fields
-        public string webClientID;
-        #endregion
-
         #region private
         private IDictionary<string,object> _configs;
         #endregion
 
         #region iAdsConfig
-        public IDictionary<string, object> configs
-        {
-            get
-            {
-                if(_configs.IsNull())
-                {
-                    _configs = new Dictionary<string,object>();
-                    _configs[WEB_CLIENT_ID] = webClientID;
-                }
-
-                return _configs;
-            }
-        }
         public T GetConfig<T>(string key)
         {
             var result = default(T);
@@ -44,10 +27,14 @@ namespace Evesoft.CloudService.GoogleSignIn
         #endregion
 
         #region constructor
-        public GoogleAuthConfig(){}
-        public GoogleAuthConfig(string webClientID)
+        public GoogleAuthConfig()
         {
-            this.webClientID = webClientID;
+            _configs = new Dictionary<string,object>();
+            _configs[nameof(CloudService)] = CloudAuthType.GoogleSignIn;        
+        }
+        public GoogleAuthConfig(string webClientID):this()
+        {
+            _configs[WEB_CLIENT_ID] = webClientID;
         }
         #endregion
     }

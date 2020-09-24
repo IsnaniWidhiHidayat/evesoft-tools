@@ -55,26 +55,6 @@ namespace Evesoft.Ads.Admob
         #endregion
 
         #region iAdsConfig
-        public IDictionary<string, object> configs
-        {
-            get
-            {
-                if(_configs.IsNull())
-                {
-                    _configs = new Dictionary<string,object>();
-                    _configs[BANNER_ID]         = bannerID;
-                    _configs[INTERSTITIAL_ID]   = interstitialID;
-                    _configs[REWARD_ID]         = rewardID;
-                    _configs[TAG_FOR_CHILD]     = tagForChild;
-                    _configs[GENDER]            = gender;
-                    _configs[BANNER_POSITION]   = bannerPosition;
-                    _configs[CUSTOM_POSITION]   = customPosition;
-                    _configs[KEY_WORDS]         = keywords;
-                }
-
-                return _configs;
-            }
-        }
         public T GetConfig<T>(string key)
         {
             var result = default(T);
@@ -86,16 +66,21 @@ namespace Evesoft.Ads.Admob
         #endregion
 
         #region constructor
-        public AdmobConfig(){}
-        public AdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
+        public AdmobConfig()
         {
-            this.bannerID          = bannerID;
-            this.interstitialID    = interstitialID;
-            this.rewardID          = rewardID;
-            this.tagForChild       = tagForChild;
-            this.bannerPosition    = bannerPosition;
-            this.customPosition    = customPosition;
-            this.keywords          = keywords;
+            _configs = new Dictionary<string,object>();
+            _configs[nameof(Ads)] = AdsType.Admob;
+        }
+        public AdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,AdsGender gender,AdPosition bannerPosition,Vector2Int customPosition,string[] keywords):this()
+        {
+            _configs[BANNER_ID]         = this.bannerID          = bannerID;
+            _configs[INTERSTITIAL_ID]   = this.interstitialID    = interstitialID;
+            _configs[REWARD_ID]         = this.rewardID          = rewardID;
+            _configs[TAG_FOR_CHILD]     = this.tagForChild       = tagForChild;
+            _configs[GENDER]            = this.gender            = gender;
+            _configs[BANNER_POSITION]   = this.bannerPosition    = bannerPosition;
+            _configs[CUSTOM_POSITION]   = this.customPosition    = customPosition;
+            _configs[KEY_WORDS]         = this.keywords          = keywords;
         }
         #endregion
     }

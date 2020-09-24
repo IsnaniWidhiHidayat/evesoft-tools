@@ -13,18 +13,6 @@ namespace Evesoft.CloudService.GooglePlayService
         #endregion
 
         #region iAdsConfig
-        public IDictionary<string, object> configs
-        {
-            get
-            {
-                if(_configs.IsNull())
-                {
-                    _configs = new Dictionary<string,object>();
-                }
-
-                return _configs;
-            }
-        }
         public T GetConfig<T>(string key)
         {
             var result = default(T);
@@ -32,6 +20,14 @@ namespace Evesoft.CloudService.GooglePlayService
                 return result;
                 
             return result;
+        }
+        #endregion
+
+        #region constructor
+        public GooglePlayServiceAuthConfig()
+        {
+            _configs = new Dictionary<string,object>();
+            _configs[nameof(CloudService)] = CloudAuthType.GooglePlayService;
         }
         #endregion
     }

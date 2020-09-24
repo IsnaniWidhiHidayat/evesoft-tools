@@ -9,7 +9,8 @@ namespace Evesoft.Ads.UnityAds
     public class UnityAdsConfig : iAdsConfig
     {
         #region const
-        public const string GAME_ID = nameof(GAME_ID);
+        public const string GAME_ID_PLAYSTORE = nameof(GAME_ID_PLAYSTORE);
+        public const string GAME_ID_APPSTORE = nameof(GAME_ID_APPSTORE);
         public const string BANNER_ID = nameof(BANNER_ID);
         public const string INTERSTITIAL_ID = nameof(INTERSTITIAL_ID);
         public const string REWARD_ID = nameof(REWARD_ID);
@@ -23,14 +24,12 @@ namespace Evesoft.Ads.UnityAds
         #endregion
 
         #region fields
-        [FoldoutGroup(grpMain),HorizontalGroup(grpMain+"/h1",width:120),HideLabel]
-        public UnityAdsStore store;
+       
+        [FoldoutGroup(grpMain)]
+        public string playStoreID;
 
-        [ShowIf(nameof(store),UnityAdsStore.PlayStore),FoldoutGroup(grpMain),HideLabel,SuffixLabel("Game ID",true),HorizontalGroup(grpMain+"/h1"),VerticalGroup(grpMain+"/h1/v1")]
-        public string playStoreGameID;
-
-        [ShowIf(nameof(store),UnityAdsStore.AppleStore),FoldoutGroup(grpMain),HideLabel,SuffixLabel("Game ID",true),VerticalGroup(grpMain+"/h1/v1")]
-        public string appStoreGameID;
+        [FoldoutGroup(grpMain)]
+        public string appleStoreID;
 
         
         [FoldoutGroup(grpMain)]
@@ -51,23 +50,6 @@ namespace Evesoft.Ads.UnityAds
         #endregion
 
         #region iAdsConfig
-        public IDictionary<string, object> configs
-        {
-            get
-            {
-                if(_configs.IsNull())
-                {
-                    _configs = new Dictionary<string,object>();
-                    _configs[GAME_ID]           = store == UnityAdsStore.PlayStore? playStoreGameID : appStoreGameID;
-                    _configs[BANNER_ID]         = bannerID;
-                    _configs[INTERSTITIAL_ID]   = interstitialID;
-                    _configs[REWARD_ID]         = rewardID;
-                    _configs[TEST_MODE]         = testMode;
-                }
-
-                return _configs;
-            }
-        }
         public T GetConfig<T>(string key)
         {
             var result = default(T);
@@ -78,17 +60,20 @@ namespace Evesoft.Ads.UnityAds
         }      
         #endregion
     
-        #region const
-        public UnityAdsConfig(){}
-        public UnityAdsConfig(UnityAdsStore store,string playstoreID,string appleStoreID,string bannerID,string interstitialID,string rewardID,bool testMode)
+        #region constructor
+        public UnityAdsConfig()
         {
-            this.store = store;
-            this.bannerID = bannerID;
-            this.interstitialID = interstitialID;
-            this.rewardID = rewardID;
-            this.playStoreGameID = playstoreID;
-            this.appStoreGameID = appleStoreID;
-            this.testMode = testMode;
+            _configs = new Dictionary<string,object>();
+            _configs[nameof(Ads)] = AdsType.UnityAds;
+        }
+        public UnityAdsConfig(string playstoreID,string appleStoreID,string bannerID,string interstitialID,string rewardID,bool testMode):this()
+        {
+            _configs[GAME_ID_PLAYSTORE] = this.playStoreID    = playstoreID;
+            _configs[GAME_ID_APPSTORE]  = this.appleStoreID   = appleStoreID;
+            _configs[BANNER_ID]         = this.bannerID           = bannerID;
+            _configs[INTERSTITIAL_ID]   = this.interstitialID     = interstitialID;
+            _configs[REWARD_ID]         = this.rewardID           = rewardID;
+            _configs[TEST_MODE]         = this.testMode           = testMode;
         }
         #endregion
     }
