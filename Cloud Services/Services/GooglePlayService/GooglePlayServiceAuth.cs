@@ -11,7 +11,7 @@ namespace Evesoft.CloudService.GooglePlayService
 
         public iUserAuth currentUser => throw new NotImplementedException();
 
-        public Task<(iUserAuth, Exception)> Login(IDictionary<string, object> options)
+        public Task<(iUserAuth, Exception)> Login(iCloudAuthOptions options = null)
         {
             throw new NotImplementedException();
         }

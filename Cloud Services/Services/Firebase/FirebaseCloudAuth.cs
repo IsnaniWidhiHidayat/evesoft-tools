@@ -4,6 +4,7 @@ using Firebase.Auth;
 using UnityEngine;
 using Firebase;
 using System;
+using System.Linq;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.CloudService.Firebase
@@ -21,7 +22,7 @@ namespace Evesoft.CloudService.Firebase
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
         [ShowInInspector] public iUserAuth currentUser => _currentUser;
-        public async Task<(iUserAuth,Exception)> Login(IDictionary<string, object> options)
+        public async Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options)
         {
             try 
             {
@@ -31,49 +32,96 @@ namespace Evesoft.CloudService.Firebase
                 if(!_currentUser.IsNull())
                     return (_currentUser,null);
     
-                var authtype    = default(CloudAuthType);
-                var token       = default(string);
-                var outauthtype = default(object);
-                var outtoken    = default(object);
-                options.TryGetValue(nameof(authtype),out outauthtype);
-                options.TryGetValue(nameof(token),out outtoken);
-                authtype = (CloudAuthType)outauthtype;
-                token    = outtoken as string;
-                
+                var authtype    = options.GetOptions<FirebaseCloudAuthType>(FirebaseCloudAuthOptions.LOGIN_TYPE);
+            
                 switch(authtype)
                 {
-                    case CloudAuthType.GoogleSignIn:
+                    case FirebaseCloudAuthType.EmailPassword:
                     {
-                        var credential  = GoogleAuthProvider.GetCredential(token,null);
-                        var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
+                        var email    = options.GetOptions<string>(FirebaseCloudAuthOptions.EMAIL);
+                        var password = options.GetOptions<string>(FirebaseCloudAuthOptions.PASSWORD);
+
+                        if(email.IsNullOrEmpty())
+                            return (null,new ArgumentNullException(FirebaseCloudAuthOptions.EMAIL,"Email is Empty"));
+
+                        if(password.IsNullOrEmpty())
+                            return (null,new ArgumentNullException(FirebaseCloudAuthOptions.PASSWORD,"Password is Empty"));
+
+                        //Check email registered
+                        var providers = await FirebaseAuth.DefaultInstance.FetchProvidersForEmailAsync(email);
+                        if(providers.IsNullOrEmpty())
+                            return (null,new FirebaseException(401,"Not Registered"));
+                
+                        var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithEmailAndPasswordAsync(email, password);
                         var accessToken  = await firebaseUser.TokenAsync(false);
+
+                        _currentUser = new CloudAuthUser()
+                        {
+                            id       = firebaseUser.UserId,
+                            authType = CloudAuthType.EmailPassword,
+                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            name     = firebaseUser.DisplayName,
+                            email    = firebaseUser.Email,
+                            token    = accessToken
+                        };
+                           
+                        return (_currentUser,null);
+                    }
+
+                    case FirebaseCloudAuthType.GoogleSignIn:
+                    {
+                        var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
+                        var credential   = GoogleAuthProvider.GetCredential(accessToken,null);
+                        var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
+                            accessToken  = await firebaseUser.TokenAsync(false);
                         
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = authtype,
+                            authType = CloudAuthType.GoogleSignIn,
                             imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
-                            name = firebaseUser.DisplayName,
-                            token    = accessToken,
-                            email    = firebaseUser.Email
+                            name     = firebaseUser.DisplayName,
+                            email    = firebaseUser.Email,
+                            token    = accessToken
                         };
                            
                         return (_currentUser,null);
                     }
     
-                    case CloudAuthType.Facebook:
+                    case FirebaseCloudAuthType.Facebook:
                     {  
-                        var credential = FacebookAuthProvider.GetCredential(token);
+                        var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
+                        var credential   = FacebookAuthProvider.GetCredential(accessToken);
                         var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
-                        token  = await firebaseUser.TokenAsync(false);
+                            accessToken  = await firebaseUser.TokenAsync(false);
                         
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = authtype,
+                            authType = CloudAuthType.Facebook,
                             imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
-                            name = firebaseUser.DisplayName,
-                            token    = token,
+                            name     = firebaseUser.DisplayName,
+                            token    = accessToken,
+                            email    = firebaseUser.Email
+                        }; 
+    
+                        return (_currentUser,null);
+                    }
+
+                    case FirebaseCloudAuthType.GooglePlayService:
+                    {
+                        var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
+                        var credential   = PlayGamesAuthProvider.GetCredential(accessToken);
+                        var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
+                            accessToken  = await firebaseUser.TokenAsync(false);
+                        
+                        _currentUser = new CloudAuthUser()
+                        {
+                            id       = firebaseUser.UserId,
+                            authType = CloudAuthType.Facebook,
+                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            name     = firebaseUser.DisplayName,
+                            token    = accessToken,
                             email    = firebaseUser.Email
                         }; 
     

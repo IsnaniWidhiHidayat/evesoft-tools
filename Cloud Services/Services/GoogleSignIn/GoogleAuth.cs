@@ -16,7 +16,7 @@ namespace Evesoft.CloudService.GoogleSignIn
         public bool inited => _inited;
         public iUserAuth currentUser => _currentUser;
         
-        public async Task<(iUserAuth,Exception)> Login(IDictionary<string, object> options)
+        public async Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options = null)
         {
             try 
             {
