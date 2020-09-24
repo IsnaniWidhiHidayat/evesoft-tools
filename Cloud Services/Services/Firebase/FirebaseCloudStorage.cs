@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Net;
 using Sirenix.OdinInspector;
 
-namespace Evesoft.CloudService
+namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudStorage : iCloudStorage

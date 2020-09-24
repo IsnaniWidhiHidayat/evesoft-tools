@@ -4,7 +4,7 @@ using Evesoft;
 using Firebase.Database;
 using Sirenix.OdinInspector;
 
-namespace Evesoft.CloudService
+namespace Evesoft.CloudService.Firebase
 {
     [Serializable]
     public class FirebaseCloudDatabaseData : iCloudDatabaseData,IDisposable

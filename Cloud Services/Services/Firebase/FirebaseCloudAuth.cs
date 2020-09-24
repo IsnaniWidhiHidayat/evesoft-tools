@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Auth;
-using Evesoft;
 using UnityEngine;
 using Firebase;
 using System;
 using Sirenix.OdinInspector;
 
-namespace Evesoft.CloudService
+namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudAuth : iCloudAuth
@@ -32,24 +31,24 @@ namespace Evesoft.CloudService
                 if(!_currentUser.IsNull())
                     return (_currentUser,null);
     
-                var authtype    = default(AuthType);
+                var authtype    = default(CloudAuthType);
                 var token       = default(string);
                 var outauthtype = default(object);
                 var outtoken    = default(object);
                 options.TryGetValue(nameof(authtype),out outauthtype);
                 options.TryGetValue(nameof(token),out outtoken);
-                authtype = (AuthType)outauthtype;
+                authtype = (CloudAuthType)outauthtype;
                 token    = outtoken as string;
                 
                 switch(authtype)
                 {
-                    case AuthType.Google:
+                    case CloudAuthType.GoogleSignIn:
                     {
                         var credential  = GoogleAuthProvider.GetCredential(token,null);
                         var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
                         var accessToken  = await firebaseUser.TokenAsync(false);
                         
-                        _currentUser = new UserAuth()
+                        _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
                             authType = authtype,
@@ -62,13 +61,13 @@ namespace Evesoft.CloudService
                         return (_currentUser,null);
                     }
     
-                    case AuthType.Facebook:
+                    case CloudAuthType.Facebook:
                     {  
                         var credential = FacebookAuthProvider.GetCredential(token);
                         var firebaseUser = await FirebaseAuth.DefaultInstance.SignInWithCredentialAsync(credential);
                         token  = await firebaseUser.TokenAsync(false);
                         
-                        _currentUser = new UserAuth()
+                        _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
                             authType = authtype,
@@ -87,7 +86,7 @@ namespace Evesoft.CloudService
                     }
                 }
             } 
-            catch (Firebase.FirebaseException ex) 
+            catch (FirebaseException ex) 
             {
                 return (null,ex);
             }
@@ -106,7 +105,7 @@ namespace Evesoft.CloudService
         #endregion
 
         #region constructor
-        public FirebaseCloudAuth()
+        public FirebaseCloudAuth(iCloudAuthConfig config)
         {
             Init();
         }

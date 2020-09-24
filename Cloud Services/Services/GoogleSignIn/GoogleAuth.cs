@@ -27,9 +27,9 @@ namespace Evesoft.CloudService.GoogleSignIn
                     return (_currentUser,null);
     
                 var googleUser = await Google.GoogleSignIn.DefaultInstance.SignIn();
-                _currentUser = new UserAuth()
+                _currentUser = new CloudAuthUser()
                 {
-                    authType = AuthType.Google,
+                    authType = CloudAuthType.GoogleSignIn,
                     id       = googleUser.UserId,
                     imageUrl = googleUser.ImageUrl.ToString(),
                     name     = googleUser.DisplayName,
@@ -57,12 +57,14 @@ namespace Evesoft.CloudService.GoogleSignIn
         #endregion
 
         #region constructor
-        public GoogleAuth(string webClientID)
+        public GoogleAuth(iCloudAuthConfig config)
         {
+            var webClientID = config.GetConfig<string>(GoogleAuthConfig.WEB_CLIENT_ID);
+
             Google.GoogleSignIn.Configuration = new Google.GoogleSignInConfiguration()
             {
-                RequestIdToken = true,
-                WebClientId = webClientID
+                RequestIdToken  = true,
+                WebClientId     = webClientID
             };
             _inited = true;
         }    

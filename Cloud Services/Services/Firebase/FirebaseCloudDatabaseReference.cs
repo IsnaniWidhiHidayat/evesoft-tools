@@ -2,7 +2,7 @@ using System;
 using Evesoft;
 using Firebase.Database;
 
-namespace Evesoft.CloudService
+namespace Evesoft.CloudService.Firebase
 {
     [Serializable]
     public class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable

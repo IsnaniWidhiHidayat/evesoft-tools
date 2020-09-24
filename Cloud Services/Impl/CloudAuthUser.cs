@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Evesoft.CloudService
 {
     [Serializable,HideMonoScript,HideReferenceObjectPicker]
-    public class UserAuth : iUserAuth ,IDisposable
+    public class CloudAuthUser : iUserAuth ,IDisposable
     {
         #region private
         [SerializeField]
@@ -24,7 +24,7 @@ namespace Evesoft.CloudService
         private string _email;
 
         [SerializeField]
-        private AuthType _loginType;
+        private CloudAuthType _loginType;
         #endregion
 
         #region iUser
@@ -40,7 +40,7 @@ namespace Evesoft.CloudService
             get => _token;
             set => _token = value;
         }
-        public AuthType authType{
+        public CloudAuthType authType{
             get => _loginType;
             set => _loginType = value;
         }
@@ -62,7 +62,7 @@ namespace Evesoft.CloudService
             _nickName   = null;
             _token      = null;
             _imageUrl   = null;
-            _loginType  = default(AuthType);
+            _loginType  = default(CloudAuthType);
         }
         #endregion
     }

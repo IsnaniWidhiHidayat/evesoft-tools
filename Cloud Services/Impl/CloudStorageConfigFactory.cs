@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService
 {
-    public static class CloudStorageOptionsFactory
+    public static class CloudStorageConfigFactory
     {
         public static IDictionary<string,object> CreateFirebaseStorageOptions(string url = null)
         {

@@ -7,6 +7,6 @@ namespace Evesoft.CloudService
         string imageUrl{get;}
         string token{get;}
         string email{get;}
-        AuthType authType{get;}
+        CloudAuthType authType{get;}
     }
 }

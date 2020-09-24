@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Firebase;
 using UnityEngine;
 
-namespace Evesoft.CloudService
+namespace Evesoft.CloudService.Firebase
 {
     internal static class FirebaseDependencies
     {

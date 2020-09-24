@@ -6,7 +6,7 @@ using Facebook.Unity;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace  Evesoft.CloudService
+namespace  Evesoft.CloudService.Facebook
 {
     [Serializable,HideReferenceObjectPicker]
     public class FacebookAuth : iCloudAuth
@@ -112,10 +112,10 @@ namespace  Evesoft.CloudService
                     }
                     else
                     {
-                        _currentUser = new UserAuth()
+                        _currentUser = new CloudAuthUser()
                         {
                             id = id,
-                            authType = AuthType.Facebook,
+                            authType = CloudAuthType.Facebook,
                             imageUrl = picture,
                             name    = name,
                             token   = accessToken,
@@ -145,22 +145,22 @@ namespace  Evesoft.CloudService
         #endregion
 
         #region constructor
-        public FacebookAuth()
+        public FacebookAuth(iCloudAuthConfig config)
         {
             var onFBInitedHandler = default(InitDelegate);
-            onFBInitedHandler = ()=>
-            {
-                if(!FB.IsInitialized)
+                onFBInitedHandler = ()=>
                 {
-                    "Failed to Initialize the Facebook SDK".LogError();
-                    _inited = false;
-                }
-                else
-                {
-                     FB.ActivateApp();
-                    _inited = true; 
-                }
-            };
+                    if(!FB.IsInitialized)
+                    {
+                        "Failed to Initialize the Facebook SDK".LogError();
+                        _inited = false;
+                    }
+                    else
+                    {
+                        FB.ActivateApp();
+                        _inited = true; 
+                    }
+                };
 
             //Init Facebook SDK
             if(!FB.IsInitialized)
