@@ -25,7 +25,7 @@ namespace Evesoft.CloudService
                 {
                     var webclientid = default(object);
                     options.TryGetValue(nameof(webclientid),out webclientid);
-                    var newAuth = new GoogleAuth(webclientid as string);   
+                    var newAuth = new GoogleSignIn.GoogleAuth(webclientid as string);   
                     auths[key] = newAuth;
                     return newAuth;
                 }

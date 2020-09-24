@@ -19,13 +19,52 @@ namespace Evesoft.IAP.Unity
         }
         #endregion
 
+        #region IDisposable
+        public void Dispose()
+        {
+            onIAPInitialize = null;
+            onInitializeFailed = null;
+            onPurchaseFailed = null;
+            onPurchasedProduct = null;
+        }
+        #endregion
+
+        #region iIAPService
+        public event Action<IList<iProductIAP>> onIAPInitialize;
+        public event Action<InitializationFailureReason> onInitializeFailed;
+        public event Action<iProductIAP, PurchaseFailureReason> onPurchaseFailed;
+        public event Action<iProductIAP> onPurchasedProduct;
+        public void Init(IList<iProductIAP> products)
+        {
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+            
+            foreach (iProductIAP item in products)
+            {
+                if(item.IsNull() || item.id.IsNullOrEmpty())
+                    continue;
+                    
+                builder.AddProduct(item.id, (UnityEngine.Purchasing.ProductType)((int)item.type));
+            }
+
+            _products = products;
+            UnityPurchasing.Initialize(this, builder);
+        }
+        public void BuyProduct(iProductIAP IAPProduct)
+        {
+            if (IAPProduct.IsNull() || IAPProduct.product.IsNull() || !IAPProduct.product.availableToPurchase)
+                return;
+
+            _storeController.InitiatePurchase(IAPProduct.id);
+        }
+        #endregion
+
         #region Interface IStore Listener
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
             _storeController         = controller;
             _storeExtensionProvider  = extensions;
 
-            UnityEngine.Purchasing.Product[] products = controller.products.all;
+            var products = controller.products.all;
 
             for (int i = 0; i < products.Length; i++)
             {
@@ -71,45 +110,6 @@ namespace Evesoft.IAP.Unity
                 
             return PurchaseProcessingResult.Complete;
         }
-        #endregion
-    
-        #region IDisposable
-        public void Dispose()
-        {
-            onIAPInitialize = null;
-            onInitializeFailed = null;
-            onPurchaseFailed = null;
-            onPurchasedProduct = null;
-        }
-        #endregion
-
-        #region iIAPService
-        public event Action<IList<iProductIAP>> onIAPInitialize;
-        public event Action<InitializationFailureReason> onInitializeFailed;
-        public event Action<iProductIAP, PurchaseFailureReason> onPurchaseFailed;
-        public event Action<iProductIAP> onPurchasedProduct;
-        public void Init(IList<iProductIAP> products)
-        {
-            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            
-            foreach (iProductIAP item in products)
-            {
-                if(item.IsNull() || item.id.IsNullOrEmpty())
-                    continue;
-                    
-                builder.AddProduct(item.id, (UnityEngine.Purchasing.ProductType)((int)item.type));
-            }
-
-            _products = products;
-            UnityPurchasing.Initialize(this, builder);
-        }
-        public void BuyProduct(iProductIAP IAPProduct)
-        {
-            if (IAPProduct.IsNull() || IAPProduct.product.IsNull() || !IAPProduct.product.availableToPurchase)
-                return;
-
-            _storeController.InitiatePurchase(IAPProduct.id);
-        }
-        #endregion
+        #endregion     
     }
 }

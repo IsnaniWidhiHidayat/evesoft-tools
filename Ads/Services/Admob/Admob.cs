@@ -1,11 +1,9 @@
 ﻿using System;
-using Sirenix.OdinInspector;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
 namespace Evesoft.Ads.Admob
 {
-    [HideMonoScript]
     public class Admob : iAdsService,IDisposable
     {
         #region private
