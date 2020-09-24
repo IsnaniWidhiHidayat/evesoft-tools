@@ -4,31 +4,35 @@ namespace Evesoft.Ads
 {
     public static class AdsServiceFactory
     {
-        private static IDictionary<string,iAdsService> adServices = new Dictionary<string, iAdsService>();
+        private static IDictionary<AdsType,iAdsService> adServices = new Dictionary<AdsType, iAdsService>();
 
         public static iAdsService CreateService(iAdsConfig config)
         {
             if(config.IsNull())
                 return null;
 
-            var type = config.GetConfig<string>(nameof(Ads));
-            if(type.IsNullOrEmpty())
-                return null;
+            var type = config.GetConfig<AdsType>(nameof(Ads));
+            if(adServices.ContainsKey(type))
+                return adServices[type];
 
             switch(type)
             {
-                case nameof(Admob):
+                case AdsType.Admob:
                 {
-                    return adServices[nameof(Admob)] = new Admob.Admob(config);
+                    return adServices[type] = new Admob.Admob(config);
                 }
 
-                case nameof(UnityAds):
+                case AdsType.UnityAds:
                 {
-                    return adServices[nameof(UnityAds)] = new UnityAds.UnityAds(config);
+                    return adServices[type] = new UnityAds.UnityAds(config);
+                }
+            
+                default:
+                {
+                    "Service Unavailable".LogError();
+                    return null;
                 }
             }
-
-            return null;
         }
     }
 }
