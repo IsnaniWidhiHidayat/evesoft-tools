@@ -14,5 +14,9 @@ namespace Evesoft.CloudService
         {
             return new Firebase.FirebaseCloudAuthConfig();
         }
+        public static iCloudAuthConfig CreatePlayServiceAuthConfig()
+        {
+            return new GooglePlayService.GooglePlayServiceAuthConfig();
+        }
     }
 }
