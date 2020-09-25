@@ -4,7 +4,7 @@ using UnityEngine.Advertisements;
 
 namespace Evesoft.Ads.UnityAds
 {
-    public class UnityAds : iAdsService,IUnityAdsListener
+    internal class UnityAds : iAdsService,IUnityAdsListener
     {
         #region private
         private string _gameID,_bannerID,_interstitialID,_rewardID;

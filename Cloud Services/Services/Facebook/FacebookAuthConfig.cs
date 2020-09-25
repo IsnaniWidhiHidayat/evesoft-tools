@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Facebook
 {
     [Serializable,HideReferenceObjectPicker]
-    public class FacebookAuthConfig : iCloudAuthConfig
+    internal class FacebookAuthConfig : iCloudAuthConfig
     {
         #region private
         private IDictionary<string,object> _configs;

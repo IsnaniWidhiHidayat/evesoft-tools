@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    public class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable
+    internal class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable
     {      
         #region private
         private iCloudDatabaseEvents _events;

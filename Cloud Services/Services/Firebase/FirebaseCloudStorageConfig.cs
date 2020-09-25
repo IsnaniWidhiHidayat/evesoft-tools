@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase
 {
-    public class FirebaseCloudStorageConfig : iCloudStorageConfig
+    internal class FirebaseCloudStorageConfig : iCloudStorageConfig
     {
         #region const
         public const string STORAGE = nameof(STORAGE);

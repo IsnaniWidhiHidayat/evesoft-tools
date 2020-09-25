@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Evesoft.CloudService.GooglePlayService
 {
     //TODO:Implament play service
-    public class GooglePlayServiceAuth : iCloudAuth
+    internal class GooglePlayServiceAuth : iCloudAuth
     {
         public bool inited => throw new NotImplementedException();
 

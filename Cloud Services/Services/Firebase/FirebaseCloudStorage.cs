@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    public class FirebaseCloudStorage : iCloudStorage
+    internal class FirebaseCloudStorage : iCloudStorage
     {
         #region private
         private static bool _inited;

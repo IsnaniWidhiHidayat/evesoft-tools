@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase
 {
-    public class FirebaseCloudAuthOptions : iCloudAuthOptions
+    internal class FirebaseCloudAuthOptions : iCloudAuthOptions
     {
         #region const
         public const string EMAIL = nameof(EMAIL);

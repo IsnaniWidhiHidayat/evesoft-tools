@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    public class FirebaseCloudDatabaseConfig : iCloudDatabaseConfig
+    internal class FirebaseCloudDatabaseConfig : iCloudDatabaseConfig
     {
         #region const
         public const string DB = nameof(DB);

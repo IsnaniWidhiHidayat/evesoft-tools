@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Evesoft.CloudService.GoogleSignIn
 {
-    public class GoogleAuth : iCloudAuth
+    internal class GoogleAuth : iCloudAuth
     {
         #region private
         private iUserAuth _currentUser;

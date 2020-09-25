@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Evesoft.CloudService
 {
     [Serializable,HideMonoScript,HideReferenceObjectPicker]
-    public class CloudAuthUser : iUserAuth ,IDisposable
+    internal class CloudAuthUser : iUserAuth ,IDisposable
     {
         #region private
         [SerializeField]

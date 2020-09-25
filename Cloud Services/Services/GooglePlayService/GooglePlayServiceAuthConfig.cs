@@ -6,7 +6,7 @@ namespace Evesoft.CloudService.GooglePlayService
 {
     //TODO:Set Config play service
     [Serializable,HideReferenceObjectPicker]
-    public class GooglePlayServiceAuthConfig : iCloudAuthConfig
+    internal class GooglePlayServiceAuthConfig : iCloudAuthConfig
     {
         #region private
         private IDictionary<string,object> _configs;

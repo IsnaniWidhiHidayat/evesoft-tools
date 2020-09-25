@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Evesoft.Ads.Admob
 {   
     [Serializable,HideReferenceObjectPicker]
-    public class AdmobConfig : iAdsConfig
+    internal class AdmobConfig : iAdsConfig
     {
         #region const
         public const string BANNER_ID = nameof(BANNER_ID);

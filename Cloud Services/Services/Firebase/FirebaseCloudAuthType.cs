@@ -1,6 +1,6 @@
 namespace Evesoft.CloudService.Firebase
 {
-    public enum FirebaseCloudAuthType
+    internal enum FirebaseCloudAuthType
     {
         None,
         EmailPassword,

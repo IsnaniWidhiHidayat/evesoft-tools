@@ -6,7 +6,7 @@ namespace Evesoft.Ads.UnityAds
 {
 
     [Serializable,HideReferenceObjectPicker]
-    public class UnityAdsConfig : iAdsConfig
+    internal class UnityAdsConfig : iAdsConfig
     {
         #region const
         public const string GAME_ID_PLAYSTORE = nameof(GAME_ID_PLAYSTORE);

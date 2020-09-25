@@ -9,7 +9,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    public class FirebaseCloudDatabase : iCloudDatabase
+    internal class FirebaseCloudDatabase : iCloudDatabase
     {
         #region private
         private static bool _inited;

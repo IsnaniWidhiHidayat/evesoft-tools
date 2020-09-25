@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Evesoft.CloudService.GoogleSignIn
 {
     [Serializable,HideReferenceObjectPicker]
-    public class GoogleAuthConfig : iCloudAuthConfig
+    internal class GoogleAuthConfig : iCloudAuthConfig
     {
         #region const
         internal const string WEB_CLIENT_ID = nameof(WEB_CLIENT_ID);

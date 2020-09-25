@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Evesoft.Ads.Admob
 {
-    public class Admob : iAdsService,IDisposable
+    internal class Admob : iAdsService,IDisposable
     {
         #region private
         private string _bannerID,_interstitialID,_rewardID;
