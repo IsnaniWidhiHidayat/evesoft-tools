@@ -21,9 +21,9 @@ namespace Evesoft.CloudService
         {
             return new Firebase.FirebaseCloudAuthOptions(Firebase.FirebaseCloudAuthType.GoogleSignIn,token);
         }
-        public static iCloudAuthOptions CreateFirebaseWithGooglePlayService(string token)
+        public static iCloudAuthOptions CreateFirebaseWithGooglePlayService(string serverAuthCode)
         {
-            return new Firebase.FirebaseCloudAuthOptions(Firebase.FirebaseCloudAuthType.GooglePlayService,token);
+            return new Firebase.FirebaseCloudAuthOptions(Firebase.FirebaseCloudAuthType.GooglePlayService,serverAuthCode);
         }
     }
 }

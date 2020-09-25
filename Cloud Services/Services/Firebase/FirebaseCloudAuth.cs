@@ -32,8 +32,11 @@ namespace Evesoft.CloudService.Firebase
                 if(!_currentUser.IsNull())
                     return (_currentUser,null);
     
-                var authtype    = options.GetOptions<FirebaseCloudAuthType>(FirebaseCloudAuthOptions.LOGIN_TYPE);
+                var authtype = options.GetOptions<FirebaseCloudAuthType>(FirebaseCloudAuthOptions.LOGIN_TYPE);
             
+                if(authtype.IsNull() || authtype == FirebaseCloudAuthType.None)
+                    return(null,new ArgumentNullException(nameof(authtype)));
+
                 switch(authtype)
                 {
                     case FirebaseCloudAuthType.EmailPassword:

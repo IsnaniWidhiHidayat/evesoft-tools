@@ -15,7 +15,7 @@ namespace Evesoft.CloudService.GoogleSignIn
         private IDictionary<string,object> _configs;
         #endregion
 
-        #region iAdsConfig
+        #region iCloudAuthConfig
         public T GetConfig<T>(string key)
         {
             var result = default(T);
