@@ -62,12 +62,12 @@ namespace Evesoft.CloudService.Firebase
                         {
                             id       = firebaseUser.UserId,
                             authType = CloudAuthType.EmailPassword,
-                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             email    = firebaseUser.Email,
                             token    = accessToken
                         };
-                           
+
                         return (_currentUser,null);
                     }
 
@@ -82,7 +82,7 @@ namespace Evesoft.CloudService.Firebase
                         {
                             id       = firebaseUser.UserId,
                             authType = CloudAuthType.GoogleSignIn,
-                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             email    = firebaseUser.Email,
                             token    = accessToken
@@ -102,7 +102,7 @@ namespace Evesoft.CloudService.Firebase
                         {
                             id       = firebaseUser.UserId,
                             authType = CloudAuthType.Facebook,
-                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             token    = accessToken,
                             email    = firebaseUser.Email
@@ -122,7 +122,7 @@ namespace Evesoft.CloudService.Firebase
                         {
                             id       = firebaseUser.UserId,
                             authType = CloudAuthType.Facebook,
-                            imageUrl = firebaseUser.PhotoUrl.AbsoluteUri,
+                            imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             token    = accessToken,
                             email    = firebaseUser.Email

@@ -35,7 +35,7 @@ namespace Evesoft.CloudService.Firebase
         public FirebaseCloudAuthOptions(string email,string password):this(FirebaseCloudAuthType.EmailPassword)
         {
             _configs[EMAIL]         = email;
-            _configs[password]      = password;
+            _configs[PASSWORD]      = password;
         }
         public FirebaseCloudAuthOptions(FirebaseCloudAuthType type, string token):this(type)
         {
