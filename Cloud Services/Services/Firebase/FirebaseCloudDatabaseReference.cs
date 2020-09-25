@@ -2,10 +2,11 @@ using System;
 using Firebase.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sirenix.OdinInspector;
 
 namespace Evesoft.CloudService.Firebase
 {
-    [Serializable]
+    [Serializable,HideReferenceObjectPicker]
     public class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable
     {      
         #region private
@@ -17,9 +18,11 @@ namespace Evesoft.CloudService.Firebase
 
         #region iCloudDatabaseReference
         public iCloudDatabaseEvents events =>_events;
-        public IDictionary<string, object> reference => _reference;
+
+        [ShowInInspector,ReadOnly,ShowIf(nameof(data))]
         public IDictionary<string, object> data => _data;
-        public async Task<Exception> SetData(IDictionary<string, object> value)
+
+        [Button] public async Task<Exception> SetData(IDictionary<string, object> value)
         {
             if(value.IsNull())
                 return null;
@@ -39,7 +42,7 @@ namespace Evesoft.CloudService.Firebase
                 return ex;
             }
         }
-        public async Task<Exception> RemoveData(IDictionary<string, object> value)
+        [Button] public async Task<Exception> RemoveData(IDictionary<string, object> value)
         {
             if(value.IsNull())
                 return null;
@@ -59,7 +62,7 @@ namespace Evesoft.CloudService.Firebase
                 return ex;
             }
         }
-        public async Task<Exception> UpdateData(IDictionary<string, object> value)
+        [Button] public async Task<Exception> UpdateData(IDictionary<string, object> value)
         {
             if(value.IsNull())
                 return null;
@@ -98,7 +101,7 @@ namespace Evesoft.CloudService.Firebase
             if(reference.IsNull())
                 return;
 
-            reference.ValueChanged  += onValueChange;
+            reference.ValueChanged  += OnValueChange;
             reference.ChildAdded    += OnChildAdded;
             reference.ChildChanged  += OnChildChange;
             reference.ChildRemoved  += OnChildRemoved;
@@ -108,7 +111,7 @@ namespace Evesoft.CloudService.Firebase
             if(reference.IsNull())
                 return;
 
-            reference.ValueChanged  -= onValueChange;
+            reference.ValueChanged  -= OnValueChange;
             reference.ChildAdded    -= OnChildAdded;
             reference.ChildChanged  -= OnChildChange;
             reference.ChildRemoved  -= OnChildRemoved;
@@ -136,7 +139,7 @@ namespace Evesoft.CloudService.Firebase
         #endregion
         
         #region callbacks  
-        private void onValueChange(object sender, ValueChangedEventArgs e)
+        private void OnValueChange(object sender, ValueChangedEventArgs e)
         {
             if(e.Snapshot.IsNull())
                 return;
@@ -144,6 +147,14 @@ namespace Evesoft.CloudService.Firebase
             var key     = e.Snapshot.Key;
             var value   = e.Snapshot.Value;
 
+            _data = value as IDictionary<string,object>;
+
+            if(_data.IsNull())
+            {
+                _data = new Dictionary<string,object>();
+                _data[key] = value;
+            }
+           
             var events = this.events as FirebaseCloudDatabaseEvents;
                 events?.OnDataChange(key,value);
         }

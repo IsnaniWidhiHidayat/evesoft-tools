@@ -7,8 +7,6 @@ namespace Evesoft.CloudService
     public interface iCloudDatabaseReference
     {       
         iCloudDatabaseEvents events{get;}
-
-        IDictionary<string,object> reference{get;}
         IDictionary<string,object> data{get;}
 
         Task<Exception> SetData(IDictionary<string,object> value);

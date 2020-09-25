@@ -1,16 +1,10 @@
-using System.Collections.Generic;
-
 namespace Evesoft.CloudService
 {
     public static class CloudDatabaseConfigFactory
     {
-        public static IDictionary<string,object> CreateFirebaseDatabaseOptions(string url = null)
+        public static iCloudDatabaseConfig CreateFirebaseDatabaseConfig(string url = null)
         {
-            var options = new Dictionary<string,object>()
-            {
-                {nameof(url),url}
-            };
-            return options;
+            return new Firebase.FirebaseCloudDatabaseConfig(url);
         }      
     }
 }

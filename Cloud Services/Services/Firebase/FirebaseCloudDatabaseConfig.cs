@@ -31,7 +31,11 @@ namespace Evesoft.CloudService.Firebase
         public FirebaseCloudDatabaseConfig()
         {
             _configs = new Dictionary<string,object>();
-            _configs[nameof(CloudService)] = CloudAuthType.Firebase;
+            _configs[nameof(CloudService)] = CloudDatabaseType.FirebaseRealtimeDatabase;
+        }
+        public FirebaseCloudDatabaseConfig(string db):this()
+        {
+            _configs[DB] = db;
         }
         #endregion
     }
