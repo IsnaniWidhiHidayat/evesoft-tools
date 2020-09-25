@@ -7,7 +7,6 @@ namespace Evesoft.CloudService
 {
     public interface iCloudStorage
     {
-        bool inited{get;}
         Task<(Texture2D,Exception)> DownloadTexture(string path,Action<float> progress = null,CancellationToken cancel = default(CancellationToken));
         Task<(byte[],Exception)> DownloadFile(string path,Action<float> progress = null,CancellationToken cancel = default(CancellationToken));
         Task<Exception> DownloadFile(string path,string saveLocalFile,Action<float> progress = null,CancellationToken cancel = default(CancellationToken));

@@ -1,40 +1,33 @@
-// namespace Evesoft.CloudService
-// {
-//     public static class CloudStorageFactory
-//     {
-//         private static IDictionary<string,iCloudStorage> storages;
+using System.Collections.Generic;
+
+namespace Evesoft.CloudService
+{
+    public static class CloudStorageFactory
+    {
+        private static IDictionary<CloudStorageType,iCloudStorage> storages = new Dictionary<CloudStorageType,iCloudStorage>();
         
-       
-//         public static iCloudStorage CreateStorage(CloudServiceType type,IDictionary<string,object> config)
-//         {
-//             if(storages.IsNull())
-//                 storages = new Dictionary<string,iCloudStorage>();
+        public static iCloudStorage CreateStorage(iCloudStorageConfig config)
+        {
+            if(config.IsNull())
+                return null;
 
-//             switch(type)
-//             {
-//                 case CloudServiceType.Firebase:
-//                 {
-//                     var outurl  = default(object);
-//                     var url     = default(string);
-//                     config.TryGetValue(nameof(url),out outurl);
-//                     url         = outurl as string;
+            var service = config.GetConfig<CloudStorageType>(nameof(CloudService));
+            if(storages.ContainsKey(service))
+                return storages[service];
 
-//                     var key  = url.IsNullOrEmpty()? "default" : url;
-//                     if(storages.ContainsKey(key))
-//                         return storages[key];
+            switch(service)
+            {
+                case CloudStorageType.FirebaseStorage:
+                {
+                    return storages[service] = new Firebase.FirebaseCloudStorage(config);
+                }
 
-//                     var newStorage = new FirebaseCloudStorage(url);
-                    
-//                     storages[key] = newStorage;
-//                     return newStorage;
-//                 }
-
-//                 default:
-//                 {
-//                     "Service UnAvailable".LogError();
-//                     return null;
-//                 }
-//             }
-//         }
-//     }
-// }
+                default:
+                {
+                    "Service UnAvailable".LogError();
+                    return null;
+                }
+            }
+        }
+    }
+}

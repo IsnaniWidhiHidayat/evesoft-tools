@@ -7,6 +7,6 @@ namespace Evesoft.CloudService
     public interface iCloudDatabase
     {
         Task<(iCloudDatabaseReference,Exception)> Connect(IDictionary<string,object> parameter);
-        void Disconnect(iCloudDatabaseReference reference);
+        Task<Exception> Disconnect(iCloudDatabaseReference reference);
     }
 }

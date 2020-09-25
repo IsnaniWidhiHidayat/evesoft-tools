@@ -1,105 +1,194 @@
-// using System;
-// using Evesoft;
-// using Firebase.Database;
+using System;
+using Firebase.Database;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-// namespace Evesoft.CloudService.Firebase
-// {
-//     [Serializable]
-//     public class FirebaseCloudDatabaseReference : iCloudDatabaseEvents,IDisposable
-//     {
-//         #region private
-//         private DatabaseReference _reference;
-//         #endregion
+namespace Evesoft.CloudService.Firebase
+{
+    [Serializable]
+    public class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable
+    {      
+        #region private
+        private iCloudDatabaseEvents _events;
+        private IDictionary<string, object> _reference;
+        private IDictionary<string, object> _data;
+        private DatabaseReference _dbRef;
+        #endregion
 
-//         #region iCloudDatabaseReference
-//         public event Action<(string,object)> onDataAdded;
-//         public event Action<(string,object)> onDataChange;
-//         public event Action<(string,object)> onDataRemoved;
-//         #endregion
+        #region iCloudDatabaseReference
+        public iCloudDatabaseEvents events =>_events;
+        public IDictionary<string, object> reference => _reference;
+        public IDictionary<string, object> data => _data;
+        public async Task<Exception> SetData(IDictionary<string, object> value)
+        {
+            if(value.IsNull())
+                return null;
 
-//         #region IDisposable
-//         public void Dispose()
-//         {
-//             RemoveReferenceEvents(_reference);
-//             onDataAdded     = null;
-//             onDataChange    = null;
-//             onDataRemoved   = null;
-//         }
-//         #endregion
+            try 
+            {
+                IList<(string,object)> data = new List<(string,object)>();
+                GetRefKey(value,ref data);
 
-//         #region methods
-//         private void SetReferenceEvents(DatabaseReference reference)
-//         {
-//             RemoveReferenceEvents(reference);
-//             if(reference.IsNull())
-//                 return;
+                foreach (var item in data)
+                    await _dbRef?.Child(item.Item1).SetValueAsync(item.Item2);
 
-//             reference.ValueChanged  += onValueChange;
-//             reference.ChildAdded    += OnChildAdded;
-//             reference.ChildChanged  += OnChildChange;
-//             reference.ChildRemoved  += OnChildRemoved;
-//         }
-//         private void RemoveReferenceEvents(DatabaseReference reference)
-//         {
-//             if(reference.IsNull())
-//                 return;
+                return null;
+            } 
+            catch (DatabaseException ex) 
+            {
+                return ex;
+            }
+        }
+        public async Task<Exception> RemoveData(IDictionary<string, object> value)
+        {
+            if(value.IsNull())
+                return null;
 
-//             reference.ValueChanged  -= onValueChange;
-//             reference.ChildAdded    -= OnChildAdded;
-//             reference.ChildChanged  -= OnChildChange;
-//             reference.ChildRemoved  -= OnChildRemoved;
-//         }
-//         #endregion
+            try 
+            {
+                IList<(string,object)> data = new List<(string,object)>();
+                GetRefKey(value,ref data);
+
+                foreach (var item in data)
+                    await _dbRef?.Child(item.Item1).RemoveValueAsync();
+
+                return null;
+            } 
+            catch (DatabaseException ex) 
+            {
+                return ex;
+            }
+        }
+        public async Task<Exception> UpdateData(IDictionary<string, object> value)
+        {
+            if(value.IsNull())
+                return null;
+
+            try 
+            {
+                await _dbRef.UpdateChildrenAsync(value);
+                return null;
+            } 
+            catch (DatabaseException ex) 
+            {
+                return ex;
+            }
+        }
+        #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            RemoveReferenceEvents(_dbRef);
+
+            _events?.Dispose();
+            _reference?.Dispose();
+            _data?.Dispose();
+
+            _events     = null;
+            _reference  = null;
+            _data       = null;
+        }
+        #endregion
+
+        #region methods
+        private void SetReferenceEvents(DatabaseReference reference)
+        {
+            RemoveReferenceEvents(reference);
+            if(reference.IsNull())
+                return;
+
+            reference.ValueChanged  += onValueChange;
+            reference.ChildAdded    += OnChildAdded;
+            reference.ChildChanged  += OnChildChange;
+            reference.ChildRemoved  += OnChildRemoved;
+        }
+        private void RemoveReferenceEvents(DatabaseReference reference)
+        {
+            if(reference.IsNull())
+                return;
+
+            reference.ValueChanged  -= onValueChange;
+            reference.ChildAdded    -= OnChildAdded;
+            reference.ChildChanged  -= OnChildChange;
+            reference.ChildRemoved  -= OnChildRemoved;
+        }
+        private void GetRefKey(IDictionary<string,object> dic,ref IList<(string,object)> result,string prefPath = null)
+        {
+            foreach (var item in dic)
+            {
+                var key     = item.Key;
+                var value   = item.Value;
+                var child   = value as IDictionary<string,object>;
         
-//         #region callbacks  
-//         private void onValueChange(object sender, ValueChangedEventArgs e)
-//         {
-//             if(e.Snapshot.IsNull())
-//                 return;
+                var path  = prefPath + "/" + key;
 
-//             var key     = e.Snapshot.Key;
-//             var value   = e.Snapshot.Value;
+                if(child.IsNull())
+                {
+                    result.Add((path,value));
+                }
+                else
+                {    
+                    GetRefKey(child,ref result,path);
+                }
+            }
+        }
+        #endregion
+        
+        #region callbacks  
+        private void onValueChange(object sender, ValueChangedEventArgs e)
+        {
+            if(e.Snapshot.IsNull())
+                return;
 
-//             onDataChange?.Invoke((key,value));
-//         }
-//         private void OnChildAdded(object sender, ChildChangedEventArgs e)
-//         {
-//             if(e.Snapshot.IsNull())
-//                 return;
+            var key     = e.Snapshot.Key;
+            var value   = e.Snapshot.Value;
+
+            var events = this.events as FirebaseCloudDatabaseEvents;
+                events?.OnDataChange(key,value);
+        }
+        private void OnChildAdded(object sender, ChildChangedEventArgs e)
+        {
+            if(e.Snapshot.IsNull())
+                return;
             
-//             var key     = e.Snapshot.Key;
-//             var value   = e.Snapshot.Value;
+            var key     = e.Snapshot.Key;
+            var value   = e.Snapshot.Value;
 
-//             onDataAdded?.Invoke((key,value));
-//         }
-//         private void OnChildChange(object sender, ChildChangedEventArgs e)
-//         {
-//             if(e.Snapshot.IsNull())
-//                 return;
+            var events = this.events as FirebaseCloudDatabaseEvents;
+                events?.OnDataAdded(key,value);
+        }
+        private void OnChildChange(object sender, ChildChangedEventArgs e)
+        {
+            if(e.Snapshot.IsNull())
+                return;
 
-//             var key     = e.Snapshot.Key;
-//             var value   = e.Snapshot.Value;
+            var key     = e.Snapshot.Key;
+            var value   = e.Snapshot.Value;
 
-//             onDataChange?.Invoke((key,value));
-//         }
-//         private void OnChildRemoved(object sender, ChildChangedEventArgs e)
-//         {
-//             if(e.Snapshot.IsNull())
-//                 return; 
+            var events = this.events as FirebaseCloudDatabaseEvents;
+                events?.OnDataChange(key,value);
+        }
+        private void OnChildRemoved(object sender, ChildChangedEventArgs e)
+        {
+            if(e.Snapshot.IsNull())
+                return; 
 
-//             var key     = e.Snapshot.Key;
-//             var value   = e.Snapshot.Value;
+            var key     = e.Snapshot.Key;
+            var value   = e.Snapshot.Value;
 
-//             onDataRemoved?.Invoke((key,value));
-//         }
-//         #endregion
+            var events = this.events as FirebaseCloudDatabaseEvents;
+                events?.OnDataRemoved(key,value);
+        }
+        #endregion
 
-//         #region constructor
-//         public FirebaseCloudDatabaseReference(DatabaseReference reference)
-//         {
-//             _reference = reference;
-//             SetReferenceEvents(_reference);
-//         }
-//         #endregion
-//     }
-// }
+        #region constructor
+        public FirebaseCloudDatabaseReference(DatabaseReference dbRef)
+        {
+            _dbRef = dbRef;
+            _events = new FirebaseCloudDatabaseEvents();
+            SetReferenceEvents(_dbRef);
+        }
+        #endregion
+    }
+}

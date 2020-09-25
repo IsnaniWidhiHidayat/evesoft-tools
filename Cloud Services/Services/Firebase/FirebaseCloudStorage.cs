@@ -1,11 +1,11 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Net;
+using UnityEngine;
+using UnityEngine.Networking;
 using Firebase;
 using Firebase.Storage;
-using UnityEngine;
-using System.Threading;
-using UnityEngine.Networking;
-using System.Net;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.CloudService.Firebase
@@ -20,8 +20,6 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region iCloudStorage
-        [ShowInInspector] public bool inited => _inited;
-
         public async Task<(Texture2D, Exception)> DownloadTexture(string path, Action<float> onProgressChange = null, CancellationToken cancel = default)
         {
             try 
@@ -236,13 +234,10 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region Constructor
-        public FirebaseCloudStorage()
+        public FirebaseCloudStorage(iCloudStorageConfig config)
         {
-            Init(null);
-        }
-        public FirebaseCloudStorage(string url)
-        {
-            Init(url);
+            var storage = config?.GetConfig<string>(FirebaseCloudStorageConfig.STORAGE);
+            Init(storage);
         }
         #endregion
 
