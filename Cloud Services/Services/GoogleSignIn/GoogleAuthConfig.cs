@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Evesoft.CloudService.GoogleSignIn
 {
@@ -9,6 +10,11 @@ namespace Evesoft.CloudService.GoogleSignIn
     {
         #region const
         internal const string WEB_CLIENT_ID = nameof(WEB_CLIENT_ID);
+        #endregion
+
+        #region field
+        [SerializeField,HideLabel,SuffixLabel(nameof(webClientID),true),Multiline(3)]
+        private string webClientID;
         #endregion
 
         #region private
@@ -34,7 +40,7 @@ namespace Evesoft.CloudService.GoogleSignIn
         }
         public GoogleAuthConfig(string webClientID):this()
         {
-            _configs[WEB_CLIENT_ID] = webClientID;
+            _configs[WEB_CLIENT_ID] = this.webClientID  = webClientID;
         }
         #endregion
     }
