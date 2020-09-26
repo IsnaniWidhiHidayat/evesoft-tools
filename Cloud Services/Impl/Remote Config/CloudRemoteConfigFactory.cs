@@ -23,9 +23,10 @@ namespace Evesoft.CloudService
 
                     var userAttribute = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.USER);
                     var appAttribute  = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.APP);
+                    var userCustomID  = setting.GetConfig<string>(UnityRemoteConfig.UnityRemoteSetting.USERID);
 
                     var type = typeof(UnityRemoteConfig.UnityRemoteConfig<,>).MakeGenericType(userAttribute.GetType(),appAttribute.GetType());
-                    var a_Context = Activator.CreateInstance(type,userAttribute,appAttribute);  
+                    var a_Context = Activator.CreateInstance(type,userAttribute,appAttribute,userCustomID);  
 
                     var config = default(iCloudRemoteConfig);
                     Activator.CreateInstance(type).To<iCloudRemoteConfig>(out config);
@@ -35,7 +36,7 @@ namespace Evesoft.CloudService
 
                 case CloudRemoteConfigType.FirebaseRemoteConfig:
                 {
-                    var type            = setting.GetConfig<Firebase.FirebaseCloudRemoteConfigType>(nameof(Firebase.FirebaseCloudRemoteConfigType));
+                    var type            = setting.GetConfig<Firebase.FirebaseCloudRemoteConfigType>(Firebase.FirebaseCloudRemoteSetting.TYPE);
                     var firebaseConfigs = default(IDictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>);
 
                     //Add service

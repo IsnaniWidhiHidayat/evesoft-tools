@@ -4,6 +4,11 @@ namespace Evesoft.CloudService.Firebase
 {
     public class FirebaseCloudRemoteSetting : iCloudRemoteSetting
     {
+        #region const
+        internal const string TYPE = nameof(TYPE);
+        internal const string DEVMODE = nameof(DEVMODE);
+        #endregion
+
         #region private
         private IDictionary<string, object> _configs;
         #endregion
@@ -20,11 +25,12 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region contructor
-        public FirebaseCloudRemoteSetting(FirebaseCloudRemoteConfigType type)
+        public FirebaseCloudRemoteSetting(FirebaseCloudRemoteConfigType type,bool devMode)
         {
             _configs                                        = new Dictionary<string,object>();
             _configs[nameof(CloudService)]                  = CloudRemoteConfigType.FirebaseRemoteConfig;
-            _configs[nameof(FirebaseCloudRemoteConfigType)] = type;
+            _configs[TYPE]      = type;
+            _configs[DEVMODE]   = devMode;
         }
         #endregion
     }

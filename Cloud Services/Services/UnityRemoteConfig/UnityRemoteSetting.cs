@@ -7,6 +7,7 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         #region const
         internal const string USER = nameof(USER);
         internal const string APP = nameof(APP);
+        internal const string USERID = nameof(USERID);
         #endregion
 
         #region private
@@ -40,6 +41,11 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         {
             _configs = new Dictionary<string,object>();
             _configs[nameof(CloudService)] = CloudRemoteConfigType.UnityRemoteConfig;
+        }
+        public UnityRemoteSetting(string userCustomId):this()
+        {
+            if(!userCustomId.IsNullOrEmpty())
+                _configs[USERID] = userCustomId;
         }
         #endregion
     }

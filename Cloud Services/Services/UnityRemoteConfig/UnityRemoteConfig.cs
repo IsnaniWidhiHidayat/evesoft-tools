@@ -2,10 +2,12 @@ using System;
 using System.Threading.Tasks;
 using URC = Unity.RemoteConfig.ConfigManager;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 
 namespace Evesoft.CloudService.UnityRemoteConfig
 {
+    [HideReferenceObjectPicker]
     internal class UnityRemoteConfig<T1,T2> : iCloudRemoteConfig,IDisposable where T1:struct where T2:struct
     {        
         #region private
@@ -13,6 +15,9 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         private T1 _userAttribute;
         private T2 _appAttribute;
         #endregion
+
+        [ShowInInspector,DisplayAsString]
+        private string[] _keys => URC.appConfig.GetKeys();
 
         #region IDisposable
         public void Dispose()
@@ -24,7 +29,7 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         #region iCloudRemoteConfig
         private bool _fetched = false;
         public bool isfetched => _fetched;
-        public bool isHaveConfigs => !URC.appConfig.GetKeys().IsNullOrEmpty();
+        public bool isHaveConfigs => !_keys.IsNullOrEmpty();
         public T GetConfig<T>(string key)
         {
             var result = default(T);
@@ -53,7 +58,7 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         }
         public async Task Fetch()
         {
-            if(_fetching)   
+            if(_fetching)
                 return;
 
             URC.FetchConfigs(_userAttribute,_appAttribute);
@@ -95,6 +100,11 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         {   
             this._userAttribute = userAttribute;
             this._appAttribute = appAtribute;
+        }
+        public UnityRemoteConfig(T1 userAttribute,T2 appAtribute,string userCustomID):this(userAttribute,appAtribute)
+        {
+            if(!userCustomID.IsNullOrEmpty())
+                URC.SetCustomUserID(userCustomID);
         }
         #endregion
     }

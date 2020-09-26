@@ -3,10 +3,11 @@ using System;
 using System.Threading.Tasks;
 using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;
 using Sirenix.OdinInspector;
-using UnityEngine;
+using Firebase.RemoteConfig;
 
 namespace Evesoft.CloudService.Firebase
 {
+    [HideReferenceObjectPicker]
     public class FirebaseCloudRemoteConfig : iCloudRemoteConfig
     {
         #region private
@@ -14,11 +15,15 @@ namespace Evesoft.CloudService.Firebase
         private FirebaseCloudRemoteConfigType _type;
         private iCloudDatabaseReference _reference;
         private bool _fetched;
+        private bool _fetching;
         #endregion
+
+        [ShowInInspector,DisplayAsString]
+        private ICollection<string> _keys => _configs?.Keys;
         
         #region iCloudRemoteConfig
         public bool isfetched => _fetched;
-        public bool isHaveConfigs => throw new NotImplementedException();
+        public bool isHaveConfigs => !FRC.Keys.IsNullOrEmpty();
         public T GetConfig<T>(string key)
         {
             switch(_type)
@@ -70,10 +75,11 @@ namespace Evesoft.CloudService.Firebase
             }
 
             return default(T);
-        }
-        
+        }       
         public async Task Fetch()
         {
+            _fetched = false;
+
             switch(_type)
             {
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
@@ -90,9 +96,17 @@ namespace Evesoft.CloudService.Firebase
 
                 case FirebaseCloudRemoteConfigType.RemoteConfig:
                 {   
-                    await FRC.FetchAsync();
+                    if(_fetching)
+                        return;
+
+                    _fetching = true;
+
+                    await FRC.FetchAsync(TimeSpan.Zero);
                     FRC.ActivateFetched();
-                    _fetched = true;
+
+                    _fetched  = true;
+                    _fetching = false;
+
                     break;
                 }
             }
@@ -103,6 +117,15 @@ namespace Evesoft.CloudService.Firebase
         public FirebaseCloudRemoteConfig(iCloudRemoteSetting setting)
         {
             _type = setting.GetConfig<FirebaseCloudRemoteConfigType>(nameof(FirebaseCloudRemoteConfigType));
+            var devMode = setting.GetConfig<bool>(FirebaseCloudRemoteSetting.DEVMODE);
+
+            _type.Log();
+            devMode.Log();
+              
+            FirebaseRemoteConfig.Settings = new ConfigSettings()
+            {
+                IsDeveloperMode = devMode
+            };    
         }
         #endregion
     }
