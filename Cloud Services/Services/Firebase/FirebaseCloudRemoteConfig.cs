@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;
 using Sirenix.OdinInspector;
 using Firebase.RemoteConfig;
+using UnityEngine;
 
 namespace Evesoft.CloudService.Firebase
 {
@@ -16,6 +17,7 @@ namespace Evesoft.CloudService.Firebase
         private iCloudDatabaseReference _reference;
         private bool _fetched;
         private bool _fetching;
+        private bool _devMode;
         #endregion
 
         [ShowInInspector,DisplayAsString]
@@ -24,7 +26,7 @@ namespace Evesoft.CloudService.Firebase
         #region iCloudRemoteConfig
         public bool isfetched => _fetched;
         public bool isHaveConfigs => !FRC.Keys.IsNullOrEmpty();
-        public T GetConfig<T>(string key)
+        public  T GetConfig<T>(string key)
         {
             switch(_type)
             {
@@ -83,14 +85,8 @@ namespace Evesoft.CloudService.Firebase
             switch(_type)
             {
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
-                {
-                    var database = CloudDatabaseFactory.CreateDatabase(CloudDatabaseConfigFactory.CreateFirebaseDatabaseConfig());
-                    var exception = default(Exception);
-                    (_reference,exception)  = await database.Connect(CloudDatabaseOptionsFactory.CreateFirebaseDatabaseOptions("config"));
-                    
-                    if(exception.IsNull())
-                        _fetched = true;
-                    
+                { 
+                    await new WaitUntil(()=> _fetched);
                     break;
                 }
 
@@ -113,19 +109,68 @@ namespace Evesoft.CloudService.Firebase
         }
         #endregion
 
+        private async void Init(iCloudRemoteSetting setting)
+        {
+            _type    = setting.GetConfig<FirebaseCloudRemoteConfigType>(FirebaseCloudRemoteSetting.TYPE);
+            _devMode = setting.GetConfig<bool>(FirebaseCloudRemoteSetting.DEVMODE);
+
+            switch(_type){
+                case FirebaseCloudRemoteConfigType.RealtimeDatabase:
+                {
+                    var database = CloudDatabaseFactory.CreateDatabase(CloudDatabaseConfigFactory.CreateFirebaseDatabaseConfig());
+                    var exception = default(Exception);
+                    var root = "config";
+                    var dev  = "development";
+                    var prod = "release";
+                    var path = root;
+                        path += string.Format("/{0}",_devMode? dev : prod) ;
+
+                    #if UNITY_EDITOR
+                    //Add Default data
+                    (_reference,exception) = await database.Connect(CloudDatabaseOptionsFactory.CreateFirebaseDatabaseOptions(root));
+                    
+                    var isEmpty = _reference.IsNullOrEmpty();
+                        isEmpty |= (!_reference.IsNullOrEmpty() && _reference.data.ContainsKey(root));
+                    
+                    if(isEmpty)
+                    {
+                        var data = new Dictionary<string,object>();
+                        data[dev] = new Dictionary<string,object>
+                        {
+                            {"version",Application.version}
+                        };
+                        data[prod] = new Dictionary<string,object>
+                        {
+                            {"version",Application.version}
+                        };
+
+                        exception = await _reference.SetData(data);
+                        _reference.Dispose();     
+                    }
+                    #endif
+
+                    (_reference,exception)  = await database.Connect(CloudDatabaseOptionsFactory.CreateFirebaseDatabaseOptions(path));
+                    
+                    if(exception.IsNull())
+                        _fetched = true;
+
+                    break;
+                }
+
+                case FirebaseCloudRemoteConfigType.RemoteConfig:{
+                    FirebaseRemoteConfig.Settings = new ConfigSettings()
+                    {
+                        IsDeveloperMode =_devMode
+                    };  
+                    break;
+                }
+            }
+        }
+
         #region constructor
         public FirebaseCloudRemoteConfig(iCloudRemoteSetting setting)
         {
-            _type = setting.GetConfig<FirebaseCloudRemoteConfigType>(nameof(FirebaseCloudRemoteConfigType));
-            var devMode = setting.GetConfig<bool>(FirebaseCloudRemoteSetting.DEVMODE);
-
-            _type.Log();
-            devMode.Log();
-              
-            FirebaseRemoteConfig.Settings = new ConfigSettings()
-            {
-                IsDeveloperMode = devMode
-            };    
+            Init(setting);
         }
         #endregion
     }

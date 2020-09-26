@@ -68,7 +68,10 @@ namespace Evesoft.CloudService.Firebase
                 if(dbRef.IsNull())
                     return (null,new NullReferenceException(nameof(dbRef)));
                 
-                return (new FirebaseCloudDatabaseReference(dbRef),null);
+                var reference = new FirebaseCloudDatabaseReference(dbRef);
+                await new WaitUntil(()=> reference.inited);
+
+                return (reference,null);
             } 
             catch (DatabaseException ex) 
             {

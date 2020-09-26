@@ -4,6 +4,17 @@ namespace Evesoft.CloudService
 {
     public static class CloudDatabaseFactory
     {
+        public static bool IsNullOrEmpty(this iCloudDatabaseReference obj)
+        {
+            if(obj.IsNull())
+                return true;
+
+            if(obj.data.IsNullOrEmpty())
+                return true;
+
+            return false;
+        }
+
         private static IDictionary<CloudDatabaseType,object> databases = new Dictionary<CloudDatabaseType,object>();
 
         public static iCloudDatabase CreateDatabase(iCloudDatabaseConfig config)

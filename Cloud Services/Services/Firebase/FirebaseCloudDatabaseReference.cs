@@ -14,6 +14,11 @@ namespace Evesoft.CloudService.Firebase
         private IDictionary<string, object> _reference;
         private IDictionary<string, object> _data;
         private DatabaseReference _dbRef;
+        private bool _inited;
+        #endregion
+
+        #region property
+        public bool inited => _inited;
         #endregion
 
         #region iCloudDatabaseReference
@@ -155,6 +160,9 @@ namespace Evesoft.CloudService.Firebase
                 _data[key] = value;
             }
            
+            if(!_inited)
+                _inited = true;
+
             var events = this.events as FirebaseCloudDatabaseEvents;
                 events?.OnDataChange(key,value);
         }
