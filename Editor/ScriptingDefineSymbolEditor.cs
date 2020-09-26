@@ -57,6 +57,23 @@ namespace Evesoft.Editor
             var platfrom = EditorUserBuildSettings.selectedBuildTargetGroup;
             PlayerSettings.SetScriptingDefineSymbolsForGroup(platfrom,symbols.Join(";"));
         }
+        public static bool ContainSymbol(params string[] symbols)
+        {
+            if(symbols.IsNullOrEmpty())
+                return false;
+
+            var predefine = GetDefineSymbol();
+            var contain = true;
+            foreach (var symbol in symbols)
+            {
+                contain &= ArrayUtility.Contains(predefine,symbol);
+
+                if(!contain)
+                    break;
+            }
+
+            return contain;
+        }
         #endregion
 
         [ShowInInspector,ShowIf(nameof(_symbols))]

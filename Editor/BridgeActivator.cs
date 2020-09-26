@@ -15,6 +15,7 @@ namespace Evesoft.Editor
         static void ShowWindow()
         {
             var window = GetWindow<BridgeActivator>();
+            window.Refresh();
             window.Show();
         }
         #endregion
@@ -74,5 +75,17 @@ namespace Evesoft.Editor
             new Bridge("Firebase Storage",DefineSymbol.FIREBASE_STORAGE),
         });
         #endregion
+    
+        public void Refresh()
+        {
+            Ads.Refresh();
+            Auth.Refresh();
+            Cache.Refresh();
+            Database.Refresh();
+            IAP.Refresh();
+            localize.Refresh();
+            RemoteConfig.Refresh();
+            Storage.Refresh();
+        }
     }
 }

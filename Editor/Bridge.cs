@@ -8,14 +8,17 @@ namespace Evesoft.Editor
     {
         [ShowInInspector,DisplayAsString,HideLabel,HorizontalGroup]
         internal string Name;
-        internal string brigdeName;
+        internal string symbol;
 
         private bool _isActive;
 
         [Button("$GetStatusName",ButtonSizes.Medium),GUIColor(nameof(GetColorByStatus)),HorizontalGroup]
-        private void Status()
+        private void ToggleEnable()
         {
-
+            if(_isActive)
+                ScriptingDefineSymbolEditor.AddDefineSymbol(symbol);
+            else
+                ScriptingDefineSymbolEditor.RemoveDefineSymbol(symbol);
         }
         private string GetStatusName(){
             return _isActive? "Enable" : "Disable";
@@ -24,11 +27,15 @@ namespace Evesoft.Editor
         {
             return _isActive ? Color.green : Color.red;
         }
+        public void Refresh()
+        {
+            _isActive = ScriptingDefineSymbolEditor.ContainSymbol(symbol);
+        }
 
-        public Bridge(string description,string bridgeName)
+        public Bridge(string description,string symbol)
         {
             this.Name = description;
-            this.brigdeName  = bridgeName;
+            this.symbol  = symbol;
         }
     }
 }
