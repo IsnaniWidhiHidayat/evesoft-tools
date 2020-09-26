@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+
+namespace Evesoft.CloudService
+{
+    public static class CloudRemoteConfigFactory
+    {
+        private static IDictionary<CloudRemoteConfigType,object> remoteConfigs = new Dictionary<CloudRemoteConfigType,object>();
+
+        public static iCloudRemoteConfig CreateRemoteConfig(iCloudRemoteSetting setting)
+        {
+            if(setting.IsNull())
+                return null;
+
+            var service = setting.GetConfig<CloudRemoteConfigType>(nameof(CloudService));
+            
+            switch(service)
+            {
+                case CloudRemoteConfigType.UnityRemoteConfig:
+                {
+                    if(remoteConfigs.ContainsKey(service))
+                        return remoteConfigs[service] as iCloudRemoteConfig;
+
+                    var userAttribute = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.USER);
+                    var appAttribute  = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.APP);
+
+                    var type = typeof(UnityRemoteConfig.UnityRemoteConfig<,>).MakeGenericType(userAttribute.GetType(),appAttribute.GetType());
+                    var a_Context = Activator.CreateInstance(type,userAttribute,appAttribute);  
+
+                    var config = default(iCloudRemoteConfig);
+                    Activator.CreateInstance(type).To<iCloudRemoteConfig>(out config);
+                    remoteConfigs[service] = config;
+                    return config;
+                }
+
+                case CloudRemoteConfigType.FirebaseRemoteConfig:
+                {
+                    var type            = setting.GetConfig<Firebase.FirebaseCloudRemoteConfigType>(nameof(Firebase.FirebaseCloudRemoteConfigType));
+                    var firebaseConfigs = default(IDictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>);
+
+                    //Add service
+                    if(!remoteConfigs.ContainsKey(service))
+                        remoteConfigs[service] = new Dictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>();
+                         
+                    firebaseConfigs = remoteConfigs[service] as IDictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>;
+                    if(firebaseConfigs.ContainsKey(type))
+                        return firebaseConfigs[type];
+    
+                    return firebaseConfigs[type] = new Firebase.FirebaseCloudRemoteConfig(setting);
+                }
+
+                default:
+                {
+                    "Service UnAvailable".LogError();
+                    return null;
+                }
+            }
+        }
+    }
+}

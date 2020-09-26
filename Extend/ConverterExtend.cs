@@ -22,7 +22,7 @@ namespace Evesoft
                 ex.Message.Log();
             }
 
-            return false;
+            return default(bool);
         }
         public static int ToInt32(this object obj)
         {
@@ -35,15 +35,33 @@ namespace Evesoft
                 ex.Message.Log();
             }
 
-            return 0;
+            return default(int);
         }
         public static long ToInt64(this object obj)
         {
-            return System.Convert.ToInt64(obj);
+            try
+            {
+                return System.Convert.ToInt64(obj);
+            }
+            catch (System.Exception ex)
+            {
+                ex.Message.Log();
+            }
+
+            return default(long);
         }
         public static ulong ToUInt64(this object obj)
         {
-            return System.Convert.ToUInt64(obj);
+            try
+            {
+                return System.Convert.ToUInt64(obj);
+            }
+            catch (System.Exception ex)
+            {
+                ex.Message.Log();
+            }
+
+            return default(ulong);
         }
         public static float ToSingle(this object obj)
         {
@@ -56,7 +74,7 @@ namespace Evesoft
                 ex.Message.Log();
             }
 
-            return 0.0f;
+            return default(float);
         }
 
         public static Texture2D ToTexture2D(this byte[] data,bool mipchain = false)
