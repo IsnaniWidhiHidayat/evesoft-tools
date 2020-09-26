@@ -1,4 +1,5 @@
-﻿using UnityEngine.Purchasing;
+﻿#if UNITY_IAP
+using UnityEngine.Purchasing;
 using System.Collections.Generic;
 using System;
 
@@ -113,3 +114,4 @@ namespace Evesoft.IAP.Unity
         #endregion     
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if FIREBASE_AUTH
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase.Auth;
@@ -61,7 +62,7 @@ namespace Evesoft.CloudService.Firebase
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = CloudAuthType.EmailPassword,
+                            authType = CloudAuthType.Firebase,
                             imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             email    = firebaseUser.Email,
@@ -70,7 +71,8 @@ namespace Evesoft.CloudService.Firebase
 
                         return (_currentUser,null);
                     }
-
+                
+                    #if GOOGLE_AUTH
                     case FirebaseCloudAuthType.GoogleSignIn:
                     {
                         var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
@@ -81,7 +83,7 @@ namespace Evesoft.CloudService.Firebase
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = CloudAuthType.GoogleSignIn,
+                            authType = CloudAuthType.Firebase,
                             imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             email    = firebaseUser.Email,
@@ -89,8 +91,10 @@ namespace Evesoft.CloudService.Firebase
                         };
                            
                         return (_currentUser,null);
-                    }
-    
+                    }    
+                    #endif
+                    
+                    #if FACEBOOK_AUTH
                     case FirebaseCloudAuthType.Facebook:
                     {  
                         var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
@@ -101,7 +105,7 @@ namespace Evesoft.CloudService.Firebase
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = CloudAuthType.Facebook,
+                            authType = CloudAuthType.Firebase,
                             imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             token    = accessToken,
@@ -110,7 +114,9 @@ namespace Evesoft.CloudService.Firebase
     
                         return (_currentUser,null);
                     }
+                    #endif
 
+                    #if PLAYSERVICE_AUTH
                     case FirebaseCloudAuthType.GooglePlayService:
                     {
                         var accessToken  = options.GetOptions<string>(FirebaseCloudAuthOptions.TOKEN);
@@ -121,7 +127,7 @@ namespace Evesoft.CloudService.Firebase
                         _currentUser = new CloudAuthUser()
                         {
                             id       = firebaseUser.UserId,
-                            authType = CloudAuthType.Facebook,
+                            authType = CloudAuthType.Firebase,
                             imageUrl = firebaseUser.PhotoUrl?.AbsoluteUri,
                             name     = firebaseUser.DisplayName,
                             token    = accessToken,
@@ -130,7 +136,8 @@ namespace Evesoft.CloudService.Firebase
     
                         return (_currentUser,null);
                     }
-    
+                    #endif
+                    
                     default:
                     {
                         return (null,new Exception("Auth Type Currently Not Supported"));
@@ -192,3 +199,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

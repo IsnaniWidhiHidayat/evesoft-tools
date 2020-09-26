@@ -3,13 +3,23 @@ using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+
+#if CACHE_TEXTURE2D
 using Evesoft.Cache;
+#endif
+
 
 namespace Evesoft.Http
 {
     public static class HttpRequestTexture2D
     {
-        public static async Task<(Texture2D,Exception)> GetTexture(string url,string key,bool cached = false,bool mipmap = false,Action<float> progressHandle = null)
+        public static async Task<(Texture2D,Exception)> GetTexture(string url,string key,
+        
+        #if CACHE_TEXTURE2D
+            bool cached = false,
+        #endif
+    
+        bool mipmap = false,Action<float> progressHandle = null)
         {           
             try 
             {
@@ -19,6 +29,7 @@ namespace Evesoft.Http
                 if(key.IsNullOrEmpty())
                     return (null,new ArgumentNullException(nameof(key)));
     
+                #if CACHE_TEXTURE2D
                 //Get from cache
                 if(cached)
                 {
@@ -27,7 +38,6 @@ namespace Evesoft.Http
                     {
                         if(cache.url == url)
                         {
-                            //onComplete?.Invoke((cache.data,null));
                             return (cache.data,null);
                         }
                         else
@@ -36,7 +46,8 @@ namespace Evesoft.Http
                         }   
                     }
                 }
-
+                #endif
+                
                 var request  = UnityWebRequestTexture.GetTexture(url);
                 var isDone   = false;
                 var progress = 0f;
@@ -78,9 +89,11 @@ namespace Evesoft.Http
 
                     if(!texture.IsNull())
                         texture.name = key;
-    
+
+                    #if CACHE_TEXTURE2D
                     if(cached)
                         Texture2DCache.defaultInstance.AddCache(new Texture2DCacheData(url,key,texture));
+                    #endif
                         
                     //onComplete?.Invoke((texture,null));
                     return(texture,null);

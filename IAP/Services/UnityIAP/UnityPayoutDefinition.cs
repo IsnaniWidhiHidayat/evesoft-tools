@@ -1,3 +1,4 @@
+#if UNITY_IAP
 namespace Evesoft.IAP.Unity
 {
     public class UnityPayoutDefinition : iPayoutDefinition
@@ -22,3 +23,4 @@ namespace Evesoft.IAP.Unity
         #endregion
     }
 }
+#endif

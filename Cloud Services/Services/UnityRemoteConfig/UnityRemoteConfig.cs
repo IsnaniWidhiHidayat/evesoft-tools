@@ -1,9 +1,9 @@
+#if UNITY_REMOTE_CONFIG
 using System;
 using System.Threading.Tasks;
 using URC = Unity.RemoteConfig.ConfigManager;
 using UnityEngine;
 using Sirenix.OdinInspector;
-
 
 namespace Evesoft.CloudService.UnityRemoteConfig
 {
@@ -109,3 +109,4 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         #endregion
     }
 }
+#endif

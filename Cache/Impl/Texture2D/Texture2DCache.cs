@@ -1,3 +1,4 @@
+#if CACHE_TEXTURE2D
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -278,3 +279,4 @@ namespace Evesoft.Cache
         #endregion
     }   
 }
+#endif

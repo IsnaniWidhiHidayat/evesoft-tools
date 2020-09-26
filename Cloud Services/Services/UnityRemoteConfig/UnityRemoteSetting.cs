@@ -1,3 +1,4 @@
+#if UNITY_REMOTE_CONFIG
 using System.Collections.Generic;
 
 namespace Evesoft.CloudService.UnityRemoteConfig
@@ -50,3 +51,4 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         #endregion
     }
 }
+#endif

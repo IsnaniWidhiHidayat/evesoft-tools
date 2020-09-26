@@ -1,3 +1,4 @@
+#if PLAYSERVICE_AUTH
 using System;
 using System.Threading.Tasks;
 using GooglePlayGames;
@@ -80,3 +81,4 @@ namespace Evesoft.CloudService.GooglePlayService
         #endregion
     }
 }
+#endif

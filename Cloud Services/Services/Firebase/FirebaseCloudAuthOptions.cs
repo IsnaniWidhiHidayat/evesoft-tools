@@ -1,3 +1,4 @@
+#if FACEBOOK_AUTH
 using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase
@@ -44,3 +45,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

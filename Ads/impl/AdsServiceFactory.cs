@@ -17,15 +17,19 @@ namespace Evesoft.Ads
 
             switch(type)
             {
+                #if ADMOB
                 case AdsType.Admob:
                 {
                     return adServices[type] = new Admob.Admob(config);
                 }
+                #endif
 
+                #if UNITY_ADS
                 case AdsType.UnityAds:
                 {
                     return adServices[type] = new UnityAds.UnityAds(config);
                 }
+                #endif
             
                 default:
                 {

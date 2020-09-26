@@ -1,3 +1,5 @@
+#if ADMOB
+
 namespace Evesoft.Ads.Admob
 {
     public enum AdsGender
@@ -8,3 +10,4 @@ namespace Evesoft.Ads.Admob
     }
 }
 
+#endif

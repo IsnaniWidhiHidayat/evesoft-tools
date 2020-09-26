@@ -1,10 +1,15 @@
+
+#if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;
 using Sirenix.OdinInspector;
-using Firebase.RemoteConfig;
 using UnityEngine;
+
+#if FIREBASE_REMOTE_CONFIG
+using Firebase.RemoteConfig;
+using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;   
+#endif
 
 namespace Evesoft.CloudService.Firebase
 {
@@ -30,6 +35,7 @@ namespace Evesoft.CloudService.Firebase
         {
             switch(_type)
             {
+                #if FIREBASE_REALTIME_DATABASE
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
                 {
                     if(_reference.data.IsNull())
@@ -42,7 +48,9 @@ namespace Evesoft.CloudService.Firebase
 
                     break;
                 }    
-
+                #endif
+                
+                #if FIREBASE_REMOTE_CONFIG
                 case FirebaseCloudRemoteConfigType.RemoteConfig:
                 {
                     var cfg = FRC.GetValue(key);
@@ -73,7 +81,8 @@ namespace Evesoft.CloudService.Firebase
                         return result;
 
                     break;
-                }
+                }    
+                #endif
             }
 
             return default(T);
@@ -84,12 +93,15 @@ namespace Evesoft.CloudService.Firebase
 
             switch(_type)
             {
+                #if FIREBASE_REALTIME_DATABASE
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
                 { 
                     await new WaitUntil(()=> _fetched);
                     break;
                 }
-
+                #endif
+               
+                #if FIREBASE_REMOTE_CONFIG
                 case FirebaseCloudRemoteConfigType.RemoteConfig:
                 {   
                     if(_fetching)
@@ -105,6 +117,7 @@ namespace Evesoft.CloudService.Firebase
 
                     break;
                 }
+                #endif
             }
         }
         #endregion
@@ -114,7 +127,9 @@ namespace Evesoft.CloudService.Firebase
             _type    = setting.GetConfig<FirebaseCloudRemoteConfigType>(FirebaseCloudRemoteSetting.TYPE);
             _devMode = setting.GetConfig<bool>(FirebaseCloudRemoteSetting.DEVMODE);
 
-            switch(_type){
+            switch(_type)
+            {
+                #if FIREBASE_REALTIME_DATABASE
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
                 {
                     var database = CloudDatabaseFactory.CreateDatabase(CloudDatabaseConfigFactory.CreateFirebaseDatabaseConfig());
@@ -156,7 +171,9 @@ namespace Evesoft.CloudService.Firebase
 
                     break;
                 }
+                #endif
 
+                #if FIREBASE_REMOTE_CONFIG
                 case FirebaseCloudRemoteConfigType.RemoteConfig:{
                     FirebaseRemoteConfig.Settings = new ConfigSettings()
                     {
@@ -164,6 +181,7 @@ namespace Evesoft.CloudService.Firebase
                     };  
                     break;
                 }
+                #endif
             }
         }
 
@@ -175,3 +193,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

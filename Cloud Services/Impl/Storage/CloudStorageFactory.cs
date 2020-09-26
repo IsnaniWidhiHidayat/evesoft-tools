@@ -17,11 +17,13 @@ namespace Evesoft.CloudService
 
             switch(service)
             {
+                #if FIREBASE_STORAGE
                 case CloudStorageType.FirebaseStorage:
                 {
                     return storages[service] = new Firebase.FirebaseCloudStorage(config);
                 }
-
+                #endif
+                
                 default:
                 {
                     "Service UnAvailable".LogError();

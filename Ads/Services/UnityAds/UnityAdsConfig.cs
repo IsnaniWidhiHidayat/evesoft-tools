@@ -1,3 +1,5 @@
+#if UNITY_ADS
+
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -78,3 +80,4 @@ namespace Evesoft.Ads.UnityAds
         #endregion
     }
 }
+#endif

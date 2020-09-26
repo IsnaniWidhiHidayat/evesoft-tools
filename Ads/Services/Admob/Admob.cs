@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if ADMOB
+
+using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -396,3 +398,5 @@ namespace Evesoft.Ads.Admob
         #endregion
     }
 } 
+
+#endif

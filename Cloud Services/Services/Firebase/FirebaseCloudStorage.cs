@@ -1,3 +1,4 @@
+#if FIREBASE_STORAGE
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -271,3 +272,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

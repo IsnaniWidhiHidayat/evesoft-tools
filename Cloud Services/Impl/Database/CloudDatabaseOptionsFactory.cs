@@ -4,6 +4,7 @@ namespace Evesoft.CloudService
 {
     public static class CloudDatabaseOptionsFactory
     {
+        #if FIREBASE_REALTIME_DATABASE
         public static IDictionary<string,object> CreateFirebaseDatabaseOptions(string dbPathRefence)
         {
             return new Dictionary<string,object>()
@@ -11,5 +12,6 @@ namespace Evesoft.CloudService
                 {Firebase.FirebaseCloudDatabaseConfig.REF,dbPathRefence}
             };
         }
+        #endif
     }
 }

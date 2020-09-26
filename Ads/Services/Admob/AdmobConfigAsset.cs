@@ -1,7 +1,6 @@
+#if ADMOB
 using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
-
 namespace Evesoft.Ads.Admob
 {
     [CreateAssetMenu(menuName = nameof(Evesoft) +"/"+ nameof(Evesoft.Ads) +"/" + nameof(AdmobConfig),fileName = nameof(AdmobConfig))]
@@ -33,3 +32,4 @@ namespace Evesoft.Ads.Admob
         #endregion
     }
 }
+#endif

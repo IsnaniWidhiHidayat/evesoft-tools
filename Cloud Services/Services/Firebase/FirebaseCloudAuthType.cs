@@ -5,7 +5,11 @@ namespace Evesoft.CloudService.Firebase
         None,
         EmailPassword,
         GoogleSignIn,
+        
+        #if FACEBOOK_AUTH
         Facebook,
+        #endif
+        
         GooglePlayService
     }
 }

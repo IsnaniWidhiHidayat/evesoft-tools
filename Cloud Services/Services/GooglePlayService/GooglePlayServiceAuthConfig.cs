@@ -1,10 +1,10 @@
+#if PLAYSERVICE_AUTH
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.CloudService.GooglePlayService
 {
-    //TODO:Set Config play service
     [Serializable,HideReferenceObjectPicker]
     internal class GooglePlayServiceAuthConfig : iCloudAuthConfig
     {
@@ -32,3 +32,4 @@ namespace Evesoft.CloudService.GooglePlayService
         #endregion
     }
 }
+#endif

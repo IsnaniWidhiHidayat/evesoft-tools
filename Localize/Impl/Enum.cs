@@ -1,4 +1,5 @@
-﻿namespace Evesoft.Localize
+﻿#if LOCALIZE
+namespace Evesoft.Localize
 {
     internal enum ParameterType
     {
@@ -6,3 +7,4 @@
         Ref
     }
 }
+#endif

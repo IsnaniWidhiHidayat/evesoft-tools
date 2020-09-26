@@ -1,3 +1,4 @@
+#if FIREBASE_REALTIME_DATABASE
 using System;
 using Firebase.Database;
 using System.Collections.Generic;
@@ -211,3 +212,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

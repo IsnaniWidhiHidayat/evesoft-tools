@@ -1,3 +1,4 @@
+#if UNITY_IAP
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -51,3 +52,4 @@ namespace Evesoft.IAP.Unity
         #endregion
     }
 }
+#endif

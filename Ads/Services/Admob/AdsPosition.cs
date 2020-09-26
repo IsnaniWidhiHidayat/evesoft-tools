@@ -1,3 +1,5 @@
+#if ADMOB
+
 namespace Evesoft.Ads.Admob
 {
     public enum AdPosition
@@ -12,4 +14,4 @@ namespace Evesoft.Ads.Admob
         Custom = 7
     }
 }
-
+#endif

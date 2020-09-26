@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_ADS
+
+using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -228,3 +230,5 @@ namespace Evesoft.Ads.UnityAds
         #endregion
     }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if FACEBOOK_AUTH
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -170,3 +171,4 @@ namespace  Evesoft.CloudService.Facebook
         #endregion
     }
 }
+#endif

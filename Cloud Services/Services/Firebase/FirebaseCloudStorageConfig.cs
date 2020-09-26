@@ -1,3 +1,4 @@
+#if FIREBASE_STORAGE
 using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase
@@ -36,3 +37,4 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif

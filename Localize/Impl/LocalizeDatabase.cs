@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if LOCALIZE
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
@@ -208,3 +209,4 @@ namespace Evesoft.Localize
         }
     }
 }
+#endif

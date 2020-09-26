@@ -26,6 +26,7 @@ namespace Evesoft.CloudService
             
             switch(service)
             {
+                #if FIREBASE_REALTIME_DATABASE
                 case CloudDatabaseType.FirebaseRealtimeDatabase:
                 {
                     if(!databases.ContainsKey(service))
@@ -41,7 +42,8 @@ namespace Evesoft.CloudService
 
                     return dic[db] = new Firebase.FirebaseCloudDatabase(config);
                 }
-
+                #endif
+                
                 default:
                 {
                     "Service UnAvailable".LogError();

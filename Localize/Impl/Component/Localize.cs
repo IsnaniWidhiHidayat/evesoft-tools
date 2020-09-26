@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if LOCALIZE
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using System;
@@ -184,3 +185,4 @@ namespace Evesoft.Localize
         #endregion
     }
 }
+#endif

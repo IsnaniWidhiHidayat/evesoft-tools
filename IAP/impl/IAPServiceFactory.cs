@@ -19,13 +19,16 @@ namespace Evesoft.IAP
 
             switch (provider)
             {
+                #if UNITY_IAP
                 case IAPServiceProvider.Unity:
                 {
                     return _IAPService[provider] = new Unity.UnityIAP(products);
-                }
-
+                } 
+                #endif
+                
                 default:
                 {
+                    "Service Not Available".LogError();
                     return null;
                 }
             }

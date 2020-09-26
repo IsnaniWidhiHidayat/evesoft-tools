@@ -1,9 +1,9 @@
-﻿using Sirenix.OdinInspector.Editor;
+﻿#if CACHE_TEXTURE2D
+
+using Sirenix.OdinInspector.Editor;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using System.Collections.Generic;
-using Evesoft;
-using UnityEngine;
 
 namespace Evesoft.Cache.Editor
 {
@@ -44,3 +44,4 @@ namespace Evesoft.Cache.Editor
         #endregion
     }
 }
+#endif

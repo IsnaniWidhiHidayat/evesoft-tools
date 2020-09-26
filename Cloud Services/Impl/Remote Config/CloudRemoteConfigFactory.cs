@@ -16,6 +16,7 @@ namespace Evesoft.CloudService
             
             switch(service)
             {
+                #if UNITY_REMOTE_CONFIG
                 case CloudRemoteConfigType.UnityRemoteConfig:
                 {
                     if(remoteConfigs.ContainsKey(service))
@@ -33,7 +34,9 @@ namespace Evesoft.CloudService
                     remoteConfigs[service] = config;
                     return config;
                 }
+                #endif
 
+                #if FIREBASE_REMOTE_CONFIG
                 case CloudRemoteConfigType.FirebaseRemoteConfig:
                 {
                     var type            = setting.GetConfig<Firebase.FirebaseCloudRemoteConfigType>(Firebase.FirebaseCloudRemoteSetting.TYPE);
@@ -49,6 +52,7 @@ namespace Evesoft.CloudService
     
                     return firebaseConfigs[type] = new Firebase.FirebaseCloudRemoteConfig(setting);
                 }
+                #endif
 
                 default:
                 {
