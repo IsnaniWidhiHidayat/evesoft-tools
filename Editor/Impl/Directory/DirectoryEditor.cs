@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using UnityEditor;
 
 namespace Evesoft.Editor.Directory
 {
@@ -7,10 +8,10 @@ namespace Evesoft.Editor.Directory
     {
         [EnableGUI,ShowInInspector,InlineButton(nameof(OpenDir),"Open")]private string project => DirectoryUtility.projectLocation;
         [EnableGUI,ShowInInspector,InlineButton(nameof(OpenPersistentDirectory),"Open")]private string persistent => DirectoryUtility.persistentLocation;
-        [EnableGUI,ShowInInspector,InlineButton(nameof(OpenCacheDirectory),"Open")]private string cache => DirectoryUtility.cacheLocation;
+        [EnableGUI,ShowInInspector,InlineButton(nameof(OpenCacheDirectory),"Open"),InlineButton(nameof(ClearCache),"Clear")]private string cache => DirectoryUtility.cacheLocation;
         [EnableGUI,ShowInInspector,InlineButton(nameof(OpenConsoleDir),"Open")]private string console => DirectoryUtility.consoleLocation;
         [EnableGUI,ShowInInspector,InlineButton(nameof(OpenStreamAssetsDir),"Open")]private string streamAsset => DirectoryUtility.streamAssetLocation;
-
+        
         private void OpenDir()
         {
            DirectoryUtility.OpenDir();
@@ -29,10 +30,17 @@ namespace Evesoft.Editor.Directory
         }
         private void OpenStreamAssetsDir()
         {
-           DirectoryUtility.OpenStreamAssetsDir();
+            DirectoryUtility.OpenStreamAssetsDir();
         }
-    
+        private void ClearCache()
+        {
+            var answer = EditorUtility.DisplayDialog("Warning","Are you sure want to clear cache folder?","Yes","No");
 
+            if(answer)
+                DirectoryUtility.cacheLocation.ClearDirectory();
+
+            UnityEngine.GUIUtility.ExitGUI();
+        }
 
         #region iGroupEditor
         public string name => "Dir";

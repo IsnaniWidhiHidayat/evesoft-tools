@@ -9,7 +9,7 @@ namespace Evesoft.Editor
     public class PanelEditor : OdinEditorWindow
     {
         #region const
-        const string path = "Tools/EveSoft/Panels";
+        const string path = "Tools/EveSoft";
         #endregion
 
         #region static
@@ -90,7 +90,7 @@ namespace Evesoft.Editor
         protected override void OnGUI()
         {
             base.OnGUI();
-
+            
             if(editors.IsNullOrEmpty())
                 return;
 

@@ -239,5 +239,18 @@ namespace Evesoft
                 return str;
             }
         }
+        public static void ClearDirectory(this string path)
+        {
+            if(path.IsNullOrEmpty())
+                return;
+
+            var di = new DirectoryInfo(path);
+            foreach (var file in di.GetFiles())
+                file.Delete(); 
+
+            
+            foreach (var dir in di.GetDirectories())
+                dir.Delete(true); 
+        }
     }
 }
