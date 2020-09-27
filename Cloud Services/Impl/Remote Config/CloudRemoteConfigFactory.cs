@@ -36,7 +36,7 @@ namespace Evesoft.CloudService
                 }
                 #endif
 
-                #if FIREBASE_REMOTE_CONFIG
+                #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
                 case CloudRemoteConfigType.FirebaseRemoteConfig:
                 {
                     var type            = setting.GetConfig<Firebase.FirebaseCloudRemoteConfigType>(Firebase.FirebaseCloudRemoteSetting.TYPE);

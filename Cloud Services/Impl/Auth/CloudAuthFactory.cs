@@ -47,7 +47,7 @@ namespace Evesoft.CloudService
                 
                 default:
                 {
-                    "Service UnAvailable".LogError();
+                    "Service Unavailable".LogError();
                     return null;
                 }
             }

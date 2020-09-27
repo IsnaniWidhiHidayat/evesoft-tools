@@ -12,7 +12,7 @@ namespace  Evesoft.CloudService
         }
         #endif
         
-        #if FIREBASE_REMOTE_CONFIG
+        #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
         public static iCloudRemoteSetting CreateFirebaseRemoteSetting(Firebase.FirebaseCloudRemoteConfigType type,bool devMode)
         {
             return new Firebase.FirebaseCloudRemoteSetting(type,devMode);

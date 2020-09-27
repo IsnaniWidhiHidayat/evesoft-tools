@@ -7,7 +7,7 @@ namespace Evesoft.CloudService
         UnityRemoteConfig,
         #endif
         
-        #if FIREBASE_REMOTE_CONFIG
+        #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
         FirebaseRemoteConfig
         #endif
     }

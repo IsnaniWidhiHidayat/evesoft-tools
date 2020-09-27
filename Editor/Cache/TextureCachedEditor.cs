@@ -5,19 +5,27 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using System.Collections.Generic;
 
-namespace Evesoft.Cache.Editor
+namespace Evesoft.Editor.Cache
 {
-    public class TextureCachedBrowser : OdinEditorWindow
+    public class TextureCachedEditor : OdinEditorWindow
     {
         #region const
         const string path = "Tools/EveSoft/Cache/Textures";
         #endregion
 
         #region static
+        private static TextureCachedEditor instance;
+
+        [UnityEditor.Callbacks.DidReloadScripts]
+        private static void Reload()
+        {
+            Texture2DCache.RemoveAllCaches();
+        }
+        
         [MenuItem(path)]
         static void ShowWindow()
         {
-            var window = GetWindow<TextureCachedBrowser>();
+            var window = GetWindow<TextureCachedEditor>();
 
             if(!UnityEditor.EditorApplication.isPlaying)
             {
@@ -30,7 +38,7 @@ namespace Evesoft.Cache.Editor
             }
     
             window.Show();
-        }
+        }    
         #endregion
 
         #region Field
@@ -41,6 +49,14 @@ namespace Evesoft.Cache.Editor
         {
             return caches.IsNullOrEmpty();
         }
+        #endregion
+
+        #region callback
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            instance = this;
+        }  
         #endregion
     }
 }

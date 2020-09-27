@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace Evesoft.Editor
+namespace Evesoft.Editor.Directory
 {
-    public static class DirectoryProject
+    internal static class DirectoryProject
     {
         #region const
         const string grpPath = "Tools/EveSoft/Directory/";

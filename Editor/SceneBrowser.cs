@@ -85,7 +85,7 @@ namespace Evesoft.Editor
         [MenuItem(path,true)]
         public static bool Validate()
         {
-            var files = Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
+            var files = System.IO.Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
             return !files.IsNullOrEmpty();
         }
         #endregion
@@ -101,7 +101,7 @@ namespace Evesoft.Editor
         {
             scenes.Clear();
 
-            var files = Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
+            var files = System.IO.Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
 
             for (int i = 0; i < files.Length; i++)
             {

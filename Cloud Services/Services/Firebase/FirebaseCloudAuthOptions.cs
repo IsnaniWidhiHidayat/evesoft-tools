@@ -1,4 +1,4 @@
-#if FACEBOOK_AUTH
+#if FIREBASE_AUTH
 using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase

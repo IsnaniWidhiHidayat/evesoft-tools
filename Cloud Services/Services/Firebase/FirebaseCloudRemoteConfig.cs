@@ -30,7 +30,16 @@ namespace Evesoft.CloudService.Firebase
         
         #region iCloudRemoteConfig
         public bool isfetched => _fetched;
-        public bool isHaveConfigs => !FRC.Keys.IsNullOrEmpty();
+        public bool isHaveConfigs {
+            get
+            {
+                #if FIREBASE_REMOTE_CONFIG
+                return !FRC.Keys.IsNullOrEmpty();
+                #endif
+                
+                return !_configs.IsNullOrEmpty();
+            }
+        }
         public  T GetConfig<T>(string key)
         {
             switch(_type)
@@ -83,6 +92,7 @@ namespace Evesoft.CloudService.Firebase
                     break;
                 }    
                 #endif
+
             }
 
             return default(T);

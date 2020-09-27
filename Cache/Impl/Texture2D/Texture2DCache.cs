@@ -73,6 +73,23 @@ namespace Evesoft.Cache
             _defaultInstance = CreateCache();
             "Default Texture2D Cache Loaded".Log();
         }
+        
+        #if UNITY_EDITOR
+        [UnityEditor.Callbacks.DidReloadScripts]
+        public static void RemoveAllCaches()
+        {
+            if(!_caches.IsNullOrEmpty())
+                foreach (var cache in _caches)
+                {
+                    if(cache.IsNull())
+                        continue;
+
+                    cache.Dispose();
+                }
+
+            _caches?.Clear();
+        } 
+        #endif
         #endregion
 
         #region Dispose
