@@ -1,6 +1,6 @@
 namespace Evesoft.Editor.Bridge
 {
-    internal static class BridgeSymbol
+    public static class BridgeSymbol
     {
         internal const string ADMOB = nameof(ADMOB);
         internal const string UNITY_ADS = nameof(UNITY_ADS);

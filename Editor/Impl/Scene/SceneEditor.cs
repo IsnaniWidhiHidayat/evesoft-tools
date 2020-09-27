@@ -8,9 +8,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 
-namespace Evesoft.Editor
+namespace Evesoft.Editor.Scene
 {
-    [Serializable]
+    [Serializable,HideReferenceObjectPicker]
     public class SceneLoader
     {
         #region Field
@@ -67,37 +67,19 @@ namespace Evesoft.Editor
         }
     }
 
-    public class SceneBrowser : OdinEditorWindow
+    [System.Serializable,HideReferenceObjectPicker]
+    public class SceneEditor : iGroupEditor
     {
-        #region const
-        const string path  = "Tools/EveSoft/Browser/Scenes";
-        #endregion
-
-        #region static
-        [MenuItem(path)]
-        public static void ShowWindow()
-        {
-            var window = GetWindow<SceneBrowser>();
-            window.Refresh();
-            window.Show();
-        }
-
-        [MenuItem(path,true)]
-        public static bool Validate()
-        {
-            var files = System.IO.Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
-            return !files.IsNullOrEmpty();
-        }
-        #endregion
-
         #region field
-        [ListDrawerSettings(HideAddButton = true, DraggableItems = false, IsReadOnly = true, ShowItemCount = false, Expanded = true)]
-        public List<SceneLoader> scenes = new List<SceneLoader>();
+        [ShowInInspector,ListDrawerSettings(HideAddButton = true, DraggableItems = false, IsReadOnly = true, ShowItemCount = false, Expanded = true)]
+        private List<SceneLoader> scenes = new List<SceneLoader>();
         #endregion
 
-        #region method
-        [Button(ButtonSizes.Small),GUIColor(0,1,0),PropertyOrder(-1)]
-        private void Refresh()
+        #region iGroupEditor
+        public string name => "Scenes";
+
+        //[Button(ButtonSizes.Small),GUIColor(0,1,0),PropertyOrder(-1)]
+        public void Refresh()
         {
             scenes.Clear();
 
@@ -107,6 +89,14 @@ namespace Evesoft.Editor
             {
                 scenes.Add(new SceneLoader(Path.GetFileNameWithoutExtension(files[i]), files[i]));
             }
+        }
+        public void OnScriptReloaded()
+        {
+            Refresh();
+        }
+        public void OnWindowClicked()
+        {
+            Refresh();
         }
         #endregion
     } 

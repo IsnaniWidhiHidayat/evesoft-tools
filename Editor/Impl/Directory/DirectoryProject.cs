@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace Evesoft.Editor.Directory
 {
-    internal static class DirectoryProject
+    public static class DirectoryProject
     {
         #region const
         const string grpPath = "Tools/EveSoft/Directory/";
