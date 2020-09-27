@@ -18,9 +18,9 @@ namespace Evesoft.Editor
         [MenuItem(path)]
         private static void ShowWindow()
         {
-            var window = GetWindow<PanelEditor>();
-            window.Refresh();
-            window.Show();
+            instance = GetWindow<PanelEditor>(nameof(Evesoft),true,typeof(EditorWindow));
+            instance.Refresh();
+            instance.Show();
         }
         
         [UnityEditor.Callbacks.DidReloadScripts]
@@ -46,11 +46,9 @@ namespace Evesoft.Editor
         [ShowInInspector,HideLabel,InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden),TabGroup(nameof(DefineSymbol))]
         private iGroupEditor DefineSymbol;
 
-        #if CACHE_TEXTURE2D
-        [ShowInInspector,HideLabel,InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden),TabGroup(nameof(TextureCache))]
-        private iGroupEditor TextureCache;
-        #endif
-        
+        [ShowInInspector,HideLabel,InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden),TabGroup(nameof(Dir))]
+        private iGroupEditor Dir;
+ 
         private IList<iGroupEditor> editors;
         #endregion
 
@@ -71,20 +69,14 @@ namespace Evesoft.Editor
             Bridges         = new Bridge.BridgeEditor();
             Scenes          = new Scene.SceneEditor();
             DefineSymbol    = new ScriptingDefineSymbol.ScriptingDefineSymbolEditor();
-            
-            #if CACHE_TEXTURE2D
-            TextureCache    = new Cache.TextureCachedEditor();
-            #endif
-            
+            Dir             = new Directory.DirectoryEditor();
 
             editors = new List<iGroupEditor>()
             {
                 Bridges     ,
                 Scenes      ,
                 DefineSymbol,
-                #if CACHE_TEXTURE2D
-                TextureCache,
-                #endif 
+                Dir,
             };
         }
         #endregion
@@ -99,14 +91,23 @@ namespace Evesoft.Editor
         {
             base.OnGUI();
 
-            if(Event.current.type == EventType.MouseDown && Event.current.button == 0)
-            {
-                if(editors.IsNullOrEmpty())
-                    return;
+            if(editors.IsNullOrEmpty())
+                return;
 
-                foreach (var editor in editors)
-                    editor?.OnWindowClicked();
-            } 
+            foreach (var editor in editors)
+            {
+                if(Event.current.type == EventType.MouseDown)
+                {
+                    if(Event.current.button == 0)
+                    {
+                        editor?.OnWindowClicked();
+                    }
+                }
+                else
+                {
+                    editor?.OnGUI();
+                } 
+            }
         }  
         #endregion
     }

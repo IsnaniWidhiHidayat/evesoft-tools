@@ -1,10 +1,10 @@
 namespace Evesoft.Editor
 {
-    public interface iGroupEditor
+    public interface iGroupEditor : iRefresh
     {
         string name{get;}
-        void Refresh();
         void OnScriptReloaded();
         void OnWindowClicked();
+        void OnGUI();
     }
 }

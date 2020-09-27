@@ -14,6 +14,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
         #region iGroupEditor
         public string name => "Define Symbol";
+
         public void Refresh()
         {
             _symbols = ScriptingDefineSymbolUtility.GetDefineSymbol();
@@ -35,6 +36,10 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
             return !EditorApplication.isCompiling && !_symbols.IsNullOrEmpty();
         }   
         public void OnWindowClicked()
+        {
+            Refresh();
+        }
+        public void OnGUI()
         {
             
         }

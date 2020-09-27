@@ -3,56 +3,49 @@ using UnityEditor;
 
 namespace Evesoft.Editor.Directory
 {
-    public static class DirectoryProject
+    public static class DirectoryUtility
     {
-        #region const
-        const string grpPath = "Tools/EveSoft/Directory/";
-        #endregion
+        public static string projectLocation => Application.dataPath;
+        public static string persistentLocation => Application.persistentDataPath;
+        public static string cacheLocation => Application.temporaryCachePath;
+        public static string consoleLocation => Application.consoleLogPath;
+        public static string streamAssetLocation => Application.streamingAssetsPath;
 
-        [MenuItem(grpPath + "Data Path")]
-        private static void OpenDir()
+        public static void OpenDir()
         {
-            var path = Application.dataPath;
+            var path = projectLocation;
             if(path.DirectoryExist())
                 System.Diagnostics.Process.Start(path);
             else
                 EditorUtility.DisplayDialog("Message","Directory not exist","ok");
         }
-
-        [MenuItem(grpPath + "Persitent")]
-        private static void OpenPersistentDirectory()
+        public static void OpenPersistentDirectory()
         {
-            var path = Application.persistentDataPath;
+            var path = persistentLocation;
             if(path.DirectoryExist())
                 System.Diagnostics.Process.Start(path);
             else
                 EditorUtility.DisplayDialog("Message","Directory not exist","ok");
         }
-
-        [MenuItem(grpPath + "Cache")]
-        private static void OpenCacheDirectory()
+        public static void OpenCacheDirectory()
         {
-            var path = Application.temporaryCachePath;
+            var path = cacheLocation;
             if(path.DirectoryExist())
                 System.Diagnostics.Process.Start(path);
             else
                 EditorUtility.DisplayDialog("Message","Directory not exist","ok");
         }    
-    
-        [MenuItem(grpPath + "Console")]
-        private static void OpenConsoleDir()
+        public static void OpenConsoleDir()
         {
-            var path = Application.consoleLogPath;
+            var path = consoleLocation;
             if(path.FileExist())
                 System.Diagnostics.Process.Start(path);
             else
                 EditorUtility.DisplayDialog("Message","File not exist","ok");
         }
-    
-        [MenuItem(grpPath + "Stream Assets")]
-        private static void OpenStreamAssetsDir()
+        public static void OpenStreamAssetsDir()
         {
-            var path = Application.streamingAssetsPath;
+            var path = streamAssetLocation;
             if(path.DirectoryExist())
                 System.Diagnostics.Process.Start(path);
             else

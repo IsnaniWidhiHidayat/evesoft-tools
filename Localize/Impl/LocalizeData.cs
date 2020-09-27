@@ -11,40 +11,15 @@ namespace Evesoft.Localize
     public class LocalizeData : ScriptableObject
     {
         #region Field
+        [Required]
         [SerializeField]
         [LabelWidth(70)]
+        [HideLabel]
         private LocalizeDatabase database;
 
-        private string message;
-
-        #if UNITY_EDITOR
-        private bool IsValidKey(string key)
-        {
-            if (string.IsNullOrEmpty(key))
-            {
-                message = "Key cannot be null";
-                return false;
-            }
-
-
-            var finds = Editor.AssetDatabaseFinder.Finds<LocalizeData>();
-                finds.Remove(this);
-
-            var same = finds.Find(x => x.key == key);
-
-            if (same != null)
-            {
-                message = string.Format("Key Already Exist with FileName : {0}", same.name);
-            }
-
-            return same == null;
-        }
-        #endif
-
-        [ValidateInput("IsValidKey", "$message")]
         [DisableInPlayMode]
         [SerializeField,HideLabel,SuffixLabel("Key",true)]
-        internal string key;
+        internal string key => name;
 
         [MultiLineProperty(2)]
         [SerializeField,HideLabel,SuffixLabel("Description",true)]

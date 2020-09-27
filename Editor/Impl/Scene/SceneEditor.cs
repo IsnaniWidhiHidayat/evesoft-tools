@@ -10,7 +10,7 @@ using Sirenix.OdinInspector.Editor;
 
 namespace Evesoft.Editor.Scene
 {
-    [Serializable,HideReferenceObjectPicker]
+    [HideReferenceObjectPicker]
     public class SceneLoader
     {
         #region Field
@@ -97,6 +97,11 @@ namespace Evesoft.Editor.Scene
         public void OnWindowClicked()
         {
             Refresh();
+        }
+
+        public void OnGUI()
+        {
+            
         }
         #endregion
     } 

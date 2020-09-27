@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace Evesoft.Editor.Bridge
 {
-    [Serializable,HideReferenceObjectPicker]
+    [HideReferenceObjectPicker]
     public class BridgeEditor : iGroupEditor
     {
         #region private
@@ -41,6 +41,10 @@ namespace Evesoft.Editor.Bridge
             Refresh();
         }
         public void OnWindowClicked()
+        {
+            Refresh();
+        }
+        public void OnGUI()
         {
             Refresh();
         }
@@ -104,16 +108,16 @@ namespace Evesoft.Editor.Bridge
         #region constructor
         public BridgeEditor()
         {
-            Admob                                = new Bridge("Admob","GoogleMobileAds.Api",BridgeSymbol.ADMOB);
-            UnityAds                             = new Bridge("Unity Ads","UnityEngine.Advertisements",BridgeSymbol.UNITY_ADS);
-            GoogleSignIn                         = new Bridge("Google Sign In","Google",BridgeSymbol.GOOGLE_AUTH);
+            Admob                                = new Bridge("Admob","GoogleMobileAds.Api",BridgeSymbol.ADMOB,new Reference.AdmobConfigReference());
+            UnityAds                             = new Bridge("Unity Ads","UnityEngine.Advertisements",BridgeSymbol.UNITY_ADS,new Reference.UnityAdsConfigReference());
+            GoogleSignIn                         = new Bridge("Google Sign In","Google",BridgeSymbol.GOOGLE_AUTH,new Reference.GoogleSignInConfigReference());
             FacebookSignIn                       = new Bridge("Facebook","Facebook.Unity",BridgeSymbol.FACEBOOK_AUTH);
             PlayServiceSignIn                    = new Bridge("Play Service","GooglePlayGames",BridgeSymbol.PLAYSERVICE_AUTH);
             FirebaseSignIn                       = new Bridge("Firebase Auth","Firebase.Auth",BridgeSymbol.FIREBASE_AUTH);
-            TextureCache                         = new Bridge("Cache - Texture2D",null,BridgeSymbol.CACHE_TEXTURE2D);
+            TextureCache                         = new Bridge("Cache - Texture2D",null,BridgeSymbol.CACHE_TEXTURE2D,new Reference.TextureCacheReference());
             FirebaseRealtimeDatabase             = new Bridge("Firebase Database","Firebase.Database",BridgeSymbol.FIREBASE_REALTIME_DATABASE);
             UnityIAP                             = new Bridge("Unity IAP","UnityEngine.Purchasing",BridgeSymbol.UNITY_IAP);
-            Localize                             = new Bridge("Localize",null,BridgeSymbol.LOCALIZE);
+            Localize                             = new Bridge("Localize",null,BridgeSymbol.LOCALIZE,new Reference.LocalizeReference());
             FirebaseRemoteConfigRealtimeDatabase = new Bridge("Firebase Database","Firebase.Database",BridgeSymbol.FIREBASE_REALTIME_DATABASE);
             FirebaseRemoteConfig                 = new Bridge("Firebase RemoteConfig","Firebase.RemoteConfig",BridgeSymbol.FIREBASE_REMOTE_CONFIG);
             UnityRemoteConfig                    = new Bridge("Unity Remote Config ","Unity.RemoteConfig",BridgeSymbol.UNITY_REMOTE_CONFIG);

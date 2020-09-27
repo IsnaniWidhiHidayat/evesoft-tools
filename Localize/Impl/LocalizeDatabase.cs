@@ -13,29 +13,10 @@ using Sirenix.OdinInspector.Editor;
 namespace Evesoft.Localize
 {
     [CreateAssetMenu(menuName = nameof(Evesoft) + "/" + nameof(Evesoft.Localize) + "/" + nameof(LocalizeDatabase))]
-    [HideMonoScript]
+    [HideMonoScript,HideReferenceObjectPicker]
 
     public class LocalizeDatabase : ScriptableObject
     {
-        #region Static
-#if UNITY_EDITOR
-        [UnityEditor.MenuItem("Tools/EveSoft/Localize/Database")]
-        private static void ShowTools()
-        {
-            var database = Evesoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
-            if (database != null)
-                OdinEditorWindow.InspectObject(database);
-        }
-
-        [UnityEditor.MenuItem("Tools/EveSoft/Localize/Database", true)]
-        private static bool ValidateTools()
-        {
-            var database = Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
-            return database != null;
-        }
-#endif
-        #endregion
-
         #region events
         public event Action<SystemLanguage> onLanguageChange;
         #endregion
@@ -43,8 +24,8 @@ namespace Evesoft.Localize
         #region Field
         [PropertyOrder(-2)]
         [ShowInInspector]
-        [ValueDropdown("languages")]
-        [LabelWidth(60)]
+        [ValueDropdown(nameof(languages))]
+        [HideLabel,SuffixLabel(nameof(language),true)]
         public SystemLanguage language
         {
             get
@@ -88,10 +69,11 @@ namespace Evesoft.Localize
             #endif    
         }
     
-        [ListDrawerSettings(CustomAddFunction = "AddLanguage", CustomRemoveElementFunction = "RemoveLanguage", ShowItemCount = false, Expanded = true, HideAddButton = true, AlwaysAddDefaultValue = true)]
+        [ListDrawerSettings(CustomAddFunction = nameof(AddLanguage), CustomRemoveElementFunction = nameof(RemoveLanguage), ShowItemCount = false, Expanded = true, HideAddButton = true, AlwaysAddDefaultValue = true)]
         [DisplayAsString]
         [PropertyOrder(-1)]
         [SerializeField]
+        [Space(5)]
         public List<SystemLanguage> languages = new List<SystemLanguage>() { SystemLanguage.English };
 
 

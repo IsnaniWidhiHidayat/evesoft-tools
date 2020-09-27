@@ -13,6 +13,9 @@ namespace Evesoft.Editor.Bridge
         private IList<string> _symbols;
         public bool _isEnable;
         private bool _isPluginInstalled;
+
+        [ShowInInspector,ShowIf(nameof(_reference)),HideLabel,InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden)]
+        private object _reference;
         #endregion
 
         #region property
@@ -26,17 +29,24 @@ namespace Evesoft.Editor.Bridge
         internal void Refresh()
         {
             _isEnable = ScriptingDefineSymbolUtility.ContainSymbol(_symbols);
+
+            if(!_reference.IsNull())
+            {
+                (_reference as iRefresh)?.Refresh();
+            }
         }
         #endregion
 
         #region constructor
-        internal Bridge(string description,string pluginNamespace,params string[] symbols)
+        internal Bridge(string description,string pluginNamespace,string symbol,object reference = null)
         {
             _name    = description;
-            _symbols = new List<string>(symbols);
+            _symbols = new List<string>();
+            _symbols.Add(symbol);
            
             _isPluginInstalled = !pluginNamespace.IsNullOrEmpty()? NamespaceUtility.IsNamespaceExists(pluginNamespace) : true;
-        }   
+            _reference = reference;
+        } 
         #endregion
     }
 }

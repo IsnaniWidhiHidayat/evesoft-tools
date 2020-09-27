@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.Ads.UnityAds
 {
     [CreateAssetMenu(menuName = nameof(Evesoft) +"/"+ nameof(Evesoft.Ads) +"/" + nameof(UnityAdsConfig),fileName = nameof(UnityAdsConfig))]
-    internal class AdmobConfigAsset : SerializedScriptableObject, iAdsConfig
+    public class UnityAdsConfigAsset : SerializedScriptableObject, iAdsConfig
     {
         [SerializeField,HideInInspector]
         private UnityAdsConfig _config;
