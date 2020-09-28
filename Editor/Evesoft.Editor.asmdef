@@ -1,0 +1,17 @@
+{
+    "name": "Evesoft.Editor",
+    "references": [
+        "GUID:2b1ebc32318651d48a9b9415bfec5a28"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
