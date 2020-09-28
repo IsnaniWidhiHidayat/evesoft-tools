@@ -18,4 +18,12 @@ namespace Evesoft.Editor
             return false;
         }
     }
+
+    public static class TypeUtility{
+        public static bool IsTypeExist(string type)
+        {
+            var t = Type.GetType(type);
+            return !t.IsNull();
+        }
+    }
 }

@@ -67,7 +67,7 @@ namespace Evesoft.Cache
         }
 
         [RuntimeInitializeOnLoadMethod]
-        public static void Init()
+        private static void Init()
         {
             _caches?.Clear();
             _defaultInstance = CreateCache();

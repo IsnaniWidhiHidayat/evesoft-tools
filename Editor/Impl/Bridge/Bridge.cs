@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using Evesoft.Editor.ScriptingDefineSymbol;
 using System;
+using UnityEngine;
 
 namespace Evesoft.Editor.Bridge
 {
     [HideReferenceObjectPicker,Toggle(nameof(_isEnable),CollapseOthersOnExpand = false)]
-    public class Bridge
+    public class Bridge:iRefresh
     {
         #region private
-        private string _name;
-        private IList<string> _symbols;
         public bool _isEnable;
-        private bool _isPluginInstalled;
+        private string _name;
+        private string _symbol;
+
+
+        private bool ShowRequired => !_required.IsNullOrEmpty();
+        [ShowInInspector,ShowIf(nameof(ShowRequired)),ListDrawerSettings(IsReadOnly = true,Expanded = true)]
+        [InfoBox("Current Platfrom Is Not Supported",InfoMessageType.Warning,nameof(isPlatformUnSupported))]
+        private IList<Prequested> _required;
+
+        [ShowInInspector,HideLabel,DisplayAsString(false),FoldoutGroup("API")]
+        private string _guide = "Cooming Soon";
 
         [ShowInInspector,ShowIf(nameof(_reference)),HideLabel,InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden)]
         private object _reference;
@@ -21,30 +30,64 @@ namespace Evesoft.Editor.Bridge
         #region property
         internal bool isEnable => _isEnable;
         internal string name => _name;
-        internal IList<string> symbols => _symbols;
-        internal bool isPluginInstalled => _isPluginInstalled;
-        #endregion
-
-        #region methods
-        internal void Refresh()
+        internal string symbol => _symbol;
+        internal bool isPlatformSupported 
         {
-            _isEnable = ScriptingDefineSymbolUtility.ContainSymbol(_symbols);
-
-            if(!_reference.IsNull())
+            get
             {
-                (_reference as iRefresh)?.Refresh();
+                var result = true;
+                if(!_required.IsNullOrEmpty())
+                {
+                    foreach (var require in _required)
+                        result &= require.isPlatformSupported;
+                }
+                return result;
+            }
+        }
+        internal bool isPlatformUnSupported => !isPlatformSupported;
+        internal bool isInstalled
+        {
+            get
+            {
+                var result = true;
+                if(!_required.IsNullOrEmpty())
+                {
+                    foreach (var require in _required)
+                        result &= require.isInstalled;
+                }
+                return result;
             }
         }
         #endregion
 
-        #region constructor
-        internal Bridge(string description,string pluginNamespace,string symbol,object reference = null)
+        #region methods
+        public void Refresh()
         {
-            _name    = description;
-            _symbols = new List<string>();
-            _symbols.Add(symbol);
-           
-            _isPluginInstalled = !pluginNamespace.IsNullOrEmpty()? NamespaceUtility.IsNamespaceExists(pluginNamespace) : true;
+            _isEnable = ScriptingDefineSymbolUtility.ContainSymbol(_symbol);
+
+            if(!_reference.IsNull())
+            {
+                (_reference as iRefresh)?.Refresh();
+            }   
+        }
+        public void RefreshRequired()
+        {
+            if(!_required.IsNullOrEmpty())
+                foreach (var require in _required)
+                    require?.Refresh();
+        }
+        public void AddHowToUse(string guide)
+        {
+            _guide = guide;
+        }
+        #endregion
+
+        #region constructor
+        internal Bridge(string name,string symbol,object reference = null,params Prequested[] required)
+        {
+            _name       = name;
+            _symbol     = symbol;
+            _required   = required;
             _reference = reference;
         } 
         #endregion

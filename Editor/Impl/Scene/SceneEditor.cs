@@ -71,7 +71,7 @@ namespace Evesoft.Editor.Scene
     public class SceneEditor : iGroupEditor
     {
         #region field
-        [ShowInInspector,ListDrawerSettings(HideAddButton = true, DraggableItems = false, IsReadOnly = true, ShowItemCount = false, Expanded = true)]
+        [ShowInInspector,ListDrawerSettings(HideAddButton = true, DraggableItems = false, IsReadOnly = true, ShowItemCount = false, Expanded = true,NumberOfItemsPerPage = 23)]
         private List<SceneLoader> scenes = new List<SceneLoader>();
         #endregion
 

@@ -8,6 +8,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
     public class ScriptingDefineSymbolEditor : iGroupEditor
     {
         #region field
+        [InfoBox("Be careful change this, because can break your code",InfoMessageType.Warning)]
         [ShowInInspector,ShowIf(nameof(ShowSymbols)),ListDrawerSettings(Expanded = true)]
         private IList<string> _symbols;
         #endregion

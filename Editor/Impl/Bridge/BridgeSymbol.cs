@@ -16,5 +16,8 @@ namespace Evesoft.Editor.Bridge
         internal const string FIREBASE_REMOTE_CONFIG = nameof(FIREBASE_REMOTE_CONFIG);
         internal const string UNITY_REMOTE_CONFIG = nameof(UNITY_REMOTE_CONFIG);
         internal const string FIREBASE_STORAGE = nameof(FIREBASE_STORAGE);
+        internal const string NATIVE_SHARE = nameof(NATIVE_SHARE);
+        internal const string NATIVE_GALLERY = nameof(NATIVE_GALLERY);
+        internal const string REST_API = nameof(REST_API);
     }   
 }

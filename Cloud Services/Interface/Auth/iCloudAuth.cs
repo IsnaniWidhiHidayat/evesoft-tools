@@ -7,7 +7,7 @@ namespace Evesoft.CloudService
     {
         bool inited{get;}
         iUserAuth currentUser{get;}
-        Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options);
+        Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options = null);
         void Logout();
     }
 }

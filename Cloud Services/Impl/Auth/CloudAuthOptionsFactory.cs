@@ -1,21 +1,7 @@
 namespace Evesoft.CloudService
 {
     public static class CloudAuthOptionsFactory
-    {
-        #if GOOGLE_AUTH
-        public static iCloudAuthOptions CreateGoogleSignIn()
-        {
-            return null;
-        }
-        #endif
-        
-        #if FACEBOOK_AUTH
-        public static iCloudAuthOptions CreateFacebook()
-        {
-            return null;
-        }
-        #endif
-        
+    { 
         #if FIREBASE_AUTH
         public static iCloudAuthOptions CreateFirebaseWithEmailPassword(string email,string password)
         {

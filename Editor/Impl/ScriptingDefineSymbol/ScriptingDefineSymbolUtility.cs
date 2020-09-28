@@ -11,7 +11,12 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
             var str =  PlayerSettings.GetScriptingDefineSymbolsForGroup(platfrom);
             return new List<string>(str.SplitBy(';'));
         }
-        public static void AddDefineSymbol(IList<string> symbols)
+        public static void SaveDefineSymbol(IList<string> symbols)
+        {
+            var platfrom = EditorUserBuildSettings.selectedBuildTargetGroup;
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(platfrom,symbols.Join(";"));
+        }
+        public static void AddDefineSymbol(params string[] symbols)
         {
             if(symbols.IsNullOrEmpty())
                 return;
@@ -27,7 +32,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
             SaveDefineSymbol(predefine);
         }
-        public static void RemoveDefineSymbol(IList<string> symbols)
+        public static void RemoveDefineSymbol(params string[] symbols)
         {
             if(symbols.IsNullOrEmpty())
                 return;
@@ -38,12 +43,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
             SaveDefineSymbol(predefine);
         }
-        public static void SaveDefineSymbol(IList<string> symbols)
-        {
-            var platfrom = EditorUserBuildSettings.selectedBuildTargetGroup;
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(platfrom,symbols.Join(";"));
-        }
-        public static bool ContainSymbol(IList<string> symbols)
+        public static bool ContainSymbol(params string[] symbols)
         {
             if(symbols.IsNullOrEmpty())
                 return false;
@@ -60,6 +60,5 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
             return contain;
         }
-        
     }
 }
