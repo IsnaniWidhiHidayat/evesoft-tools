@@ -1,4 +1,5 @@
-﻿#if UNITY_IAP
+#if ODIN_INSPECTOR 
+#if UNITY_IAP
 using UnityEngine.Purchasing;
 using System.Collections.Generic;
 using System;
@@ -114,4 +115,5 @@ namespace Evesoft.IAP.Unity
         #endregion     
     }
 }
+#endif
 #endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using Sirenix.OdinInspector;
 using UnityEditor;
 using System.Collections.Generic;
@@ -47,3 +48,4 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
         #endregion
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
@@ -112,3 +113,24 @@ namespace Evesoft.Editor
         #endregion
     }
 }
+
+#else
+using UnityEditor;
+using UnityEngine;
+
+namespace Evesoft.Editor
+{
+    public static class PanelEditor
+    {
+        #region const
+        const string path = "Tools/EveSoft";
+        #endregion
+
+        [MenuItem(path)]
+        private static void ShowWindow()
+        {
+            EditorUtility.DisplayDialog("Message","Required Odin Inspector","Ok");
+        }
+    }
+}
+#endif

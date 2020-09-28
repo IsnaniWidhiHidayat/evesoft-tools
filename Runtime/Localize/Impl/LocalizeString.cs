@@ -1,4 +1,5 @@
-﻿#if LOCALIZE
+#if ODIN_INSPECTOR 
+#if LOCALIZE
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -24,4 +25,5 @@ namespace Evesoft.Localize
         #endregion
     }
 } 
+#endif
 #endif

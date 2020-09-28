@@ -1,4 +1,5 @@
-﻿#if UNITY_ADS
+#if ODIN_INSPECTOR 
+#if UNITY_ADS
 
 using System;
 using UnityEngine;
@@ -231,4 +232,5 @@ namespace Evesoft.Ads.UnityAds
     }
 }
 
+#endif
 #endif

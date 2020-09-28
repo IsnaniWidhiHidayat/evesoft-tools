@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
     public static class CloudDatabaseConfigFactory
@@ -10,3 +11,4 @@ namespace Evesoft.CloudService
         #endif   
     }
 }
+#endif

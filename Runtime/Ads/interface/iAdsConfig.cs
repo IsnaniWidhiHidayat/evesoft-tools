@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Ads
 {
     public interface iAdsConfig
@@ -6,3 +7,5 @@ namespace Evesoft.Ads
     }
 }
 
+
+#endif

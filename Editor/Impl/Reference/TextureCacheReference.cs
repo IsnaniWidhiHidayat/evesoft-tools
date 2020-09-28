@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using Sirenix.OdinInspector;
 
 namespace Evesoft.Editor.Reference
@@ -16,3 +17,4 @@ namespace Evesoft.Editor.Reference
         #endif
     }
 }
+#endif

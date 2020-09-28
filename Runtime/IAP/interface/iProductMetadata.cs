@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
     public interface iProductMetadata
@@ -9,3 +10,4 @@ namespace Evesoft.IAP
         decimal localizedPrice { get; }
     }
 }
+#endif

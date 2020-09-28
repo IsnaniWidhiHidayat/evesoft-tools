@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Net;
 
@@ -17,3 +18,5 @@ namespace Evesoft.Cache
     }
 }
 
+
+#endif

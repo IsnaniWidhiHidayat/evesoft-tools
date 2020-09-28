@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Collections.Generic;
 
 namespace Evesoft.IAP
@@ -12,3 +13,4 @@ namespace Evesoft.IAP
         iPayoutDefinition payout { get; }
     }
 }
+#endif

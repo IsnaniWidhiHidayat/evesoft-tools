@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 
 namespace Evesoft.CloudService
 {
@@ -11,3 +12,4 @@ namespace Evesoft.CloudService
         #endif      
     }
 }
+#endif

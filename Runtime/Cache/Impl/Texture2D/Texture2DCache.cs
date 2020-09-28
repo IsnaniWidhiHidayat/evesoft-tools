@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if CACHE_TEXTURE2D
 using System.Collections.Generic;
 using System;
@@ -296,4 +297,5 @@ namespace Evesoft.Cache
         #endregion
     }   
 }
+#endif
 #endif

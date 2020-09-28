@@ -1,4 +1,5 @@
-﻿#if LOCALIZE
+#if ODIN_INSPECTOR 
+#if LOCALIZE
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
@@ -185,4 +186,5 @@ namespace Evesoft.Localize
         #endregion
     }
 }
+#endif
 #endif

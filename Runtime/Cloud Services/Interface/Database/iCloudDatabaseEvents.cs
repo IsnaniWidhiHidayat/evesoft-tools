@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 
 namespace Evesoft.CloudService
@@ -9,3 +10,4 @@ namespace Evesoft.CloudService
         event Action<string,object> onDataRemoved;
     }
 }
+#endif

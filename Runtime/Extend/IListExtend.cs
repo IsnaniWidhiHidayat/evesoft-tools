@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,3 +168,5 @@ namespace Evesoft
         }
     }  
 }
+
+#endif

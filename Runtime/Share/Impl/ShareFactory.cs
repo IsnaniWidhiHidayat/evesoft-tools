@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Share
 {
     public static class ShareFactory 
@@ -22,3 +23,4 @@ namespace Evesoft.Share
         }    
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FACEBOOK_AUTH
 using System;
 using System.Collections.Generic;
@@ -32,4 +33,5 @@ namespace Evesoft.CloudService.Facebook
         #endregion
     }
 }
+#endif
 #endif

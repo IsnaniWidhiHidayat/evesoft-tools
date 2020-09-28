@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using System.Collections.Generic;
 
 namespace Evesoft.IAP
@@ -14,3 +15,5 @@ namespace Evesoft.IAP
         void BuyProduct(iProductIAP product);
     }
 }
+
+#endif

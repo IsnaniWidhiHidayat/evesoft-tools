@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if ADMOB
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -32,4 +33,5 @@ namespace Evesoft.Ads.Admob
         #endregion
     }
 }
+#endif
 #endif

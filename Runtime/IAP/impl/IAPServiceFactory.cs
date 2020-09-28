@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#if ODIN_INSPECTOR 
+using System.Collections.Generic;
 
 namespace Evesoft.IAP
 {
@@ -35,3 +36,5 @@ namespace Evesoft.IAP
         }
     }
 }
+
+#endif

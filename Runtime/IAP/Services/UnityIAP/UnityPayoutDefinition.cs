@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if UNITY_IAP
 namespace Evesoft.IAP.Unity
 {
@@ -23,4 +24,5 @@ namespace Evesoft.IAP.Unity
         #endregion
     }
 }
+#endif
 #endif

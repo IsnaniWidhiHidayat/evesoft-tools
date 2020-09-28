@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Editor
 {
     public interface iGroupEditor : iRefresh
@@ -8,3 +9,4 @@ namespace Evesoft.Editor
         void OnGUI();
     }
 }
+#endif

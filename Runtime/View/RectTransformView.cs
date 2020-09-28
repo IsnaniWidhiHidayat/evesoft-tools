@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR 
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Evesoft.Views
@@ -31,3 +32,5 @@ namespace Evesoft.Views
     }
 }
 
+
+#endif

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if ODIN_INSPECTOR 
+using UnityEngine;
 using UnityEditor;
 
 namespace Evesoft.Editor.Directory
@@ -53,3 +54,5 @@ namespace Evesoft.Editor.Directory
         }
     } 
 }
+
+#endif

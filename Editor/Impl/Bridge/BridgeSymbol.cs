@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Editor.Bridge
 {
     public static class BridgeSymbol
@@ -21,3 +22,4 @@ namespace Evesoft.Editor.Bridge
         internal const string REST_API = nameof(REST_API);
     }   
 }
+#endif

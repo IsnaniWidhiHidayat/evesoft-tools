@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_AUTH
 namespace Evesoft.CloudService.Firebase
 {
@@ -19,4 +20,5 @@ namespace Evesoft.CloudService.Firebase
         #endif
     }
 }
+#endif
 #endif

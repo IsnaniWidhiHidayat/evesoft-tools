@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if GOOGLE_AUTH
 using System;
 using System.Collections.Generic;
@@ -46,4 +47,5 @@ namespace Evesoft.CloudService.GoogleSignIn
         #endregion
     }
 }
+#endif
 #endif

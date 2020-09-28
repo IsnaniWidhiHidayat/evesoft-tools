@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_AUTH || FIREBASE_REALTIME_DATABASE || FIREBASE_REMOTE_CONFIG || FIREBASE_STORAGE
 using System.Threading.Tasks;
 using Firebase;
@@ -29,4 +30,5 @@ namespace Evesoft.CloudService.Firebase
         }
     }
 }
+#endif
 #endif

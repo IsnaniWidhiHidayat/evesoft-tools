@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#if ODIN_INSPECTOR 
+using System.Collections.Generic;
 using System;
 
 namespace Evesoft.Cache
@@ -74,3 +75,5 @@ namespace Evesoft.Cache
         #endregion
     }
 }
+
+#endif

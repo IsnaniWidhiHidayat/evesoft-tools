@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
 namespace Evesoft.CloudService.Firebase
 {
@@ -12,4 +13,5 @@ namespace Evesoft.CloudService.Firebase
         #endif
     }
 }
+#endif
 #endif

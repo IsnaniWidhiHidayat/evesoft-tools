@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR 
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using Evesoft.Editor.ScriptingDefineSymbol;
 using System;
@@ -93,3 +94,4 @@ namespace Evesoft.Editor.Bridge
         #endregion
     }
 }
+#endif

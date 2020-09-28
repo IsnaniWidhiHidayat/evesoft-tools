@@ -1,4 +1,5 @@
-﻿#if LOCALIZE
+#if ODIN_INSPECTOR 
+#if LOCALIZE
 namespace Evesoft.Localize
 {
     internal enum ParameterType
@@ -7,4 +8,5 @@ namespace Evesoft.Localize
         Ref
     }
 }
+#endif
 #endif

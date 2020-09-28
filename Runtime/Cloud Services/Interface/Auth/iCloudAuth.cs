@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Threading.Tasks;
 using System;
 
@@ -11,3 +12,4 @@ namespace Evesoft.CloudService
         void Logout();
     }
 }
+#endif

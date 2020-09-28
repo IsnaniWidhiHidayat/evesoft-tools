@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if CACHE_TEXTURE2D
 using System;
 using UnityEngine;
@@ -56,4 +57,5 @@ namespace Evesoft.Cache
         #endregion
     }
 }
+#endif
 #endif

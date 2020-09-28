@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 
 #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
 using System.Collections.Generic;
@@ -203,4 +204,5 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif
 #endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
     public enum CloudAuthType : byte
@@ -21,3 +22,4 @@ namespace Evesoft.CloudService
         #endif
     }
 }
+#endif

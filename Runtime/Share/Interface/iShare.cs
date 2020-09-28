@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using UnityEngine;
 
 namespace Evesoft.Share
@@ -13,3 +14,4 @@ namespace Evesoft.Share
         void Share();
     }
 }
+#endif

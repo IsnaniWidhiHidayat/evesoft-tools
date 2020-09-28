@@ -1,4 +1,5 @@
-﻿namespace Evesoft.IAP
+#if ODIN_INSPECTOR 
+namespace Evesoft.IAP
 {
     public enum ProductType
     {
@@ -7,3 +8,5 @@
         Subscription = 2
     }
 }
+
+#endif

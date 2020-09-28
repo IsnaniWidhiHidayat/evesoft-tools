@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Collections.Generic;
 
 namespace Evesoft.Ads
@@ -40,3 +41,4 @@ namespace Evesoft.Ads
         }
     }
 }
+#endif

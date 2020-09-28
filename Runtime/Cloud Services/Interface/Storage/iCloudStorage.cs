@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Threading.Tasks;
 using System.Threading;
@@ -16,3 +17,4 @@ namespace Evesoft.CloudService
         Task<Exception> RemoveFile(string path);
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
     public enum CloudRemoteConfigType : byte
@@ -12,3 +13,4 @@ namespace Evesoft.CloudService
         #endif
     }
 }
+#endif

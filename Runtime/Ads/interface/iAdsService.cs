@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 
 namespace Evesoft.Ads
@@ -43,3 +44,4 @@ namespace Evesoft.Ads
         void RequestRewardVideo();     
     }
 }
+#endif

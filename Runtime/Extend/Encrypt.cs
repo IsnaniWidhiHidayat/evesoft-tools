@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
@@ -95,3 +96,5 @@ namespace Evesoft
         }
     }
 }
+
+#endif

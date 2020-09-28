@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -251,6 +252,12 @@ namespace Evesoft
             
             foreach (var dir in di.GetDirectories())
                 dir.Delete(true); 
+        }  
+        public static string[] GetFiles(this string path,string extension)
+        {
+            return Directory.GetFiles(path,extension,SearchOption.AllDirectories);
         }
     }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -10,3 +11,4 @@ namespace Evesoft.CloudService
         Task<Exception> Disconnect(iCloudDatabaseReference reference);
     }
 }
+#endif

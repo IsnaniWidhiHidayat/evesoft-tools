@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Share
 {
     public enum ShareType
@@ -7,3 +8,4 @@ namespace Evesoft.Share
         #endif
     }
 }
+#endif

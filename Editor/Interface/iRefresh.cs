@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Editor
 {
     public interface iRefresh
@@ -5,3 +6,4 @@ namespace Evesoft.Editor
         void Refresh();
     }
 }
+#endif

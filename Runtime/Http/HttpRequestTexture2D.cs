@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -111,3 +112,4 @@ namespace Evesoft.Http
         }
     }
 }
+#endif

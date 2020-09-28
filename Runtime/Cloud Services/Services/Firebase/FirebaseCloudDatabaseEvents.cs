@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_REALTIME_DATABASE
 using System;
 
@@ -34,4 +35,5 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif
 #endif

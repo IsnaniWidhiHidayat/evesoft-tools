@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if ADMOB
 using System;
 using System.Collections.Generic;
@@ -86,4 +87,5 @@ namespace Evesoft.Ads.Admob
         #endregion
     }
 }
+#endif
 #endif

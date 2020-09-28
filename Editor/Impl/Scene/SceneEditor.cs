@@ -1,4 +1,5 @@
-﻿
+#if ODIN_INSPECTOR 
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -105,3 +106,5 @@ namespace Evesoft.Editor.Scene
         #endregion
     } 
 }
+
+#endif

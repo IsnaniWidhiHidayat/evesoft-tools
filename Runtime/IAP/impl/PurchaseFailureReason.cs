@@ -1,4 +1,5 @@
-﻿namespace Evesoft.IAP
+#if ODIN_INSPECTOR 
+namespace Evesoft.IAP
 {
     public enum PurchaseFailureReason
     {
@@ -12,3 +13,5 @@
         Unknown = 7
     }
 }
+
+#endif

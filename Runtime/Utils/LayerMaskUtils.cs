@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,3 +23,4 @@ namespace Evesoft.Utils
         }
     }
 }
+#endif

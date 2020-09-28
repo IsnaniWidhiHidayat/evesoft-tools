@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,3 +15,4 @@ namespace Evesoft.CloudService
         Task<Exception> UpdateData(IDictionary<string,object> value);
     }
 }
+#endif

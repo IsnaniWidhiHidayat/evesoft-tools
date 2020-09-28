@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Reflection;
 
@@ -27,3 +28,4 @@ namespace Evesoft.Editor
         }
     }
 }
+#endif

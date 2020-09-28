@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
     public enum PayoutType
@@ -8,3 +9,4 @@ namespace Evesoft.IAP
         Resource = 3
     }
 }
+#endif

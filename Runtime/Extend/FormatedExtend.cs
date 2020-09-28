@@ -1,4 +1,5 @@
-﻿
+#if ODIN_INSPECTOR 
+
 
 using System;
 
@@ -284,3 +285,5 @@ namespace Evesoft
         }
     }
 }
+
+#endif

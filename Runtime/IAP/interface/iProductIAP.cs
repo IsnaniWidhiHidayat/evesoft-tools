@@ -1,4 +1,5 @@
-﻿namespace Evesoft.IAP
+#if ODIN_INSPECTOR 
+namespace Evesoft.IAP
 {
     public interface iProductIAP
     {
@@ -9,3 +10,5 @@
         void Init(iProduct product);
     }
 }
+
+#endif

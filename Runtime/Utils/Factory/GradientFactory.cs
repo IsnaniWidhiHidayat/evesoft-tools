@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 
 using UnityEngine;
 
@@ -31,3 +32,4 @@ namespace Evesoft.Utils
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Collections.Generic;
 
 namespace Evesoft.CloudService
@@ -15,3 +16,4 @@ namespace Evesoft.CloudService
         #endif
     }
 }
+#endif

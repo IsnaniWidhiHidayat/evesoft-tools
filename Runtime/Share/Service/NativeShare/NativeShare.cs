@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if NATIVE_SHARE
 using System;
 using UnityEngine;
@@ -73,4 +74,5 @@ namespace Evesoft.Share.NativeShare
     }
 }
 
+#endif
 #endif

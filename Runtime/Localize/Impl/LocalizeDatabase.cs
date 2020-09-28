@@ -1,4 +1,5 @@
-﻿#if LOCALIZE
+#if ODIN_INSPECTOR 
+#if LOCALIZE
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -191,4 +192,5 @@ namespace Evesoft.Localize
         }
     }
 }
+#endif
 #endif

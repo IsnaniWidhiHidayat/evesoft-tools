@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#if ODIN_INSPECTOR 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Evesoft.MeshCombiner
@@ -86,3 +87,5 @@ namespace Evesoft.MeshCombiner
     }
 }
 
+
+#endif

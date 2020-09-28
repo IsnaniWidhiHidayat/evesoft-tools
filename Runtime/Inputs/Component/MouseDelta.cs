@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if ODIN_INSPECTOR 
+using UnityEngine;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.Input
@@ -35,3 +36,5 @@ namespace Evesoft.Input
         }
     } 
 }
+
+#endif

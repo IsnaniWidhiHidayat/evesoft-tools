@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft
 {
     public static class Menu
@@ -9,3 +10,4 @@ namespace Evesoft
         public const string localize = root + "/Localize";
     }
 }
+#endif

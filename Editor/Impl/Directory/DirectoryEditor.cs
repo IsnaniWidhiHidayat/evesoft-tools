@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using Sirenix.OdinInspector;
 using UnityEditor;
 
@@ -64,3 +65,4 @@ namespace Evesoft.Editor.Directory
         #endregion
     }
 }
+#endif

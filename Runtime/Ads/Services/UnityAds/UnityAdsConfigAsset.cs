@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if UNITY_ADS
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -33,4 +34,5 @@ namespace Evesoft.Ads.UnityAds
         #endregion
     }
 }
+#endif
 #endif

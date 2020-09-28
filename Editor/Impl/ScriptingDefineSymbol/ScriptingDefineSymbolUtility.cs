@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -62,3 +63,4 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
         }
     }
 }
+#endif

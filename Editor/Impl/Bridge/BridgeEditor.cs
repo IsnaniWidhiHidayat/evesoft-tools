@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Evesoft.Editor.ScriptingDefineSymbol;
@@ -394,3 +395,4 @@ public class Test : MonoBehaviour
         #endregion
     }
 }
+#endif

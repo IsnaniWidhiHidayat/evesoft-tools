@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_AUTH
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -199,4 +200,5 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif
 #endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
     public interface iProduct
@@ -10,3 +11,4 @@ namespace Evesoft.IAP
         iProductMetadata metadata{get;}
     }
 }
+#endif

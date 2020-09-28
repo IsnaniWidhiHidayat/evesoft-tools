@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_REALTIME_DATABASE
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -98,4 +99,5 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif
 #endif

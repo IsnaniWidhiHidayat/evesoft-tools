@@ -1,4 +1,5 @@
-﻿using System.IO;
+#if ODIN_INSPECTOR 
+using System.IO;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
@@ -77,3 +78,5 @@ namespace Evesoft.Utils
         }       
     }
 }
+
+#endif

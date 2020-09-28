@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if ADMOB
 
 namespace Evesoft.Ads.Admob
@@ -14,4 +15,6 @@ namespace Evesoft.Ads.Admob
         Custom = 7
     }
 }
+#endif
+
 #endif

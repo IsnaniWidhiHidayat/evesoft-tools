@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if ODIN_INSPECTOR 
+using UnityEngine;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.Views
@@ -41,3 +42,4 @@ namespace Evesoft.Views
         #endregion
     } 
 }
+#endif

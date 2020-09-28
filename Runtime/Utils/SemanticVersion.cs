@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR 
+using Sirenix.OdinInspector;
 using System;
 
 namespace Evesoft.Utils
@@ -53,3 +54,4 @@ namespace Evesoft.Utils
         }
     }
 }
+#endif

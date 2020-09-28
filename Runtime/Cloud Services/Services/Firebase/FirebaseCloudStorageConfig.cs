@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if FIREBASE_STORAGE
 using System.Collections.Generic;
 
@@ -37,4 +38,5 @@ namespace Evesoft.CloudService.Firebase
         #endregion
     }
 }
+#endif
 #endif

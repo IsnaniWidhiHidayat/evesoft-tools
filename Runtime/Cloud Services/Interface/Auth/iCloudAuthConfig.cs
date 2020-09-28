@@ -1,4 +1,5 @@
-﻿namespace Evesoft.CloudService
+#if ODIN_INSPECTOR 
+namespace Evesoft.CloudService
 {
     public interface iCloudAuthConfig
     {
@@ -7,3 +8,5 @@
 }
 
 
+
+#endif

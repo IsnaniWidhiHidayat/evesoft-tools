@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
@@ -67,3 +68,4 @@ namespace Evesoft.CloudService
         #endregion
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if UNITY_REMOTE_CONFIG
 using System;
 using System.Threading.Tasks;
@@ -109,4 +110,5 @@ namespace Evesoft.CloudService.UnityRemoteConfig
         #endregion
     }
 }
+#endif
 #endif

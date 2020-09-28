@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if UNITY_ADS
 
 using System;
@@ -80,4 +81,5 @@ namespace Evesoft.Ads.UnityAds
         #endregion
     }
 }
+#endif
 #endif

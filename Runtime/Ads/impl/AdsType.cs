@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.Ads
 {
     public enum AdsType
@@ -11,3 +12,4 @@ namespace Evesoft.Ads
 #endif
     }
 }
+#endif

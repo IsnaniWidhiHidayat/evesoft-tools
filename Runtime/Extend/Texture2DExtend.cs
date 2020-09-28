@@ -1,4 +1,5 @@
-﻿
+#if ODIN_INSPECTOR 
+
 using System.Threading;
 using UnityEngine;
 
@@ -191,3 +192,5 @@ namespace Evesoft
         }
     }
 }
+
+#endif

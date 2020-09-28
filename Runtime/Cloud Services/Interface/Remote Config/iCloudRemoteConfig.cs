@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+#if ODIN_INSPECTOR 
+using System.Threading.Tasks;
 
 namespace Evesoft.CloudService
 {
@@ -11,3 +12,5 @@ namespace Evesoft.CloudService
     }
 }
 
+
+#endif

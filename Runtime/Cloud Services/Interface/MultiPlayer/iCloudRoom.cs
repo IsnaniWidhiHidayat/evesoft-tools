@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using System.Collections.Generic;
 
@@ -20,3 +21,4 @@ namespace Evesoft.CloudService
         void LeftRemoveRoom();
     }
 }
+#endif

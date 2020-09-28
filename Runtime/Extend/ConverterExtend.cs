@@ -1,4 +1,5 @@
-﻿using System;
+#if ODIN_INSPECTOR 
+using System;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Text;
@@ -175,3 +176,5 @@ namespace Evesoft
         }
     }
 }
+
+#endif

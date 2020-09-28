@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
     public interface iUserAuth 
@@ -10,3 +11,4 @@ namespace Evesoft.CloudService
         CloudAuthType authType{get;}
     }
 }
+#endif

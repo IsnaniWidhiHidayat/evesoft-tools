@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if ODIN_INSPECTOR 
+using UnityEngine;
 using UnityDebug = UnityEngine.Debug;
 
 namespace Evesoft
@@ -127,3 +128,4 @@ namespace Evesoft
         
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿#if ADMOB
+#if ODIN_INSPECTOR 
+#if ADMOB
 
 using System;
 using GoogleMobileAds.Api;
@@ -399,4 +400,5 @@ namespace Evesoft.Ads.Admob
     }
 } 
 
+#endif
 #endif

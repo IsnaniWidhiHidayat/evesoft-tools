@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+#if ODIN_INSPECTOR 
+using UnityEngine;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.Utils
@@ -15,3 +16,5 @@ namespace Evesoft.Utils
         void OnDrawGizmos() { }
     } 
 }
+
+#endif

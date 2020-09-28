@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if PLAYSERVICE_AUTH
 using System;
 using System.Threading.Tasks;
@@ -81,4 +82,5 @@ namespace Evesoft.CloudService.GooglePlayService
         #endregion
     }
 }
+#endif
 #endif

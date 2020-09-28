@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+#if ODIN_INSPECTOR 
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System;
 using UnityEditor;
@@ -53,4 +54,5 @@ namespace Evesoft.Editor
         }
     }
 }  
+#endif
 #endif

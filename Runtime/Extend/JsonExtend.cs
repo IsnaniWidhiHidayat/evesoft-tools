@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -104,3 +105,4 @@ namespace Evesoft
         }
     }
 }
+#endif

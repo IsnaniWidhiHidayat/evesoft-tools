@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR 
 #if ADMOB
 
 namespace Evesoft.Ads.Admob
@@ -9,5 +10,7 @@ namespace Evesoft.Ads.Admob
         Female = 2
     }
 }
+
+#endif
 
 #endif
