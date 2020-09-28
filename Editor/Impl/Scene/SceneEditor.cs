@@ -78,7 +78,7 @@ namespace Evesoft.Editor.Scene
         #region iGroupEditor
         public string name => "Scenes";
 
-        //[Button(ButtonSizes.Small),GUIColor(0,1,0),PropertyOrder(-1)]
+
         public void Refresh()
         {
             scenes.Clear();
@@ -98,7 +98,6 @@ namespace Evesoft.Editor.Scene
         {
             Refresh();
         }
-
         public void OnGUI()
         {
             
