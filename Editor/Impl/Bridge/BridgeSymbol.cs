@@ -20,6 +20,7 @@ namespace Evesoft.Editor.Bridge
         internal const string NATIVE_SHARE = nameof(NATIVE_SHARE);
         internal const string NATIVE_GALLERY = nameof(NATIVE_GALLERY);
         internal const string REST_API = nameof(REST_API);
+        internal const string YARN_SPINNER = nameof(YARN_SPINNER);
     }   
 }
 #endif

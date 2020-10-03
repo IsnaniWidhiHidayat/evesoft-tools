@@ -19,6 +19,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
         public void Refresh()
         {
+            "Refresh".Log();
             _symbols = ScriptingDefineSymbolUtility.GetDefineSymbol();
         } 
         public void OnScriptReloaded()
@@ -28,7 +29,11 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
         #endregion
 
         #region methods
-        [Button,PropertyOrder(-1)]
+        private bool ShowApplyBtn()
+        {
+            return ScriptingDefineSymbolUtility.GetDefineSymbol().Join() != _symbols.Join();
+        }
+        [Button,ShowIf(nameof(ShowApplyBtn))]
         private void Apply()
         {
             ScriptingDefineSymbolUtility.SaveDefineSymbol(_symbols);
@@ -39,7 +44,7 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
         }   
         public void OnWindowClicked()
         {
-            Refresh();
+            //Refresh();
         }
         public void OnGUI()
         {

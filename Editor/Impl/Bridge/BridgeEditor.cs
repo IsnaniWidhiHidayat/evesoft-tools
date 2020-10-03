@@ -28,7 +28,8 @@ namespace Evesoft.Editor.Bridge
         FirebaseRemoteConfig,
         UnityRemoteConfig,
         FirebaseStorage,
-        Share ;
+        Share ,
+        YarnSpinner;
         #endregion
 
         #region iGroupEditor
@@ -47,7 +48,7 @@ namespace Evesoft.Editor.Bridge
         }
         public void OnWindowClicked()
         {
-            Refresh();
+            //Refresh();
         }
         public void OnGUI()
         {
@@ -55,7 +56,29 @@ namespace Evesoft.Editor.Bridge
         }
         #endregion
 
-        [Button,PropertyOrder(-1),DisableIf("@EditorApplication.isCompiling")]
+        private bool ShowApplyOrCancelBtn()
+        {
+            if(EditorApplication.isCompiling)
+                return false;
+
+            var symbols = ScriptingDefineSymbolUtility.GetDefineSymbol();
+           
+            if(!bridges.IsNullOrEmpty())
+            {
+                foreach (var bridge in bridges)
+                {
+                    if(bridge.isEnable && !symbols.Contains(bridge.symbol))
+                        return true;
+                    
+                    if(!bridge.isEnable && symbols.Contains(bridge.symbol))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        [Button,PropertyOrder(-1),HorizontalGroup,ShowIf(nameof(ShowApplyOrCancelBtn))]
         public void Apply()
         {
             var symbols = ScriptingDefineSymbolUtility.GetDefineSymbol();
@@ -107,6 +130,12 @@ namespace Evesoft.Editor.Bridge
             }    
         }
 
+        [Button,PropertyOrder(-1),HorizontalGroup,ShowIf(nameof(ShowApplyOrCancelBtn))]
+        public void Cancel()
+        {
+            Refresh();
+        }
+
         #region constructor
         public BridgeEditor()
         {
@@ -125,6 +154,7 @@ namespace Evesoft.Editor.Bridge
             UnityRemoteConfig                    = new Bridge("Unity Remote Config",BridgeSymbol.UNITY_REMOTE_CONFIG,null,new Prequested("Unity Remote Config","Unity.RemoteConfig","https://firebase.google.com/docs/unity/setup",BuildTarget.Android,BuildTarget.iOS,BuildTarget.StandaloneWindows,BuildTarget.StandaloneOSX));
             FirebaseStorage                      = new Bridge("Firebase Storage",BridgeSymbol.FIREBASE_STORAGE,null,new Prequested("Firebase Storage","Firebase.Storage","https://firebase.google.com/docs/unity/setup",BuildTarget.Android,BuildTarget.iOS));
             Share                                = new Bridge("Share",BridgeSymbol.NATIVE_SHARE,null,new Prequested("Native Share","NativeShare,NativeShare.Runtime","https://assetstore.unity.com/packages/tools/integration/native-share-for-android-ios-112731",BuildTarget.Android,BuildTarget.iOS));
+            YarnSpinner                          = new Bridge("YarnSpinner",BridgeSymbol.YARN_SPINNER,null,new Prequested("Yarn Spinner","Yarn.Unity","https://yarnspinner.dev/"));
 
             var guide = @"using Evesoft.Ads;
 using Sirenix.OdinInspector;
@@ -390,6 +420,7 @@ public class Test : MonoBehaviour
                 UnityRemoteConfig                   ,
                 FirebaseStorage                     ,
                 Share,
+                YarnSpinner,
             };
         }
         #endregion

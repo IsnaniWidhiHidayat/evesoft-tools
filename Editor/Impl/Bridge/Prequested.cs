@@ -41,7 +41,7 @@ namespace Evesoft.Editor.Bridge
             if(!isInstalled)
                 isInstalled = !namespaceclass.IsNullOrEmpty()? TypeUtility.IsTypeExist(namespaceclass) : true;
 
-            isPlatformSupported = platforms.IsNullOrEmpty()?true:ArrayUtility.Contains(platforms,EditorUserBuildSettings.activeBuildTarget);
+            isPlatformSupported = platforms.IsNullOrEmpty()? true : ArrayUtility.Contains(platforms,EditorUserBuildSettings.activeBuildTarget);
         }
         #endregion
 
