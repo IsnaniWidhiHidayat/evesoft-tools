@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.Utils
 {
     [HideMonoScript]
-    [AddComponentMenu(Menu.utils + "/ScreenDimming")]
+    [AddComponentMenu(Menu.utils + "/" + nameof(ScreenDimming))]
     internal class ScreenDimming : MonoBehaviour
     {
         private void Start()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using UnityEditor;
 
-namespace Evesoft.Editor
+namespace Evesoft.Utils
 {
     public static class AssetDatabaseFinder
     {

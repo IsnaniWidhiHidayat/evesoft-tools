@@ -1,5 +1,7 @@
 #if ODIN_INSPECTOR 
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Evesoft.CloudService
 {
@@ -7,7 +9,7 @@ namespace Evesoft.CloudService
     {
         private static IDictionary<CloudAuthType,iCloudAuth> auths = new Dictionary<CloudAuthType,iCloudAuth>();
 
-        public static iCloudAuth CreateAuth(iCloudAuthConfig config)
+        public static iCloudAuth Create(iCloudAuthConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -53,6 +55,18 @@ namespace Evesoft.CloudService
                 }
             }
         }     
+        public static iCloudAuth Get(CloudAuthType type)
+        {
+            if(auths.ContainsKey(type))
+                return auths[type];
+
+            return null;
+        }
+        public static async Task<iCloudAuth> GetAsync(CloudAuthType type)
+        {
+            await new WaitUntil(()=> !Get(type).IsNull());
+            return Get(type);
+        }
     }
 }
 #endif

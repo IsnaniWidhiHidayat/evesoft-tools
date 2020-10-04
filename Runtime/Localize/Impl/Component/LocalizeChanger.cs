@@ -69,7 +69,7 @@ namespace Evesoft.Localize
         {
             #if UNITY_EDITOR
             if (database.IsNull())
-                database = Evesoft.Editor.AssetDatabaseFinder.Find<LocalizeDatabase>();
+                database = Utils.AssetDatabaseFinder.Find<LocalizeDatabase>();
             #endif
 
             if (!database.IsNull())

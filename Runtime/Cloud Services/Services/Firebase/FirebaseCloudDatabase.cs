@@ -85,6 +85,7 @@ namespace Evesoft.CloudService.Firebase
             if(reference.IsNull())
                 return new ArgumentNullException(nameof(reference));
 
+            await new WaitForEndOfFrame();
             reference.Dispose();
             return null;
         }

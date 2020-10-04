@@ -33,7 +33,7 @@ namespace Evesoft.Editor.Scene
             this.openMode = openMode;
         }
         #endregion
-        [Button(size: ButtonSizes.Small, Name = "Single"),HorizontalGroup(Width = 70)]
+        [Button(size: ButtonSizes.Small, Name = "Single"),HorizontalGroup(Width = 60)]
         public void LoadSingle()
         {
             if (!string.IsNullOrEmpty(name))
@@ -50,7 +50,7 @@ namespace Evesoft.Editor.Scene
             }
         }
 
-        [Button(size: ButtonSizes.Small, Name = "Additive"),HorizontalGroup(Width = 70)]
+        [Button(size: ButtonSizes.Small, Name = "Additive"),HorizontalGroup(Width = 60)]
         public void LoadAdditive()
         {
             if (!string.IsNullOrEmpty(name))
@@ -65,6 +65,14 @@ namespace Evesoft.Editor.Scene
                     Debug.LogError(ex.Message);
                 }
             }
+        }
+
+        [Button(size: ButtonSizes.Small),HorizontalGroup(Width = 40)]
+        public void Ping()
+        {
+            var path    = "Assets" + this.path.Replace(Application.dataPath,string.Empty);
+            var obj     = AssetDatabase.LoadMainAssetAtPath(path);
+            EditorGUIUtility.PingObject(obj);
         }
     }
 

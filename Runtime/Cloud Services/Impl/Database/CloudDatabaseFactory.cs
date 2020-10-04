@@ -1,5 +1,7 @@
 #if ODIN_INSPECTOR 
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Evesoft.CloudService
 {
@@ -18,7 +20,7 @@ namespace Evesoft.CloudService
 
         private static IDictionary<CloudDatabaseType,object> databases = new Dictionary<CloudDatabaseType,object>();
 
-        public static iCloudDatabase CreateDatabase(iCloudDatabaseConfig config)
+        public static iCloudDatabase Create(iCloudDatabaseConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -51,6 +53,36 @@ namespace Evesoft.CloudService
                     return null;
                 }
             }
+        }
+        public static iCloudDatabase Get(CloudDatabaseType type,params string[] param)
+        {
+            switch(type)
+            {
+                #if FIREBASE_REALTIME_DATABASE
+                case CloudDatabaseType.FirebaseRealtimeDatabase:
+                {
+                    if(databases.ContainsKey(type))
+                    {
+                        var services = databases[type] as Dictionary<string,iCloudDatabase>;
+                        var db       = param.IsNullOrEmpty()? "default" : param.First() ;
+                        if(services.ContainsKey(db))
+                            return services[db];
+                    }
+
+                    return null;  
+                }
+                #endif
+
+                default:
+                {
+                    return null;
+                }
+            }
+        }
+        public static async Task<iCloudDatabase> GetAsync(CloudDatabaseType type)
+        {
+            await new WaitUntil(()=> !Get(type).IsNull());
+            return Get(type);
         }
     }
 }

@@ -116,7 +116,7 @@ namespace Evesoft.Localize
             ClearNull();
 
             #if UNITY_EDITOR
-            localize = Editor.AssetDatabaseFinder.Finds<LocalizeData>();
+            localize = Utils.AssetDatabaseFinder.Finds<LocalizeData>();
             UnityEditor.SceneManagement.EditorSceneManager.activeSceneChangedInEditMode += OnSceneLoaded;
             #endif        
         }

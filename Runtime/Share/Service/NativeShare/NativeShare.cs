@@ -53,7 +53,7 @@ namespace Evesoft.Share.NativeShare
         }
         public iShare SetTarget(string androidPackageName, string androidClassName = null)
         {
-            _nativeShare.SetTarget(androidClassName,androidClassName);
+            _nativeShare.AddTarget(androidClassName,androidClassName);
            return this;
         }
         public iShare SetText(string text)

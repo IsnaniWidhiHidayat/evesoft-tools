@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Evesoft.Dialogue
 {
@@ -6,7 +8,7 @@ namespace Evesoft.Dialogue
     {
         private static IDictionary<DialogueType,iDialogue> dialogue = new Dictionary<DialogueType,iDialogue>();
 
-        public static iDialogue CreateDialogue(iDialogueConfig config)
+        public static iDialogue Create(iDialogueConfig config)
         {
              if(config.IsNull())
                 return null;
@@ -31,5 +33,17 @@ namespace Evesoft.Dialogue
                 }
             }
         }
+        public static iDialogue Get(DialogueType type)
+        {
+            if(dialogue.ContainsKey(type))
+                return dialogue[type];
+
+            return null;
+        }
+        public static async Task<iDialogue> GetAsync(DialogueType type)
+        {
+            await new WaitUntil(()=> !Get(type).IsNull());
+            return Get(type);
+        }              
     }
 }

@@ -1,5 +1,7 @@
 #if ODIN_INSPECTOR 
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Evesoft.CloudService
 {
@@ -7,7 +9,7 @@ namespace Evesoft.CloudService
     {
         private static IDictionary<CloudStorageType,iCloudStorage> storages = new Dictionary<CloudStorageType,iCloudStorage>();
         
-        public static iCloudStorage CreateStorage(iCloudStorageConfig config)
+        public static iCloudStorage Create(iCloudStorageConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -31,6 +33,18 @@ namespace Evesoft.CloudService
                     return null;
                 }
             }
+        }
+        public static iCloudStorage Get(CloudStorageType type)
+        {
+            if(storages.ContainsKey(type))
+                return storages[type];
+
+            return null;
+        }
+        public static async Task<iCloudStorage> GetAsync(CloudStorageType type)
+        {
+            await new WaitUntil(()=> !Get(type).IsNull());
+            return Get(type);
         }
     }
 }

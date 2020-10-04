@@ -154,7 +154,7 @@ namespace Evesoft.Editor.Bridge
             UnityRemoteConfig                    = new Bridge("Unity Remote Config",BridgeSymbol.UNITY_REMOTE_CONFIG,null,new Prequested("Unity Remote Config","Unity.RemoteConfig","https://firebase.google.com/docs/unity/setup",BuildTarget.Android,BuildTarget.iOS,BuildTarget.StandaloneWindows,BuildTarget.StandaloneOSX));
             FirebaseStorage                      = new Bridge("Firebase Storage",BridgeSymbol.FIREBASE_STORAGE,null,new Prequested("Firebase Storage","Firebase.Storage","https://firebase.google.com/docs/unity/setup",BuildTarget.Android,BuildTarget.iOS));
             Share                                = new Bridge("Share",BridgeSymbol.NATIVE_SHARE,null,new Prequested("Native Share","NativeShare,NativeShare.Runtime","https://assetstore.unity.com/packages/tools/integration/native-share-for-android-ios-112731",BuildTarget.Android,BuildTarget.iOS));
-            YarnSpinner                          = new Bridge("YarnSpinner",BridgeSymbol.YARN_SPINNER,null,new Prequested("Yarn Spinner","Yarn.Unity","https://yarnspinner.dev/"));
+            YarnSpinner                          = new Bridge("YarnSpinner",BridgeSymbol.YARN_SPINNER,new Reference.YarnSpinnerReference(),new Prequested("Yarn Spinner","Yarn.Unity","https://yarnspinner.dev/"));
 
             var guide = @"using Evesoft.Ads;
 using Sirenix.OdinInspector;
@@ -275,6 +275,10 @@ public class Test : MonoBehaviour
             Texture2DCache.defaultInstance.AddCache(new Texture2DCacheData(url,key,texture));
     }
 }");
+            Localize.AddHowToUse(@"1. Create Database     : RightClick On Project Window -> Create -> Evesoft -> Localize -> LocalizeDatabase.
+2. Create LocalizeData : RightClick On Project Window -> Create -> Evesoft -> Localize -> LocalizeData.
+3. Add Localize Component to Any GameObject you want localize, then choose localize data you want to use by dropdown.
+4. To change language just change language on Database already created");
             FirebaseRealtimeDatabase.AddHowToUse(@"
 using UnityEngine;
 using Evesoft;

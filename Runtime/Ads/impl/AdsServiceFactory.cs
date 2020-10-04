@@ -1,5 +1,7 @@
 #if ODIN_INSPECTOR 
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Evesoft.Ads
 {
@@ -7,7 +9,7 @@ namespace Evesoft.Ads
     {
         private static IDictionary<AdsType,iAdsService> adServices = new Dictionary<AdsType, iAdsService>();
 
-        public static iAdsService CreateService(iAdsConfig config)
+        public static iAdsService Create(iAdsConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -38,6 +40,18 @@ namespace Evesoft.Ads
                     return null;
                 }
             }
+        }
+        public static iAdsService Get(AdsType type)
+        {
+            if(adServices.ContainsKey(type))
+                return adServices[type];
+
+            return null;
+        }
+        public static async Task<iAdsService> GetAsync(AdsType type)
+        {
+            await new WaitUntil(()=> !Get(type).IsNull());
+            return Get(type);
         }
     }
 }

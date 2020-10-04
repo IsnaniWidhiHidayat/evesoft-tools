@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using Yarn;
 using Yarn.Unity;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
-namespace Evesoft.Dialogue.YarnSpinner
+namespace Evesoft.Dialogue.YarnSpinner.Component
 {
-    public class YarnSpinnerVariableStorage : VariableStorageBehaviour
+    [HideMonoScript]
+    [DisallowMultipleComponent]
+    internal class YarnSpinnerVariableStorage : VariableStorageBehaviour
     {
         #region private
-        [ShowInInspector,HideLabel]
         private IDictionary<string,Yarn.Value> _variables;
         private IDictionary<string,object> _defaultVariables;
+        #endregion
+
+        #region property
+        #if UNITY_EDITOR
+        internal IDictionary<string,string> viewVariables = new Dictionary<string,string>();
+        #endif
         #endregion
 
         #region VariableStorageBehaviour
@@ -19,6 +27,10 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             variableName = string.Format("${0}",variableName);
             _variables[variableName] = new Yarn.Value(value);
+
+            #if UNITY_EDITOR
+            viewVariables[variableName] = value.AsString;
+            #endif
         }
         public override Value GetValue(string variableName)
         {
@@ -41,12 +53,18 @@ namespace Evesoft.Dialogue.YarnSpinner
         }       
         #endregion
 
-        #region constructor
-        public YarnSpinnerVariableStorage(IDictionary<string,object> defaultVariables = null)
+        #region methods
+        public void SetDefaultVariable(IDictionary<string,object> defaultVariables)
         {
-            _variables          = new Dictionary<string, Yarn.Value>();
-            _defaultVariables   = defaultVariables;
+            _defaultVariables = defaultVariables;
             ResetToDefaults();
+        }
+        #endregion
+
+        #region constructor
+        public YarnSpinnerVariableStorage()
+        {
+            _variables = new Dictionary<string,Yarn.Value>();
         }
         #endregion
     }

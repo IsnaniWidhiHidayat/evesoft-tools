@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.Utils
 {
     [HideMonoScript]
-    [AddComponentMenu(Menu.utils + "/RunInBackground")]
+    [AddComponentMenu(Menu.utils + "/" + nameof(RunInBackground))]
     internal class RunInBackground : MonoBehaviour
     {
         private void Start()

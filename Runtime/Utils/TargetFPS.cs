@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.Utils
 {
     [HideMonoScript]
-    [AddComponentMenu(Menu.utils + "/TargetFPS")]
+    [AddComponentMenu(Menu.utils + "/" + nameof(TargetFPS))]
     public class TargetFPS : MonoBehaviour
     {     
         public enum TargetFPSType

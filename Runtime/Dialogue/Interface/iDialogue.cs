@@ -5,8 +5,9 @@ namespace Evesoft.Dialogue
 {
     public interface iDialogue
     {
-        event Action<iDialogue,string> onNodeStart;
-        event Action<iDialogue,string> onNodeComplete;
+        event Action<iDialogue,string> onDialogueStart;
+        event Action<iDialogue,string> onDialogueEnd;
+        event Action<iDialogue> onDialogueComplete;
         
         string currentNode{get;}
 

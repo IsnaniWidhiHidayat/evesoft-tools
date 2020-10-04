@@ -19,7 +19,6 @@ namespace Evesoft.Editor.ScriptingDefineSymbol
 
         public void Refresh()
         {
-            "Refresh".Log();
             _symbols = ScriptingDefineSymbolUtility.GetDefineSymbol();
         } 
         public void OnScriptReloaded()

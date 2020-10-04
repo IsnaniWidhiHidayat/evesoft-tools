@@ -36,9 +36,9 @@ namespace Evesoft.CloudService.Firebase
             {
                 #if FIREBASE_REMOTE_CONFIG
                 return !FRC.Keys.IsNullOrEmpty();
-                #endif
-                
+                #else
                 return !_configs.IsNullOrEmpty();
+                #endif
             }
         }
         public  T GetConfig<T>(string key)
@@ -143,7 +143,7 @@ namespace Evesoft.CloudService.Firebase
                 #if FIREBASE_REALTIME_DATABASE
                 case FirebaseCloudRemoteConfigType.RealtimeDatabase:
                 {
-                    var database = CloudDatabaseFactory.CreateDatabase(CloudDatabaseConfigFactory.CreateFirebaseDatabaseConfig());
+                    var database = CloudDatabaseFactory.Create(CloudDatabaseConfigFactory.CreateFirebaseDatabaseConfig());
                     var exception = default(Exception);
                     var root = "config";
                     var dev  = "development";
