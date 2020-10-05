@@ -33,7 +33,7 @@ namespace Evesoft.Editor.Reference
         {
             get
             {
-                var dialogue = DialogueFactory.Get(DialogueType.YarnSpinner);
+                var dialogue = Evesoft.Dialogue.DialogueFactory.Get(Evesoft.Dialogue.DialogueType.YarnSpinner);
                 if(dialogue.IsNull())
                     return null;
 

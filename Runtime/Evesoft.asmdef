@@ -5,7 +5,9 @@
         "YarnSpinner.Unity",
         "Unity.RemoteConfig",
         "NativeShare.Runtime",
-        "UnityEngine.Advertisements"
+        "UnityEngine.Advertisements",
+        "GooglePlayGames",
+        "GoogleSignIn"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
