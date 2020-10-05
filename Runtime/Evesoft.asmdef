@@ -1,0 +1,21 @@
+{
+    "name": "Evesoft",
+    "references": [
+        "GoogleMobileAds",
+        "YarnSpinner.Unity",
+        "Unity.RemoteConfig",
+        "NativeShare.Runtime",
+        "UnityEngine.Advertisements"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "UnityEngine.Purchasing.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,8 +1,6 @@
 #if ODIN_INSPECTOR 
 using System;
 using System.Collections.Generic;
-
-using Evesoft.Dialogue;
 using Sirenix.OdinInspector;
 using UnityEditor;
 
@@ -18,7 +16,7 @@ namespace Evesoft.Editor.Reference
         {
             get
             {
-                var dialogue = DialogueFactory.Get(DialogueType.YarnSpinner);
+                var dialogue = Evesoft.Dialogue.DialogueFactory.Get(Evesoft.Dialogue.DialogueType.YarnSpinner);
                 if(dialogue.IsNull())
                     return null;
 
