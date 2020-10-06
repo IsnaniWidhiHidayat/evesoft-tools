@@ -7,7 +7,7 @@ using Facebook.Unity;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace  Evesoft.CloudService.Facebook
+namespace Evesoft.CloudService.Facebook
 {
     [Serializable,HideReferenceObjectPicker]
     internal class FacebookAuth : iCloudAuth

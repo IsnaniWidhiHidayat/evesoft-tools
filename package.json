@@ -1,13 +1,12 @@
 {
     "name": "com.evesoft.tools",
     "displayName": "Evesoft",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "unity": "2019.4",
     "description": "Evesoft Unity Tools",
     "author": 
     {
-        "name": "Widhi",
+        "name": "Isnani Widhi Hidayat",
         "url": "https://github.com/IsnaniWidhiHidayat/evesoft-tools"
-    },
-    "type": "tool"
+    }
 }

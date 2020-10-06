@@ -20,7 +20,7 @@ namespace Evesoft.Editor.Reference
                 if(dialogue.IsNull())
                     return null;
 
-                var yarn    = dialogue as Evesoft.Dialogue.YarnSpinner.YarnSpinner;
+                var yarn = dialogue as Evesoft.Dialogue.YarnSpinner.YarnSpinner;
                 if(yarn.IsNull())
                     return null;
 

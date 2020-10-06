@@ -176,7 +176,9 @@ namespace Evesoft.Dialogue.YarnSpinner
             var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
             var scripts   = config.GetConfig<IList<YarnProgram>>(YarnSpinnerConfig.SCRIPTS);
             var defaultVariables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
-           
+            var functions = config.GetConfig<IList<(string,int,Yarn.Function)>>(YarnSpinnerConfig.FUNCTIONS);
+            var returningFunctions = config.GetConfig<IList<(string,int,Yarn.ReturningFunction)>>(YarnSpinnerConfig.FUNCTIONS);
+
             //Set dialogue Runner
             _dialogeRunner  = (attachTo.IsNull()? new GameObject(nameof(YarnSpinner)) : attachTo).AddComponent<DialogueRunner>();
             
@@ -188,7 +190,6 @@ namespace Evesoft.Dialogue.YarnSpinner
             storage.SetDefaultVariable(defaultVariables);
             _dialogeRunner.variableStorage  = storage;
 
-
             //Set UI
             var UI = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerUI>();
             UI.SetUI(ui);
@@ -197,20 +198,75 @@ namespace Evesoft.Dialogue.YarnSpinner
             //Set node
             _dialogeRunner.startAutomatically = startAuto;
             _dialogeRunner.startNode          = startNode;
+            _dialogeRunner.yarnScripts        = new YarnProgram[0];
 
             //Set Scripts
             if(!scripts.IsNullOrEmpty())
             {
-                _dialogeRunner.yarnScripts = new YarnProgram[scripts.Count];
-                scripts.CopyTo(_dialogeRunner.yarnScripts,0);
+                foreach (var script in scripts)
+                    _dialogeRunner.Add(script);
             }
-            else
+           
+            //SetFunctions
+            if(!functions.IsNullOrEmpty())
             {
-                _dialogeRunner.yarnScripts = new YarnProgram[0];
+                foreach (var function in functions)
+                {
+                    (var name,var paramCount,var func) = function;
+                    _dialogeRunner.AddFunction(name,paramCount,func);
+                }
             }
 
+            //Set Returning Functions
+            if(!returningFunctions.IsNullOrEmpty())
+            {
+                foreach (var function in returningFunctions)
+                {
+                    (var name,var paramCount,var func) = function;
+                    _dialogeRunner.AddFunction(name,paramCount,func);
+                }
+            }
+
+            //Add Function by component attached
+            var yarnFunctions = GameObject.FindObjectsOfType<Component.YarnSpinnerFunctions>();
+            if(!yarnFunctions.IsNullOrEmpty())
+            {
+                foreach (var item in yarnFunctions)
+                {
+                    if(item.IsNull() || item.registerFunctions.IsNullOrEmpty())
+                        continue;
+
+                    foreach (var function in item.registerFunctions)
+                    {
+                        switch(function.type)
+                        {
+                            case Component.RegisterFunction.Type.Function:
+                            {
+                                if(function.function.IsNull())
+                                    break;
+
+                                _dialogeRunner.AddFunction(function.name,function.paramCount,function.function.Invoke);
+                                break;
+                            }
+
+                            case Component.RegisterFunction.Type.ReturningFunction:
+                            {
+                                if(function.returnfunction.IsNull())
+                                    break;
+
+                                _dialogeRunner.AddFunction(function.name,function.paramCount,function.returnfunction.Invoke);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+          
             //Hide Game Object
             _dialogeRunner.gameObject.hideFlags = HideFlags.HideInHierarchy;
+
+            //dont destroy
+            GameObject.DontDestroyOnLoad(_dialogeRunner.gameObject);
         }
         #endregion
 

@@ -6,7 +6,6 @@ using Firebase.Auth;
 using UnityEngine;
 using Firebase;
 using System;
-using System.Linq;
 using Sirenix.OdinInspector;
 
 namespace Evesoft.CloudService.Firebase

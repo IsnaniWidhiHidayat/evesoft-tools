@@ -12,6 +12,8 @@ namespace Evesoft.Dialogue.YarnSpinner
         public const string START_AUTO = nameof(START_AUTO);
         public const string SCRIPTS    = nameof(SCRIPTS);
         public const string ATTACH_TO  = nameof(ATTACH_TO);
+        public const string FUNCTIONS  = nameof(FUNCTIONS);
+        public const string RETURNING_FUNCTIONS = nameof(RETURNING_FUNCTIONS);
         public const string DEFAULT_VARIABLES_STORAGE = nameof(DEFAULT_VARIABLES_STORAGE);
         #endregion
 
@@ -52,12 +54,38 @@ namespace Evesoft.Dialogue.YarnSpinner
             if(scripts.IsNullOrEmpty())
                 return;
 
-            if(!_configs.ContainsKey(SCRIPTS))
-                _configs[SCRIPTS] = new List<YarnProgram>();
+            var key = SCRIPTS;
+            if(!_configs.ContainsKey(key))
+                _configs[key] = new List<YarnProgram>();
 
-            var value = _configs[SCRIPTS] as List<YarnProgram>;
+            var value = _configs[key] as List<YarnProgram>;
                 value.AddRange(scripts);
         }
+        public void AddFunctions(params (string,int,Yarn.Function)[] functions)
+        {
+            if(functions.IsNullOrEmpty())
+                return;
+
+            var key = FUNCTIONS;
+            if(!_configs.ContainsKey(key))
+                _configs[key] = new List<(string,int,Yarn.Function)>();
+
+            var value = _configs[key] as List<(string,int,Yarn.Function)>;
+                value.AddRange(functions);
+        }
+        public void AddFunctions(params (string,int,Yarn.ReturningFunction)[] functions)
+        {
+            if(functions.IsNullOrEmpty())
+                return;
+
+            var key = RETURNING_FUNCTIONS;
+            if(!_configs.ContainsKey(key))
+                _configs[key] = new List<(string,int,Yarn.ReturningFunction)>();
+
+            var value = _configs[key] as List<(string,int,Yarn.ReturningFunction)>;
+                value.AddRange(functions);
+        }
+        
         public void SetAttachTo(GameObject obj)
         {
             _configs[ATTACH_TO]  = obj;

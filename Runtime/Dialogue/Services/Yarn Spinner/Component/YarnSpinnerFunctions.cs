@@ -50,13 +50,13 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
 
         #region field
         [OdinSerialize,ListDrawerSettings(Expanded = true,DraggableItems = false)]
-        private List<RegisterFunction> registerFunctions = new List<RegisterFunction>();
+        internal List<RegisterFunction> registerFunctions = new List<RegisterFunction>();
         #endregion
 
         #region methods
         private void Start()
         {
-            Init();
+            //Init();
         }
         private async void Init()
         {

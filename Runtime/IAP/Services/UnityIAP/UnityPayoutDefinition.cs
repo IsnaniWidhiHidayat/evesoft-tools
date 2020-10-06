@@ -2,7 +2,7 @@
 #if UNITY_IAP
 namespace Evesoft.IAP.Unity
 {
-    public class UnityPayoutDefinition : iPayoutDefinition
+    internal class UnityPayoutDefinition : iPayoutDefinition
     {
         #region private
         private UnityEngine.Purchasing.PayoutDefinition _definition;

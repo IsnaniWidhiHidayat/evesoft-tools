@@ -6,7 +6,7 @@ using System;
 
 namespace Evesoft.IAP.Unity
 {
-    public class UnityIAP : iIAPService, IStoreListener,IDisposable
+    internal class UnityIAP : iIAPService, IStoreListener,IDisposable
     {
         #region Private
         private IStoreController _storeController;
@@ -51,8 +51,9 @@ namespace Evesoft.IAP.Unity
             _products = products;
             UnityPurchasing.Initialize(this, builder);
         }
-        public void BuyProduct(iProductIAP IAPProduct)
+        public void BuyProduct(iProductIAP product)
         {
+            var IAPProduct = product as UnityProductIAP;
             if (IAPProduct.IsNull() || IAPProduct.product.IsNull() || !IAPProduct.product.availableToPurchase)
                 return;
 
@@ -74,13 +75,15 @@ namespace Evesoft.IAP.Unity
                 if (current.IsNull())
                     continue;
        
-                iProductIAP data = _products.Find(x => x != null && x.id == current.definition.id);
-                
+                var data = _products.Find(x => x != null && x.id == current.definition.id);
                 if(data.IsNull())
                     continue;
 
-                iProduct product = new UnityProduct(products[i]);
-                data.Init(product);
+                var product = data as UnityProductIAP;
+                if(product.IsNull())
+                    continue;
+                
+                product.SetProduct(new UnityProduct(products[i]));
             }
 
             "{0} - {1}".LogFormat(this.GetType(),nameof(onIAPInitialize));

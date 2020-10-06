@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService.UnityRemoteConfig
 {
-    public class UnityRemoteSetting : iCloudRemoteSetting
+    internal class UnityRemoteSetting : iCloudRemoteSetting
     {
         #region const
         internal const string USER = nameof(USER);

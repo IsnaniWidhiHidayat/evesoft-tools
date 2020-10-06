@@ -15,7 +15,7 @@ using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;
 namespace Evesoft.CloudService.Firebase
 {
     [HideReferenceObjectPicker]
-    public class FirebaseCloudRemoteConfig : iCloudRemoteConfig
+    internal class FirebaseCloudRemoteConfig : iCloudRemoteConfig
     {
         #region private
         private IDictionary<string, object> _configs;

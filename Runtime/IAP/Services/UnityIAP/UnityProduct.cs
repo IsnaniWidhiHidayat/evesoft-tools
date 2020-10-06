@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.IAP.Unity
 {
     [Serializable,HideReferenceObjectPicker]
-    public class UnityProduct : iProduct
+    internal class UnityProduct : iProduct
     {
         #region private
         private UnityEngine.Purchasing.Product _unityProduct;

@@ -21,7 +21,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         private IDictionary<string,object> _data;    
         #endregion
 
-        #region iDialogueData
+        #region iDialogueData     
         public T GetValue<T>(string key)
         {
              var result = default(T);
