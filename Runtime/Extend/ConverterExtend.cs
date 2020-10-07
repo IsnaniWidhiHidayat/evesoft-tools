@@ -78,6 +78,24 @@ namespace Evesoft
             return default(float);
         }
 
+        public static bool ParseToBoolean(this string obj,out bool value)
+        {
+            return Boolean.TryParse(obj,out value);
+        }
+        public static bool ParseToInt(this string obj,out int value)
+        {
+            return Int32.TryParse(obj,out value);
+        }
+        public static bool ParseToFloat(this string obj,out float value)
+        {
+            return float.TryParse(obj,out value);
+        }
+        public static bool ParseToDouble(this string obj,out double value)
+        {
+            return double.TryParse(obj,out value);
+        }
+        
+
         public static Texture2D ToTexture2D(this byte[] data,bool mipchain = false)
         {
             if (data == null)
