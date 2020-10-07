@@ -69,7 +69,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             var data = _data[key] as List<(string,int,Yarn.Function)>;
                 data.AddRange(functions);
         }
-        public void AddReturnFunctions(params (string,int,ReturningFunction)[] functions)
+        public void AddFunctions(params (string,int,ReturningFunction)[] functions)
         {
             var key = RETURNING_FUNCTION;
             if(!_data.ContainsKey(key))

@@ -407,6 +407,36 @@ public class Test : MonoBehaviour
     }
 }");
 
+            YarnSpinner.AddHowToUse(@"public class DialogueManager : SerializedMonoBehaviour
+    {
+        #region field
+        [OdinSerialize,ShowInInspector]
+        private iDialogueUI _UI;
+
+        [SerializeField,ShowInInspector]
+        private YarnProgram[] dialogue;
+
+        [OdinSerialize,ShowInInspector]
+        private IDictionary<string,object> _defaultVariables;
+
+        [OdinSerialize,ShowInInspector]
+        private (string,int,Action<object[]>)[] functions;
+        #endregion
+
+        #region private
+        private iDialogue _dialogue;
+        #endregion
+
+        #region methods
+        private void Start()
+        {
+            var config   = DialogueConfigFactory.CreateYarnSpinnerConfig(_UI,_defaultVariables,dialogue);
+            _dialogue    = DialogueFactory.Create(config);
+            _dialogue.StartDialogue(""Sally"");
+        }
+        #endregion
+    }");
+
             bridges = new List<Bridge>()
             {
                 Admob                               ,

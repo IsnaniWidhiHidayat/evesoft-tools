@@ -200,11 +200,13 @@ namespace Evesoft.Dialogue.YarnSpinner
             _dialogeRunner.startNode          = startNode;
             _dialogeRunner.yarnScripts        = new YarnProgram[0];
 
+            var data = DialogueDataFactory.CreateYarnSpinnerData();
+
             //Set Scripts
             if(!scripts.IsNullOrEmpty())
             {
                 foreach (var script in scripts)
-                    _dialogeRunner.Add(script);
+                    data.AddScript(script);
             }
            
             //SetFunctions
@@ -213,7 +215,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                 foreach (var function in functions)
                 {
                     (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,func);
+                    data.AddFunctions((name,paramCount,func));
                 }
             }
 
@@ -223,7 +225,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                 foreach (var function in returningFunctions)
                 {
                     (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,func);
+                    data.AddFunctions((name,paramCount,func));
                 }
             }
 
@@ -245,7 +247,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                                 if(function.function.IsNull())
                                     break;
 
-                                _dialogeRunner.AddFunction(function.name,function.paramCount,function.function.Invoke);
+                                data.AddFunctions((function.name,function.paramCount,function.function.Invoke));
                                 break;
                             }
 
@@ -254,7 +256,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                                 if(function.returnfunction.IsNull())
                                     break;
 
-                                _dialogeRunner.AddFunction(function.name,function.paramCount,function.returnfunction.Invoke);
+                                data.AddFunctions((function.name,function.paramCount,function.returnfunction.Invoke));
                                 break;
                             }
                         }
@@ -262,6 +264,8 @@ namespace Evesoft.Dialogue.YarnSpinner
                 }
             }
           
+            Add(data);
+
             //Hide Game Object
             _dialogeRunner.gameObject.hideFlags = HideFlags.HideInHierarchy;
 
