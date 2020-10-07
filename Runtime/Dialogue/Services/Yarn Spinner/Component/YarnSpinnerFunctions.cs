@@ -15,28 +15,38 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         public enum Type
         {
             Function,
-            ReturningFunction
+            ReturningFunction,
+            Commmand,
+            BlockingCommand,
         }
 
         #region const
         const string grpName = "$"+nameof(name);
         const string grph1  = grpName + "/h1";
+        const int labelWidth = 80;
         #endregion
 
-        [HideLabel,FoldoutGroup(grpName),HorizontalGroup(grph1)]
+        [LabelWidth(labelWidth),FoldoutGroup(grpName)]
         public Type type;
 
-        [Required,HideLabel,HorizontalGroup(grph1),SuffixLabel(nameof(name),true)]
+        [LabelWidth(labelWidth),Required,FoldoutGroup(grpName)]
         public string name;
 
-        [HideLabel,HorizontalGroup(grph1,Width = 100),SuffixLabel(nameof(paramCount),true)]
+        private bool ShowParamCount => type == Type.ReturningFunction || type ==Type.Function;
+        [LabelWidth(labelWidth),FoldoutGroup(grpName),ShowIf(nameof(ShowParamCount))]
         public int paramCount;
-        //[ValidateInput(nameof(ValidateFunction),"Need Some Function")
-        [HideLabel,FoldoutGroup(grpName),ShowInInspector,Required,ShowIf(nameof(type),Type.Function,false)]
+       
+        [LabelWidth(labelWidth),LabelText("Function"),FoldoutGroup(grpName),ShowInInspector,ShowIf(nameof(type),Type.Function,false)]
         public Action<object[]> function;
 
-        [HideLabel,FoldoutGroup(grpName),ShowInInspector,Required,ShowIf(nameof(type),Type.ReturningFunction,false)]
+        [LabelWidth(labelWidth),LabelText("Function"),FoldoutGroup(grpName),ShowInInspector,ShowIf(nameof(type),Type.ReturningFunction,false)]
         public Func<object[],object> returnfunction;
+
+        [LabelWidth(labelWidth),LabelText("Function"),FoldoutGroup(grpName),ShowInInspector,ShowIf(nameof(type),Type.Commmand,false)]
+        public Action<string[]> command;
+
+        [LabelWidth(labelWidth),LabelText("Function"),FoldoutGroup(grpName),ShowInInspector,ShowIf(nameof(type),Type.BlockingCommand,false)]
+        public Action<string[],Action> blockingCommand;
     }
 
     [HideMonoScript]

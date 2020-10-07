@@ -16,14 +16,8 @@ namespace Evesoft.Dialogue.YarnSpinner
         public DialogueRunner dialogeRunner => _dialogeRunner;
 
         #if UNITY_EDITOR
-        private IDictionary<string,string> _functions;
-        public IDictionary<string,string> functions
-        {
-            get
-            {
-                return _functions;
-            }
-        }
+        public IDictionary<string,string> functions{get;private set;}
+        public IDictionary<string,string> commands{get;private set;}
         public IDictionary<string,string> variables 
         {
             get
@@ -45,19 +39,37 @@ namespace Evesoft.Dialogue.YarnSpinner
         private void AddRegisteredFunctions(byte type,string name,int paramCount)
         {
             #if UNITY_EDITOR
-            if(_functions.IsNull())
-                _functions = new Dictionary<string,string>();
+            if(functions.IsNull())
+                functions = new Dictionary<string,string>();
 
-            _functions[name] = string.Format("{2}{0}(params obj[{1}] param)",name,paramCount,type ==0 ?"" : "object ");
+            functions[name] = string.Format("{2}{0}(params object[{1}] param)",name,paramCount,type == 0 ?"" : "object ");
             #endif
         }
         private void RemoveRegisteredFunctions(string name)
         {
             #if UNITY_EDITOR
-            if(_functions.IsNullOrEmpty())
+            if(functions.IsNullOrEmpty())
                 return;
 
-            _functions.Remove(name);
+            functions.Remove(name);
+            #endif
+        }
+        private void AddRegisteredCommand(byte type,string name)
+        {
+            #if UNITY_EDITOR
+            if(commands.IsNull())
+                commands = new Dictionary<string,string>();
+
+            commands[name] = string.Format("{0}(params string[] param{1})",name,type == 0?"" : ", Action onComplete");
+            #endif
+        }
+        private void RemoveRegisteredCommand(string name)
+        {
+            #if UNITY_EDITOR
+            if(commands.IsNullOrEmpty())
+                return;
+
+            commands.Remove(name);
             #endif
         }
         #endregion
@@ -75,6 +87,9 @@ namespace Evesoft.Dialogue.YarnSpinner
         }
         public void Add(iDialogueData data)
         {
+            if(data.IsNull())
+                return;
+
             //Add Yarn Program
             var scripts = data.GetValue<IList<YarnProgram>>(YarnSpinnerData.SCRIPT);
             if(!scripts.IsNullOrEmpty())
@@ -92,16 +107,31 @@ namespace Evesoft.Dialogue.YarnSpinner
             }
                 
             //Add Command Handler
-            var commandHandlers = data.GetValue<IList<(string,DialogueRunner.CommandHandler)>>(YarnSpinnerData.COMMAND_HANDLER);
+            var commandHandlers = data.GetValue<IList<(string,DialogueRunner.CommandHandler)>>(YarnSpinnerData.COMMAND);
             if(!commandHandlers.IsNullOrEmpty())
             {
                 foreach (var command in commandHandlers)
                 {
                     (var name,var handler) = command;
                     _dialogeRunner.AddCommandHandler(name,handler);
+
+                    AddRegisteredCommand(0,name);
                 }
             }
                 
+            //Add BlokingCommand Handler
+            var blokingCommandHandlers = data.GetValue<IList<(string,DialogueRunner.BlockingCommandHandler)>>(YarnSpinnerData.BLOKING_COMMAND);
+            if(!blokingCommandHandlers.IsNullOrEmpty())
+            {
+                foreach (var command in blokingCommandHandlers)
+                {
+                    (var name,var handler) = command;
+                    _dialogeRunner.AddCommandHandler(name,handler);
+
+                    AddRegisteredCommand(1,name);
+                }
+            }
+
             //Add Function
             var functions = data.GetValue<IList<(string,int,Yarn.Function)>>(YarnSpinnerData.FUNCTION);
             if(!functions.IsNullOrEmpty())
@@ -119,7 +149,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             var returningFunction = data.GetValue<IList<(string,int,Yarn.ReturningFunction)>>(YarnSpinnerData.RETURNING_FUNCTION);
             if(!returningFunction.IsNullOrEmpty())
             {
-               foreach (var function in returningFunction)
+                foreach (var function in returningFunction)
                 {
                     (var name,var paramCount,var func) = function;
                     _dialogeRunner.AddFunction(name,paramCount,func);
@@ -130,12 +160,18 @@ namespace Evesoft.Dialogue.YarnSpinner
         }      
         public void Remove(iDialogueData data)
         {
+            if(data.IsNull())
+                return;
+
             //Remove Command Handler
             var names = data.GetValue<IList<string>>(YarnSpinnerData.REMOVE_COMMAND);
             if(!names.IsNullOrEmpty())
             {
                 foreach (var name in names)
+                {
                     _dialogeRunner.RemoveCommandHandler(name);
+                    RemoveRegisteredCommand(name);
+                }
             }
                 
             //Remove Function
@@ -170,24 +206,21 @@ namespace Evesoft.Dialogue.YarnSpinner
         #region constructor
         internal YarnSpinner(iDialogueConfig config)
         { 
-            var attachTo  = config.GetConfig<GameObject>(YarnSpinnerConfig.ATTACH_TO);
             var ui        = config.GetConfig<iDialogueUI>(YarnSpinnerConfig.UI);
             var startAuto = config.GetConfig<bool>(YarnSpinnerConfig.START_AUTO);
             var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
-            var scripts   = config.GetConfig<IList<YarnProgram>>(YarnSpinnerConfig.SCRIPTS);
-            var defaultVariables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
-            var functions = config.GetConfig<IList<(string,int,Yarn.Function)>>(YarnSpinnerConfig.FUNCTIONS);
-            var returningFunctions = config.GetConfig<IList<(string,int,Yarn.ReturningFunction)>>(YarnSpinnerConfig.FUNCTIONS);
+            var variables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
+            var data      = config.GetConfig<YarnSpinnerData>(YarnSpinnerConfig.DATA);
 
             //Set dialogue Runner
-            _dialogeRunner  = (attachTo.IsNull()? new GameObject(nameof(YarnSpinner)) : attachTo).AddComponent<DialogueRunner>();
+            _dialogeRunner  = new GameObject(nameof(YarnSpinner)).AddComponent<DialogueRunner>();
             
             //Set Events
             SetEvents(_dialogeRunner);
 
             //Set Storage
             var storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
-            storage.SetDefaultVariable(defaultVariables);
+            storage.SetDefaultVariable(variables);
             _dialogeRunner.variableStorage  = storage;
 
             //Set UI
@@ -200,35 +233,6 @@ namespace Evesoft.Dialogue.YarnSpinner
             _dialogeRunner.startNode          = startNode;
             _dialogeRunner.yarnScripts        = new YarnProgram[0];
 
-            var data = DialogueDataFactory.CreateYarnSpinnerData();
-
-            //Set Scripts
-            if(!scripts.IsNullOrEmpty())
-            {
-                foreach (var script in scripts)
-                    data.AddScript(script);
-            }
-           
-            //SetFunctions
-            if(!functions.IsNullOrEmpty())
-            {
-                foreach (var function in functions)
-                {
-                    (var name,var paramCount,var func) = function;
-                    data.AddFunctions((name,paramCount,func));
-                }
-            }
-
-            //Set Returning Functions
-            if(!returningFunctions.IsNullOrEmpty())
-            {
-                foreach (var function in returningFunctions)
-                {
-                    (var name,var paramCount,var func) = function;
-                    data.AddFunctions((name,paramCount,func));
-                }
-            }
-
             //Add Function by component attached
             var yarnFunctions = GameObject.FindObjectsOfType<Component.YarnSpinnerFunctions>();
             if(!yarnFunctions.IsNullOrEmpty())
@@ -240,6 +244,9 @@ namespace Evesoft.Dialogue.YarnSpinner
 
                     foreach (var function in item.registerFunctions)
                     {
+                        if(data.IsNull())
+                            data = DialogueDataFactory.CreateYarnSpinnerData();
+
                         switch(function.type)
                         {
                             case Component.RegisterFunction.Type.Function:
@@ -257,6 +264,24 @@ namespace Evesoft.Dialogue.YarnSpinner
                                     break;
 
                                 data.AddFunctions((function.name,function.paramCount,function.returnfunction.Invoke));
+                                break;
+                            }
+
+                            case Component.RegisterFunction.Type.Commmand:
+                            {
+                                if(function.command.IsNull())
+                                    break;
+
+                                data.AddCommandHandlers((function.name,function.command.Invoke));
+                                break;
+                            }
+
+                            case Component.RegisterFunction.Type.BlockingCommand:
+                            {
+                                if(function.blockingCommand.IsNull())
+                                    break;
+
+                                data.AddCommandHandlers((function.name,function.blockingCommand.Invoke));
                                 break;
                             }
                         }

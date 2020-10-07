@@ -6,7 +6,7 @@ namespace Evesoft.Dialogue
     public static class DialogueConfigFactory
     {
         #if YARN_SPINNER
-        public static iDialogueConfig CreateYarnSpinnerConfig(iDialogueUI ui,IDictionary<string,object> defaultVariables = null,YarnProgram[] scripts = null,(string,int,Yarn.Function)[] functions = null,(string,int,Yarn.ReturningFunction)[] returningFunctions = null)
+        public static iDialogueConfig CreateYarnSpinnerConfig(iDialogueUI ui,IDictionary<string,object> defaultVariables = null,YarnProgram[] scripts = null,(string,int,Yarn.Function)[] functions = null,(string,int,Yarn.ReturningFunction)[] returningFunctions = null,(string,Yarn.Unity.DialogueRunner.CommandHandler)[] commands = null,(string,Yarn.Unity.DialogueRunner.BlockingCommandHandler)[] blokingCommands = null)
         {
             var config =  new YarnSpinner.YarnSpinnerConfig();
                 config.SetUI(ui);
@@ -14,14 +14,24 @@ namespace Evesoft.Dialogue
                 if(!defaultVariables.IsNullOrEmpty())
                     config.SetDefaultValue(defaultVariables);
 
+                var data = DialogueDataFactory.CreateYarnSpinnerData();
+        
                 if(!scripts.IsNullOrEmpty())
-                    config.AddScripts(scripts);
+                    data.AddScripts(scripts);
 
                 if(!functions.IsNullOrEmpty())
-                    config.AddFunctions(functions);
+                    data.AddFunctions(functions);
 
                 if(!returningFunctions.IsNullOrEmpty())
-                    config.AddFunctions(returningFunctions);
+                    data.AddFunctions(returningFunctions);
+
+                if(!commands.IsNullOrEmpty())
+                    data.AddCommandHandlers(commands);
+
+                if(!blokingCommands.IsNullOrEmpty())
+                    data.AddCommandHandlers(blokingCommands);
+
+                config.SetData(data);
 
             return config;
         }   
