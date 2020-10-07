@@ -21,10 +21,37 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         }
 
         #region const
-        const string grpName = "$"+nameof(name);
+        const string grpName = "$"+nameof(GetName);
         const string grph1  = grpName + "/h1";
         const int labelWidth = 80;
         #endregion
+
+        private string GetName()
+        {
+            switch(type){
+                case Type.Function:
+                {
+                    return $"{name}(params object[] param) - F";
+                }
+
+                case Type.ReturningFunction:
+                {
+                    return $"object {name}(params object[] param) - RF";
+                }
+
+                case Type.Commmand:
+                {
+                    return $"{name}(params string[] param) - C";
+                }
+
+                case Type.BlockingCommand:
+                {
+                    return $"{name}(params string[] param, Action onComplete) - BC";
+                }
+            }
+            
+            return default(string);
+        }
 
         [LabelWidth(labelWidth),FoldoutGroup(grpName)]
         public Type type;
