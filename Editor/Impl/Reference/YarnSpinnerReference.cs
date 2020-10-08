@@ -29,6 +29,23 @@ namespace Evesoft.Editor.Reference
         }
 
         [ShowInInspector,ShowIf("@EditorApplication.isPlaying"),InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden)]
+        private IDictionary<string,string> Commands
+        {
+            get
+            {
+                var dialogue = Evesoft.Dialogue.DialogueFactory.Get(Evesoft.Dialogue.DialogueType.YarnSpinner);
+                if(dialogue.IsNull())
+                    return null;
+
+                var yarn    = dialogue as Evesoft.Dialogue.YarnSpinner.YarnSpinner;
+                if(yarn.IsNull())
+                    return null;
+
+                return yarn.commands;
+            }
+        }
+
+        [ShowInInspector,ShowIf("@EditorApplication.isPlaying"),InlineEditor(objectFieldMode:InlineEditorObjectFieldModes.Hidden)]
         private IDictionary<string,string> functions
         {
             get
