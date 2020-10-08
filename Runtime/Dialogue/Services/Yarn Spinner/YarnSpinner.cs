@@ -133,26 +133,32 @@ namespace Evesoft.Dialogue.YarnSpinner
             }
 
             //Add Function
-            var functions = data.GetValue<IList<(string,int,Yarn.Function)>>(YarnSpinnerData.FUNCTION);
+            var functions = data.GetValue<IList<(string,int,Action<object[]>)>>(YarnSpinnerData.FUNCTION);
             if(!functions.IsNullOrEmpty())
             { 
                 foreach (var function in functions)
                 {
                     (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,func);
+                    _dialogeRunner.AddFunction(name,paramCount,(values)=>
+                    {
+                       func.Invoke(ConverToObjects(values));
+                    });
 
                     AddRegisteredFunctions(0,name,paramCount);
                 }
             }
                
             //Add Returning Functions;
-            var returningFunction = data.GetValue<IList<(string,int,Yarn.ReturningFunction)>>(YarnSpinnerData.RETURNING_FUNCTION);
+            var returningFunction = data.GetValue<IList<(string,int,Func<object[],object>)>>(YarnSpinnerData.RETURNING_FUNCTION);
             if(!returningFunction.IsNullOrEmpty())
             {
                 foreach (var function in returningFunction)
                 {
                     (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,func);
+                    _dialogeRunner.AddFunction(name,paramCount,(values)=>
+                    {
+                        return func?.Invoke(ConverToObjects(values));
+                    });
 
                     AddRegisteredFunctions(1,name,paramCount);
                 } 
@@ -300,6 +306,45 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region methods
+        private object[] ConverToObjects(Yarn.Value[] data)
+        {
+            if(data.IsNullOrEmpty())
+                return null;
+
+            var result = new object[data.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                var value = data[i];
+                switch(value.type)
+                {
+                    case Yarn.Value.Type.Bool:
+                    {
+                        result[i] = value.AsBool;
+                        break;
+                    }
+                    
+                    case Yarn.Value.Type.Number:
+                    {
+                        result[i] = value.AsNumber;
+                        break;
+                    }
+
+                    case Yarn.Value.Type.String:
+                    {
+                        result[i] = value.AsString;
+                        break;
+                    }
+
+                    default:
+                    {
+                        result[i] = null;
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
         private void SetEvents(DialogueRunner dialogue)
         {
             RemoveEvents(dialogue);

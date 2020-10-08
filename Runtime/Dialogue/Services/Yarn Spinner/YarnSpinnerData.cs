@@ -71,22 +71,22 @@ namespace Evesoft.Dialogue.YarnSpinner
             var data = _data[key] as List<(string,DialogueRunner.BlockingCommandHandler)>;
                 data.AddRange(handler);
         }
-        public void AddFunctions(params (string,int,Yarn.Function)[] functions)
+        public void AddFunctions(params (string,int,Action<object[]>)[] functions)
         {
             var key = FUNCTION;
             if(!_data.ContainsKey(key))
-                _data[key] = new List<(string,int,Yarn.Function)>();
+                _data[key] = new List<(string,int,Action<object[]>)>();
 
-            var data = _data[key] as List<(string,int,Yarn.Function)>;
+            var data = _data[key] as List<(string,int,Action<object[]>)>;
                 data.AddRange(functions);
         }
-        public void AddFunctions(params (string,int,ReturningFunction)[] functions)
+        public void AddFunctions(params (string,int,Func<object[],object>)[] functions)
         {
             var key = RETURNING_FUNCTION;
             if(!_data.ContainsKey(key))
-                _data[key] = new List<(string,int,Yarn.ReturningFunction)>();
+                _data[key] = new List<(string,int,Func<object[],object>)>();
 
-            var data = _data[key] as List<(string,int,Yarn.ReturningFunction)>;
+            var data = _data[key] as List<(string,int,Func<object[],object>)>;
                 data.AddRange(functions);
         }
         public void RemoveCommands(params string[] names)
