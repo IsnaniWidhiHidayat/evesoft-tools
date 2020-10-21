@@ -25,7 +25,7 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         #region VariableStorageBehaviour
         public override void SetValue(string variableName, Value value)
         {
-            variableName = string.Format("${0}",variableName);
+            variableName = variableName[0] == '$'? variableName :  string.Format("${0}",variableName);
             _variables[variableName] = new Yarn.Value(value);
 
             #if UNITY_EDITOR
