@@ -43,10 +43,10 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
             //pool
             for (int i = 0; i < optionSet.Options.Length; i++)
             {
-                var option = optionSet.Options[i];
-                var id     = option.ID;
+                var option       = optionSet.Options[i];
+                var id           = option.ID;
                 var localizeText = localisationProvider.GetLocalisedTextForLine(option.Line);
-                var text   = localizeText;
+                var text         = localizeText;
 
                 if(_options.Count-1 < i)
                 {
@@ -55,8 +55,9 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                 }
                    
                 var current = _options[i] as YarnSpinnerDialogueOptions;
-                current.id    = id;
-                current.text  = text;
+                current.id  = id;
+                current.text = text;
+                current.localizeText = localizeText;
                 current.RemoveAllListener();
                 current.AddListener(val =>
                 {
