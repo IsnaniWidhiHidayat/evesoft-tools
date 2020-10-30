@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Evesoft.Ads.Admob
 {
-    internal class Admob : iAdsService,IDisposable
+    internal class Admob : IAdsService,IDisposable
     {
         #region private
         private string _bannerID,_interstitialID,_rewardID;
@@ -25,7 +25,7 @@ namespace Evesoft.Ads.Admob
         #endregion
 
         #region Constructor
-        public Admob(iAdsConfig config)
+        public Admob(IAdsConfig config)
         {
             _bannerID = config.GetConfig<string>(AdmobConfig.BANNER_ID);
             _interstitialID = config.GetConfig<string>(AdmobConfig.INTERSTITIAL_ID);
@@ -74,28 +74,28 @@ namespace Evesoft.Ads.Admob
         
         #region iAdsService
     
-        public event Action<iAdsService> onInited;
-        public event Action<iAdsService> onBannerRequested;
-        public event Action<iAdsService> onBannerLeaveApp;
-        public event Action<iAdsService> onBannerOpening;
-        public event Action<iAdsService> onBannerClosed;
-        public event Action<iAdsService, string> onBannerLoadFailed;
-        public event Action<iAdsService> onBannerLoaded;
-        public event Action<iAdsService> onInterstitialOpening;
-        public event Action<iAdsService> onInterstitialRequested;
-        public event Action<iAdsService> onInterstitialLoaded;
-        public event Action<iAdsService, string> onInterstitialLoadFailed;
-        public event Action<iAdsService> onInterstitialLeaveApp;
-        public event Action<iAdsService> onInterstitialClosed;
-        public event Action<iAdsService> onRewardVideoStart;
-        public event Action<iAdsService> onRewardVideoOpening;
-        public event Action<iAdsService> onRewardVideoLoaded;
-        public event Action<iAdsService> onRewardVideoRequested;
-        public event Action<iAdsService, string> onRewardVideoLoadFailed;
-        public event Action<iAdsService> onRewardVideoLeaveApp;
-        public event Action<iAdsService> onRewardedVideo;
-        public event Action<iAdsService> onRewardFailedToShow;
-        public event Action<iAdsService> onRewardVideoClosed;
+        public event Action<IAdsService> onInited;
+        public event Action<IAdsService> onBannerRequested;
+        public event Action<IAdsService> onBannerLeaveApp;
+        public event Action<IAdsService> onBannerOpening;
+        public event Action<IAdsService> onBannerClosed;
+        public event Action<IAdsService, string> onBannerLoadFailed;
+        public event Action<IAdsService> onBannerLoaded;
+        public event Action<IAdsService> onInterstitialOpening;
+        public event Action<IAdsService> onInterstitialRequested;
+        public event Action<IAdsService> onInterstitialLoaded;
+        public event Action<IAdsService, string> onInterstitialLoadFailed;
+        public event Action<IAdsService> onInterstitialLeaveApp;
+        public event Action<IAdsService> onInterstitialClosed;
+        public event Action<IAdsService> onRewardVideoStart;
+        public event Action<IAdsService> onRewardVideoOpening;
+        public event Action<IAdsService> onRewardVideoLoaded;
+        public event Action<IAdsService> onRewardVideoRequested;
+        public event Action<IAdsService, string> onRewardVideoLoadFailed;
+        public event Action<IAdsService> onRewardVideoLeaveApp;
+        public event Action<IAdsService> onRewardedVideo;
+        public event Action<IAdsService> onRewardFailedToShow;
+        public event Action<IAdsService> onRewardVideoClosed;
 
         public bool isBannerLoaded => _isBannerLoaded;
         public bool isRewardLoaded => _rewardVideoAd.IsNull()? false : _rewardVideoAd.IsLoaded();

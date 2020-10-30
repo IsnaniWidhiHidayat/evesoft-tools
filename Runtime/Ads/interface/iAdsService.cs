@@ -3,31 +3,31 @@ using System;
 
 namespace Evesoft.Ads
 {
-    public interface iAdsService 
+    public interface IAdsService 
     {
         #region Events
-        event Action<iAdsService> onInited;
-        event Action<iAdsService> onBannerRequested;
-        event Action<iAdsService> onBannerLeaveApp;
-        event Action<iAdsService> onBannerOpening;
-        event Action<iAdsService> onBannerClosed;
-        event Action<iAdsService,string> onBannerLoadFailed;
-        event Action<iAdsService> onBannerLoaded;
-        event Action<iAdsService> onInterstitialOpening;
-        event Action<iAdsService> onInterstitialRequested;
-        event Action<iAdsService> onInterstitialLoaded;
-        event Action<iAdsService,string> onInterstitialLoadFailed;
-        event Action<iAdsService> onInterstitialLeaveApp;
-        event Action<iAdsService> onInterstitialClosed;
-        event Action<iAdsService> onRewardVideoStart;
-        event Action<iAdsService> onRewardVideoOpening;
-        event Action<iAdsService> onRewardVideoLoaded;
-        event Action<iAdsService> onRewardVideoRequested;
-        event Action<iAdsService,string> onRewardVideoLoadFailed;
-        event Action<iAdsService> onRewardVideoLeaveApp;
-        event Action<iAdsService> onRewardedVideo;
-        event Action<iAdsService> onRewardFailedToShow;
-        event Action<iAdsService> onRewardVideoClosed;
+        event Action<IAdsService> onInited;
+        event Action<IAdsService> onBannerRequested;
+        event Action<IAdsService> onBannerLeaveApp;
+        event Action<IAdsService> onBannerOpening;
+        event Action<IAdsService> onBannerClosed;
+        event Action<IAdsService,string> onBannerLoadFailed;
+        event Action<IAdsService> onBannerLoaded;
+        event Action<IAdsService> onInterstitialOpening;
+        event Action<IAdsService> onInterstitialRequested;
+        event Action<IAdsService> onInterstitialLoaded;
+        event Action<IAdsService,string> onInterstitialLoadFailed;
+        event Action<IAdsService> onInterstitialLeaveApp;
+        event Action<IAdsService> onInterstitialClosed;
+        event Action<IAdsService> onRewardVideoStart;
+        event Action<IAdsService> onRewardVideoOpening;
+        event Action<IAdsService> onRewardVideoLoaded;
+        event Action<IAdsService> onRewardVideoRequested;
+        event Action<IAdsService,string> onRewardVideoLoadFailed;
+        event Action<IAdsService> onRewardVideoLeaveApp;
+        event Action<IAdsService> onRewardedVideo;
+        event Action<IAdsService> onRewardFailedToShow;
+        event Action<IAdsService> onRewardVideoClosed;
         #endregion
         
         bool isBannerLoaded{get;}

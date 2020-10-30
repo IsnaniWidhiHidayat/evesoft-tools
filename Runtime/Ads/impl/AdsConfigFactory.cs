@@ -8,7 +8,7 @@ namespace Evesoft.Ads
     public static class AdsConfigFactory
     {
         #if ADMOB
-        public static iAdsConfig CreateAdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,Admob.AdsGender gender,Admob.AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
+        public static IAdsConfig CreateAdmobConfig(string bannerID,string interstitialID,string rewardID,bool tagForChild,Admob.AdsGender gender,Admob.AdPosition bannerPosition,Vector2Int customPosition,string[] keywords)
         {
             return new Admob.AdmobConfig(bannerID,interstitialID,rewardID,tagForChild,gender,bannerPosition,customPosition,keywords);
         }

@@ -7,9 +7,9 @@ namespace Evesoft.Ads
 {
     public static class AdsServiceFactory
     {
-        private static IDictionary<AdsType,iAdsService> adServices = new Dictionary<AdsType, iAdsService>();
+        private static IDictionary<AdsType,IAdsService> adServices = new Dictionary<AdsType, IAdsService>();
 
-        public static iAdsService Create(iAdsConfig config)
+        public static IAdsService Create(IAdsConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -41,14 +41,14 @@ namespace Evesoft.Ads
                 }
             }
         }
-        public static iAdsService Get(AdsType type)
+        public static IAdsService Get(AdsType type)
         {
             if(adServices.ContainsKey(type))
                 return adServices[type];
 
             return null;
         }
-        public static async Task<iAdsService> GetAsync(AdsType type)
+        public static async Task<IAdsService> GetAsync(AdsType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);
