@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class FirebaseCloudDatabase : iCloudDatabase
+    internal class FirebaseCloudDatabase : ICloudDatabase
     {
         #region private
         private static bool _inited;
@@ -49,7 +49,7 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region iCloudDatabase
-        public async Task<(iCloudDatabaseReference, Exception)> Connect(IDictionary<string, object> parameter)
+        public async Task<(ICloudDatabaseReference, Exception)> Connect(IDictionary<string, object> parameter)
         {
             try 
             {
@@ -80,7 +80,7 @@ namespace Evesoft.CloudService.Firebase
                 return (null,ex);
             }
         }
-        public async Task<Exception> Disconnect(iCloudDatabaseReference reference)
+        public async Task<Exception> Disconnect(ICloudDatabaseReference reference)
         {
             if(reference.IsNull())
                 return new ArgumentNullException(nameof(reference));
@@ -92,7 +92,7 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region Constructor
-        public FirebaseCloudDatabase(iCloudDatabaseConfig config)
+        public FirebaseCloudDatabase(ICloudDatabaseConfig config)
         {
             var url = config?.GetConfig<string>(FirebaseCloudDatabaseConfig.DB);
             Init(url);

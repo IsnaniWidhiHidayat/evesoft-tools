@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudRemoteConfig
+    public interface ICloudRemoteConfig
     {
         bool isHaveConfigs{get;}
         bool isfetched{get;}

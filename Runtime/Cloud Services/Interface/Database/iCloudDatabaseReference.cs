@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudDatabaseReference
+    public interface ICloudDatabaseReference
     {       
-        iCloudDatabaseEvents events{get;}
+        ICloudDatabaseEvents events{get;}
         IDictionary<string,object> data{get;}
 
         Task<Exception> SetData(IDictionary<string,object> value);

@@ -10,14 +10,14 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
     internal class YarnSpinnerUI : DialogueUIBehaviour
     {
         #region private
-        private iDialogueUI _ui;
-        private Queue<iDialogueOptions> _poolOptions;
-        private IList<iDialogueOptions> _options;
+        private IDialogueUI _ui;
+        private Queue<IDialogueOptions> _poolOptions;
+        private IList<IDialogueOptions> _options;
         private YarnSpinnerDialogueLine _line;
         #endregion
 
         #region methods
-        public void SetUI(iDialogueUI ui)
+        public void SetUI(IDialogueUI ui)
         {
             this._ui = ui;
         }
@@ -35,10 +35,10 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         public override void RunOptions (Yarn.OptionSet optionSet, ILineLocalisationProvider localisationProvider, Action<int> onOptionSelected) {
            
             if(_options.IsNull())
-                _options = new List<iDialogueOptions>();
+                _options = new List<IDialogueOptions>();
 
             if(_poolOptions.IsNull())
-                _poolOptions = new Queue<iDialogueOptions>();
+                _poolOptions = new Queue<IDialogueOptions>();
 
             //pool
             for (int i = 0; i < optionSet.Options.Length; i++)
@@ -111,7 +111,7 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         
         #region constructor
         public YarnSpinnerUI(){}
-        public YarnSpinnerUI(iDialogueUI ui = null)
+        public YarnSpinnerUI(IDialogueUI ui = null)
         {
             this._ui = ui;
         }

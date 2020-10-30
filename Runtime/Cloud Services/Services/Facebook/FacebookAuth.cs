@@ -10,18 +10,18 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Facebook
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class FacebookAuth : iCloudAuth
+    internal class FacebookAuth : ICloudAuth
     {
         #region private
-        private iUserAuth _currentUser;
+        private IUserAuth _currentUser;
         private bool _inited;
         #endregion
 
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
-        [ShowInInspector] public iUserAuth currentUser => _currentUser;
+        [ShowInInspector] public IUserAuth currentUser => _currentUser;
 
-        public async Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options = null)
+        public async Task<(IUserAuth,Exception)> Login(ICloudAuthOptions options = null)
         {
             try 
             {
@@ -127,7 +127,7 @@ namespace Evesoft.CloudService.Facebook
                 }
                 else
                 {
-                    return (default(iUserAuth),new Exception(errorMessage));
+                    return (default(IUserAuth),new Exception(errorMessage));
                 }     
             } 
             catch (System.Exception ex) 
@@ -146,7 +146,7 @@ namespace Evesoft.CloudService.Facebook
         #endregion
 
         #region constructor
-        public FacebookAuth(iCloudAuthConfig config)
+        public FacebookAuth(ICloudAuthConfig config)
         {
             var onFBInitedHandler = default(InitDelegate);
                 onFBInitedHandler = ()=>

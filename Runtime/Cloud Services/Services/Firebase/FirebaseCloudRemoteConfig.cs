@@ -15,12 +15,12 @@ using FRC = Firebase.RemoteConfig.FirebaseRemoteConfig;
 namespace Evesoft.CloudService.Firebase
 {
     [HideReferenceObjectPicker]
-    internal class FirebaseCloudRemoteConfig : iCloudRemoteConfig
+    internal class FirebaseCloudRemoteConfig : ICloudRemoteConfig
     {
         #region private
         private IDictionary<string, object> _configs;
         private FirebaseCloudRemoteConfigType _type;
-        private iCloudDatabaseReference _reference;
+        private ICloudDatabaseReference _reference;
         private bool _fetched;
         private bool _fetching;
         private bool _devMode;
@@ -133,7 +133,7 @@ namespace Evesoft.CloudService.Firebase
         }
         #endregion
 
-        private async void Init(iCloudRemoteSetting setting)
+        private async void Init(ICloudRemoteSetting setting)
         {
             _type    = setting.GetConfig<FirebaseCloudRemoteConfigType>(FirebaseCloudRemoteSetting.TYPE);
             _devMode = setting.GetConfig<bool>(FirebaseCloudRemoteSetting.DEVMODE);
@@ -197,7 +197,7 @@ namespace Evesoft.CloudService.Firebase
         }
 
         #region constructor
-        public FirebaseCloudRemoteConfig(iCloudRemoteSetting setting)
+        public FirebaseCloudRemoteConfig(ICloudRemoteSetting setting)
         {
             Init(setting);
         }

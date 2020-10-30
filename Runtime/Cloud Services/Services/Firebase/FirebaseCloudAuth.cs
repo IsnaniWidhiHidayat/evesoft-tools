@@ -11,19 +11,19 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class FirebaseCloudAuth : iCloudAuth
+    internal class FirebaseCloudAuth : ICloudAuth
     {
         #region private
         private bool _inited;
         private bool _initing;
-        private iUserAuth _currentUser;
+        private IUserAuth _currentUser;
         private FirebaseAuth _auth;
         #endregion
 
         #region iCloudAuth
         [ShowInInspector] public bool inited => _inited;
-        [ShowInInspector] public iUserAuth currentUser => _currentUser;
-        public async Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options)
+        [ShowInInspector] public IUserAuth currentUser => _currentUser;
+        public async Task<(IUserAuth,Exception)> Login(ICloudAuthOptions options)
         {
             try 
             {
@@ -163,7 +163,7 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region constructor
-        public FirebaseCloudAuth(iCloudAuthConfig config)
+        public FirebaseCloudAuth(ICloudAuthConfig config)
         {
             Init();
         }

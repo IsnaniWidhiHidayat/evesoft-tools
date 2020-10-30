@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Evesoft.Cache
 {
-    public interface iCache<T>
+    public interface ICache<T>
     {
-        event Action<iCache<T>> onLoaded;
-        event Action<iCache<T>> onSaved;
+        event Action<ICache<T>> onLoaded;
+        event Action<ICache<T>> onSaved;
 
         List<T> cached{get;}
         T GetCache(string url,string key);

@@ -3,14 +3,14 @@ using System;
 
 namespace Evesoft.Dialogue.YarnSpinner
 {
-    internal class YarnSpinnerDialogueOptions : iDialogueOptions
+    internal class YarnSpinnerDialogueOptions : IDialogueOptions
     {
         #region iDialogueOptions
         public int id {get;set;}
         public string text {get;set;}
         public string localizeText {get;set;}
 
-        public event Action<iDialogueOptions> onClick;
+        public event Action<IDialogueOptions> onClick;
 
         public void Select()
         {
@@ -27,11 +27,11 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             onClick = null;
         }
-        public void AddListener(Action<iDialogueOptions> listener)
+        public void AddListener(Action<IDialogueOptions> listener)
         {
             onClick += listener;
         }
-        public void RemoveListener(Action<iDialogueOptions> listener)
+        public void RemoveListener(Action<IDialogueOptions> listener)
         {
             onClick -= listener;
         }

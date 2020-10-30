@@ -9,7 +9,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.UnityRemoteConfig
 {
     [HideReferenceObjectPicker]
-    internal class UnityRemoteConfig<T1,T2> : iCloudRemoteConfig,IDisposable where T1:struct where T2:struct
+    internal class UnityRemoteConfig<T1,T2> : ICloudRemoteConfig,IDisposable where T1:struct where T2:struct
     {        
         #region private
         private bool _fetching;

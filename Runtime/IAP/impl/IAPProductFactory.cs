@@ -4,7 +4,7 @@ namespace Evesoft.IAP
     public static class IAPProductFactory
     {
         #if UNITY_IAP
-        public static iProductIAP CreateUnityProduct(string id,int count,ProductType type)
+        public static IProductIAP CreateUnityProduct(string id,int count,ProductType type)
         {
             if(id.IsNullOrEmpty())
                 return null;

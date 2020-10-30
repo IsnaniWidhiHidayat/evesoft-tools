@@ -7,18 +7,18 @@ using UnityEngine;
 
 namespace Evesoft.CloudService.GoogleSignIn
 {
-    internal class GoogleAuth : iCloudAuth
+    internal class GoogleAuth : ICloudAuth
     {
         #region private
-        private iUserAuth _currentUser;
+        private IUserAuth _currentUser;
         private bool _inited;
         #endregion
 
         #region iCloudAuth
         public bool inited => _inited;
-        public iUserAuth currentUser => _currentUser;
+        public IUserAuth currentUser => _currentUser;
         
-        public async Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options = null)
+        public async Task<(IUserAuth,Exception)> Login(ICloudAuthOptions options = null)
         {
             try 
             {
@@ -59,7 +59,7 @@ namespace Evesoft.CloudService.GoogleSignIn
         #endregion
 
         #region constructor
-        public GoogleAuth(iCloudAuthConfig config)
+        public GoogleAuth(ICloudAuthConfig config)
         {
             var webClientID = config.GetConfig<string>(GoogleAuthConfig.WEB_CLIENT_ID);
 

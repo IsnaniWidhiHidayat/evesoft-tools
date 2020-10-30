@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace Evesoft.IAP
 {
-    public interface iIAPService
+    public interface IIAPService
     {
-        event Action<IList<iProductIAP>> onIAPInitialize;
+        event Action<IList<IProductIAP>> onIAPInitialize;
         event Action<InitializationFailureReason> onInitializeFailed;
-        event Action<iProductIAP,PurchaseFailureReason> onPurchaseFailed;
-        event Action<iProductIAP> onPurchasedProduct;
+        event Action<IProductIAP,PurchaseFailureReason> onPurchaseFailed;
+        event Action<IProductIAP> onPurchasedProduct;
 
-        void Init(IList<iProductIAP> products);
-        void BuyProduct(iProductIAP product);
+        void Init(IList<IProductIAP> products);
+        void BuyProduct(IProductIAP product);
     }
 }
 

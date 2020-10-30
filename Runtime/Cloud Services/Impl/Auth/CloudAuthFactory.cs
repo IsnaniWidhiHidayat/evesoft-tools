@@ -7,9 +7,9 @@ namespace Evesoft.CloudService
 {
     public static class CloudAuthFactory
     {
-        private static IDictionary<CloudAuthType,iCloudAuth> auths = new Dictionary<CloudAuthType,iCloudAuth>();
+        private static IDictionary<CloudAuthType,ICloudAuth> auths = new Dictionary<CloudAuthType,ICloudAuth>();
 
-        public static iCloudAuth Create(iCloudAuthConfig config)
+        public static ICloudAuth Create(ICloudAuthConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -55,14 +55,14 @@ namespace Evesoft.CloudService
                 }
             }
         }     
-        public static iCloudAuth Get(CloudAuthType type)
+        public static ICloudAuth Get(CloudAuthType type)
         {
             if(auths.ContainsKey(type))
                 return auths[type];
 
             return null;
         }
-        public static async Task<iCloudAuth> GetAsync(CloudAuthType type)
+        public static async Task<ICloudAuth> GetAsync(CloudAuthType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

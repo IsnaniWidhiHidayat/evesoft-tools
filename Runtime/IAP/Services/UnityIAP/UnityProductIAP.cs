@@ -1,12 +1,12 @@
 namespace Evesoft.IAP.Unity
 {
-    internal class UnityProductIAP : iProductIAP
+    internal class UnityProductIAP : IProductIAP
     {
         #region private
-        internal iProduct product{get;private set;}
+        internal IProduct product{get;private set;}
         #endregion
 
-        internal void SetProduct(iProduct product)
+        internal void SetProduct(IProduct product)
         {
             this.product = product;
         }

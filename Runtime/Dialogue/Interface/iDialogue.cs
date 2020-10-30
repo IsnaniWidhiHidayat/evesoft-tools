@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Evesoft.Dialogue
 {
-    public interface iDialogue
+    public interface IDialogue
     {
-        event Action<iDialogue,string> onDialogueStart;
-        event Action<iDialogue,string> onDialogueEnd;
-        event Action<iDialogue> onDialogueComplete;
+        event Action<IDialogue,string> onDialogueStart;
+        event Action<IDialogue,string> onDialogueEnd;
+        event Action<IDialogue> onDialogueComplete;
         
         string currentNode{get;}
 
@@ -16,7 +16,7 @@ namespace Evesoft.Dialogue
         void ResetDialogue();
         void StopDialogue();
         void Clean();
-        void Add(iDialogueData data);
-        void Remove(iDialogueData data);
+        void Add(IDialogueData data);
+        void Remove(IDialogueData data);
     }
 }

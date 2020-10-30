@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudStorageConfig
+    public interface ICloudStorageConfig
     {
         T GetConfig<T>(string key);
     }

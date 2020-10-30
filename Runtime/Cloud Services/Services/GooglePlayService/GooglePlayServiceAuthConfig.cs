@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.GooglePlayService
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class GooglePlayServiceAuthConfig : iCloudAuthConfig
+    internal class GooglePlayServiceAuthConfig : ICloudAuthConfig
     {
         #region private
         private IDictionary<string,object> _configs;

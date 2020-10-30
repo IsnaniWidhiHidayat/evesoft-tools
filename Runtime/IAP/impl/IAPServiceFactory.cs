@@ -7,15 +7,15 @@ namespace Evesoft.IAP
 {
     public static class IAPServiceFactory
     {
-        private static IDictionary<IAPServiceProvider, iIAPService> _IAPService = new Dictionary<IAPServiceProvider, iIAPService>();
+        private static IDictionary<IAPServiceProvider, IIAPService> _IAPService = new Dictionary<IAPServiceProvider, IIAPService>();
 
-        public static iIAPService Create(IList<iProductIAP> products,IAPServiceProvider provider)
+        public static IIAPService Create(IList<IProductIAP> products,IAPServiceProvider provider)
         {
             if(products.IsNullOrEmpty())
                 return null;
 
             if(_IAPService == null)
-                _IAPService = new Dictionary<IAPServiceProvider, iIAPService>();
+                _IAPService = new Dictionary<IAPServiceProvider, IIAPService>();
 
             if (_IAPService.ContainsKey(provider))
                 return _IAPService[provider];
@@ -36,14 +36,14 @@ namespace Evesoft.IAP
                 }
             }
         }
-        public static iIAPService Get(IAPServiceProvider type)
+        public static IIAPService Get(IAPServiceProvider type)
         {
             if(_IAPService.ContainsKey(type))
                 return _IAPService[type];
 
             return null;
         }
-        public static async Task<iIAPService> GetAsync(IAPServiceProvider type)
+        public static async Task<IIAPService> GetAsync(IAPServiceProvider type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

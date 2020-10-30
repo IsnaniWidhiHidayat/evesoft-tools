@@ -7,9 +7,9 @@ namespace Evesoft.Share
 {
     public static class ShareFactory 
     {
-        private static IDictionary<ShareType,iShare> _shareService = new Dictionary<ShareType,iShare>();
+        private static IDictionary<ShareType,IShare> _shareService = new Dictionary<ShareType,IShare>();
 
-        public static iShare Create(ShareType type)
+        public static IShare Create(ShareType type)
         {
             var share = Get(type);
             if(!share.IsNull())
@@ -31,14 +31,14 @@ namespace Evesoft.Share
                 }
             }
         }  
-        public static iShare Get(ShareType type)
+        public static IShare Get(ShareType type)
         {
             if(_shareService.ContainsKey(type))
                 return _shareService[type];
 
             return null;
         }  
-        public static async Task<iShare> GetAsync(ShareType type)
+        public static async Task<IShare> GetAsync(ShareType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

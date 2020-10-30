@@ -9,7 +9,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.Cache
 {
     [Serializable]
-    public class Texture2DCache : iCache<Texture2DCacheData>,IDisposable
+    public class Texture2DCache : ICache<Texture2DCacheData>,IDisposable
     {
         #region const
         const string defaultKey = "default";
@@ -22,9 +22,9 @@ namespace Evesoft.Cache
         #endregion
 
         #region Static
-        private static iCache<Texture2DCacheData> _defaultInstance;  
-        private static Dictionary<string,iCache<Texture2DCacheData>> _caches = new Dictionary<string, iCache<Texture2DCacheData>>();
-        public static iCache<Texture2DCacheData> defaultInstance
+        private static ICache<Texture2DCacheData> _defaultInstance;  
+        private static Dictionary<string,ICache<Texture2DCacheData>> _caches = new Dictionary<string, ICache<Texture2DCacheData>>();
+        public static ICache<Texture2DCacheData> defaultInstance
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Evesoft.Cache
                     return _defaultInstance = GetCache(defaultKey);
             }
         }
-        public static iCache<Texture2DCacheData> GetCache(string key)
+        public static ICache<Texture2DCacheData> GetCache(string key)
         {
             if(key.IsNullOrEmpty())
                 return null;
@@ -46,11 +46,11 @@ namespace Evesoft.Cache
             else
                 return null;
         }
-        public static Dictionary<string,iCache<Texture2DCacheData>> GetCaches()
+        public static Dictionary<string,ICache<Texture2DCacheData>> GetCaches()
         {
             return _caches;
         }
-        public static iCache<Texture2DCacheData> CreateCache(string key = defaultKey,string metaFile = "images/images.json",string format = ".png")
+        public static ICache<Texture2DCacheData> CreateCache(string key = defaultKey,string metaFile = "images/images.json",string format = ".png")
         {
             var cache = GetCache(key);
             if(!cache.IsNull())
@@ -106,8 +106,8 @@ namespace Evesoft.Cache
         #endregion
        
         #region iCache
-        public event Action<iCache<Texture2DCacheData>> onLoaded;
-        public event Action<iCache<Texture2DCacheData>> onSaved;
+        public event Action<ICache<Texture2DCacheData>> onLoaded;
+        public event Action<ICache<Texture2DCacheData>> onSaved;
 
         [Newtonsoft.Json.JsonProperty(nameof(cached))]
         private List<Texture2DCacheData> _cached;

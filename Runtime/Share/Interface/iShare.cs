@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Evesoft.Share
 {
-    public interface iShare 
+    public interface IShare 
     {
-        iShare SetSubject(string subject);
-        iShare SetText(string text);
-        iShare SetTitle(string title);
-        iShare SetTarget(string androidPackageName,string androidClassName = null);
-        iShare AddTexture(Texture2D texture);
-        iShare AddFile(string filePath,string mime = null);
+        IShare SetSubject(string subject);
+        IShare SetText(string text);
+        IShare SetTitle(string title);
+        IShare SetTarget(string androidPackageName,string androidClassName = null);
+        IShare AddTexture(Texture2D texture);
+        IShare AddFile(string filePath,string mime = null);
         void Share();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudAuthOptions
+    public interface ICloudAuthOptions
     {
         T GetOptions<T>(string key);
     }

@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class FirebaseCloudAuthConfig : iCloudAuthConfig
+    internal class FirebaseCloudAuthConfig : ICloudAuthConfig
     {
         #region private
         private IDictionary<string,object> _configs;

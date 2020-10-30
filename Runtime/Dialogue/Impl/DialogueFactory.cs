@@ -6,9 +6,9 @@ namespace Evesoft.Dialogue
 {
     public static class DialogueFactory
     {
-        private static IDictionary<DialogueType,iDialogue> dialogue = new Dictionary<DialogueType,iDialogue>();
+        private static IDictionary<DialogueType,IDialogue> dialogue = new Dictionary<DialogueType,IDialogue>();
 
-        public static iDialogue Create(iDialogueConfig config)
+        public static IDialogue Create(IDialogueConfig config)
         {
              if(config.IsNull())
                 return null;
@@ -33,14 +33,14 @@ namespace Evesoft.Dialogue
                 }
             }
         }
-        public static iDialogue Get(DialogueType type)
+        public static IDialogue Get(DialogueType type)
         {
             if(dialogue.ContainsKey(type))
                 return dialogue[type];
 
             return null;
         }
-        public static async Task<iDialogue> GetAsync(DialogueType type)
+        public static async Task<IDialogue> GetAsync(DialogueType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

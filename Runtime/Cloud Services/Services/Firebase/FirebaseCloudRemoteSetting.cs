@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService.Firebase
 {
-    internal class FirebaseCloudRemoteSetting : iCloudRemoteSetting
+    internal class FirebaseCloudRemoteSetting : ICloudRemoteSetting
     {
         #region const
         internal const string TYPE = nameof(TYPE);

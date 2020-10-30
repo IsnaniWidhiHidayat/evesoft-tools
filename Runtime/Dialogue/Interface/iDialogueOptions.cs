@@ -1,9 +1,9 @@
 using System;
 namespace Evesoft.Dialogue
 {
-    public interface iDialogueOptions : IDisposable
+    public interface IDialogueOptions : IDisposable
     {
-        event Action<iDialogueOptions> onClick;
+        event Action<IDialogueOptions> onClick;
 
         int id {get;}
         string text {get;}

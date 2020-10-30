@@ -4,11 +4,11 @@ using System.Net;
 
 namespace Evesoft.Cache
 {
-    public interface iRequester<T> 
+    public interface IRequester<T> 
     {
-        event Action<iRequester<T>,float> onProgressChange;
-        event Action<iRequester<T>> onComplete;
-        event Action<iRequester<T>,Exception> onFailed;
+        event Action<IRequester<T>,float> onProgressChange;
+        event Action<IRequester<T>> onComplete;
+        event Action<IRequester<T>,Exception> onFailed;
         
         string url{get;}
         //bool caching{get;}

@@ -10,7 +10,7 @@ namespace Evesoft.CloudService
     {
         private static IDictionary<CloudRemoteConfigType,object> remoteConfigs = new Dictionary<CloudRemoteConfigType,object>();
 
-        public static iCloudRemoteConfig Create(iCloudRemoteSetting setting)
+        public static ICloudRemoteConfig Create(ICloudRemoteSetting setting)
         {
             if(setting.IsNull())
                 return null;
@@ -23,7 +23,7 @@ namespace Evesoft.CloudService
                 case CloudRemoteConfigType.UnityRemoteConfig:
                 {
                     if(remoteConfigs.ContainsKey(service))
-                        return remoteConfigs[service] as iCloudRemoteConfig;
+                        return remoteConfigs[service] as ICloudRemoteConfig;
 
                     var userAttribute = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.USER);
                     var appAttribute  = setting.GetConfig<object>(UnityRemoteConfig.UnityRemoteSetting.APP);
@@ -32,8 +32,8 @@ namespace Evesoft.CloudService
                     var type = typeof(UnityRemoteConfig.UnityRemoteConfig<,>).MakeGenericType(userAttribute.GetType(),appAttribute.GetType());
                     var a_Context = Activator.CreateInstance(type,userAttribute,appAttribute,userCustomID);  
 
-                    var config = default(iCloudRemoteConfig);
-                    Activator.CreateInstance(type).To<iCloudRemoteConfig>(out config);
+                    var config = default(ICloudRemoteConfig);
+                    Activator.CreateInstance(type).To<ICloudRemoteConfig>(out config);
                     remoteConfigs[service] = config;
                     return config;
                 }
@@ -46,9 +46,9 @@ namespace Evesoft.CloudService
 
                     //Add service
                     if(!remoteConfigs.ContainsKey(service))
-                        remoteConfigs[service] = new Dictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>();
+                        remoteConfigs[service] = new Dictionary<Firebase.FirebaseCloudRemoteConfigType,ICloudRemoteConfig>();
                          
-                    var firebaseConfigs = remoteConfigs[service] as IDictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>;
+                    var firebaseConfigs = remoteConfigs[service] as IDictionary<Firebase.FirebaseCloudRemoteConfigType,ICloudRemoteConfig>;
                     if(firebaseConfigs.ContainsKey(type))
                         return firebaseConfigs[type];
     
@@ -63,7 +63,7 @@ namespace Evesoft.CloudService
                 }
             }
         }
-        public static iCloudRemoteConfig Get(CloudRemoteConfigType type
+        public static ICloudRemoteConfig Get(CloudRemoteConfigType type
         #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
         ,params object[] param
         #endif
@@ -78,7 +78,7 @@ namespace Evesoft.CloudService
                     #if UNITY_REMOTE_CONFIG
                     case CloudRemoteConfigType.UnityRemoteConfig:
                     {
-                        return service as iCloudRemoteConfig;
+                        return service as ICloudRemoteConfig;
                     }
                     #endif
 
@@ -86,7 +86,7 @@ namespace Evesoft.CloudService
                     case CloudRemoteConfigType.FirebaseRemoteConfig:
                     {
                         var firebaseType    = (Firebase.FirebaseCloudRemoteConfigType)param.First();
-                        var firebaseConfigs = service as IDictionary<Firebase.FirebaseCloudRemoteConfigType,iCloudRemoteConfig>;
+                        var firebaseConfigs = service as IDictionary<Firebase.FirebaseCloudRemoteConfigType,ICloudRemoteConfig>;
                         if(firebaseConfigs.ContainsKey(firebaseType))
                             return firebaseConfigs[firebaseType];
 
@@ -98,7 +98,7 @@ namespace Evesoft.CloudService
 
             return null;
         }
-        public static async Task<iCloudRemoteConfig> GetAsync(CloudRemoteConfigType type
+        public static async Task<ICloudRemoteConfig> GetAsync(CloudRemoteConfigType type
         #if FIREBASE_REMOTE_CONFIG || FIREBASE_REALTIME_DATABASE
         ,params object[] param
         #endif

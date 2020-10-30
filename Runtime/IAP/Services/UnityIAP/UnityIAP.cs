@@ -6,16 +6,16 @@ using System;
 
 namespace Evesoft.IAP.Unity
 {
-    internal class UnityIAP : iIAPService, IStoreListener,IDisposable
+    internal class UnityIAP : IIAPService, IStoreListener,IDisposable
     {
         #region Private
         private IStoreController _storeController;
         private IExtensionProvider _storeExtensionProvider;
-        private IList<iProductIAP> _products;
+        private IList<IProductIAP> _products;
         #endregion
 
         #region Constructor
-        public UnityIAP(IList<iProductIAP> products)
+        public UnityIAP(IList<IProductIAP> products)
         {
             Init(products);
         }
@@ -32,15 +32,15 @@ namespace Evesoft.IAP.Unity
         #endregion
 
         #region iIAPService
-        public event Action<IList<iProductIAP>> onIAPInitialize;
+        public event Action<IList<IProductIAP>> onIAPInitialize;
         public event Action<InitializationFailureReason> onInitializeFailed;
-        public event Action<iProductIAP, PurchaseFailureReason> onPurchaseFailed;
-        public event Action<iProductIAP> onPurchasedProduct;
-        public void Init(IList<iProductIAP> products)
+        public event Action<IProductIAP, PurchaseFailureReason> onPurchaseFailed;
+        public event Action<IProductIAP> onPurchasedProduct;
+        public void Init(IList<IProductIAP> products)
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
             
-            foreach (iProductIAP item in products)
+            foreach (IProductIAP item in products)
             {
                 if(item.IsNull() || item.id.IsNullOrEmpty())
                     continue;
@@ -51,7 +51,7 @@ namespace Evesoft.IAP.Unity
             _products = products;
             UnityPurchasing.Initialize(this, builder);
         }
-        public void BuyProduct(iProductIAP product)
+        public void BuyProduct(IProductIAP product)
         {
             var IAPProduct = product as UnityProductIAP;
             if (IAPProduct.IsNull() || IAPProduct.product.IsNull() || !IAPProduct.product.availableToPurchase)
@@ -96,7 +96,7 @@ namespace Evesoft.IAP.Unity
         }
         public void OnPurchaseFailed(UnityEngine.Purchasing.Product product, UnityEngine.Purchasing.PurchaseFailureReason reason)
         {
-            iProductIAP productIAP = _products.IsNullOrEmpty() ? null : _products.Find(x => x != null && x.id == product.definition.id);
+            IProductIAP productIAP = _products.IsNullOrEmpty() ? null : _products.Find(x => x != null && x.id == product.definition.id);
             if (productIAP == null)
                 return;
 
@@ -105,7 +105,7 @@ namespace Evesoft.IAP.Unity
         }
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
         {
-            iProductIAP product = _products.Find(x => x != null && x.id == e.purchasedProduct.definition.id);
+            IProductIAP product = _products.Find(x => x != null && x.id == e.purchasedProduct.definition.id);
 
             if (product != null)
             {

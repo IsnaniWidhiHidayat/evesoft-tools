@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Evesoft.Dialogue
 {
-    public interface iDialogueUI : IDisposable
+    public interface IDialogueUI : IDisposable
     {
         event Action onDialogueStart;
         event Action onDialogueEnd;
@@ -18,9 +18,9 @@ namespace Evesoft.Dialogue
 
         void OnDialogueStart();
         void OnDialogueEnd();
-        void OnLineStart(iDialogueLine line);
+        void OnLineStart(IDialogueLine line);
         void OnLineEnd();
-        void OnOptionsStart(IList<iDialogueOptions> options);
+        void OnOptionsStart(IList<IDialogueOptions> options);
         void OnOptionsSelected(int ID);
         void OnOptionsEnd();
         void OnCommand(string command);

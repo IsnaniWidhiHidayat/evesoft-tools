@@ -6,7 +6,7 @@ using Yarn.Unity;
 
 namespace Evesoft.Dialogue.YarnSpinner
 {
-    public class YarnSpinner : iDialogue
+    public class YarnSpinner : IDialogue
     {
         #region private
         private DialogueRunner _dialogeRunner;
@@ -77,15 +77,15 @@ namespace Evesoft.Dialogue.YarnSpinner
         #region iDialogue
         public string currentNode => _dialogeRunner?.CurrentNodeName;
 
-        public event Action<iDialogue, string> onDialogueStart;
-        public event Action<iDialogue, string> onDialogueEnd;
-        public event Action<iDialogue> onDialogueComplete;
+        public event Action<IDialogue, string> onDialogueStart;
+        public event Action<IDialogue, string> onDialogueEnd;
+        public event Action<IDialogue> onDialogueComplete;
 
         public bool IsNodeExist(string name)
         {
             return _dialogeRunner.NodeExists(name);
         }
-        public void Add(iDialogueData data)
+        public void Add(IDialogueData data)
         {
             if(data.IsNull())
                 return;
@@ -164,7 +164,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                 } 
             }
         }      
-        public void Remove(iDialogueData data)
+        public void Remove(IDialogueData data)
         {
             if(data.IsNull())
                 return;
@@ -210,9 +210,9 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region constructor
-        internal YarnSpinner(iDialogueConfig config)
+        internal YarnSpinner(IDialogueConfig config)
         { 
-            var ui        = config.GetConfig<iDialogueUI>(YarnSpinnerConfig.UI);
+            var ui        = config.GetConfig<IDialogueUI>(YarnSpinnerConfig.UI);
             var startAuto = config.GetConfig<bool>(YarnSpinnerConfig.START_AUTO);
             var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
             var variables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);

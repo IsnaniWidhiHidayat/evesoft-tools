@@ -1,7 +1,7 @@
 #if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
-    public interface iCloudAuthConfig
+    public interface ICloudAuthConfig
     {
         T GetConfig<T>(string key);
     }

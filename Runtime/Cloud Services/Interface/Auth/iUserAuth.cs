@@ -1,7 +1,7 @@
 #if ODIN_INSPECTOR 
 namespace Evesoft.CloudService
 {
-    public interface iUserAuth 
+    public interface IUserAuth 
     {
         string id{get;}
         string name{get;}

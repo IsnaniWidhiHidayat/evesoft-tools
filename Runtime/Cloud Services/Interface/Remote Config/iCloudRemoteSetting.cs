@@ -2,7 +2,7 @@
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudRemoteSetting
+    public interface ICloudRemoteSetting
     {
         T GetConfig<T>(string key);
     }

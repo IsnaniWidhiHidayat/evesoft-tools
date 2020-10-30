@@ -7,9 +7,9 @@ namespace Evesoft.CloudService
 {
     public static class CloudStorageFactory
     {
-        private static IDictionary<CloudStorageType,iCloudStorage> storages = new Dictionary<CloudStorageType,iCloudStorage>();
+        private static IDictionary<CloudStorageType,ICloudStorage> storages = new Dictionary<CloudStorageType,ICloudStorage>();
         
-        public static iCloudStorage Create(iCloudStorageConfig config)
+        public static ICloudStorage Create(ICloudStorageConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -34,14 +34,14 @@ namespace Evesoft.CloudService
                 }
             }
         }
-        public static iCloudStorage Get(CloudStorageType type)
+        public static ICloudStorage Get(CloudStorageType type)
         {
             if(storages.ContainsKey(type))
                 return storages[type];
 
             return null;
         }
-        public static async Task<iCloudStorage> GetAsync(CloudStorageType type)
+        public static async Task<ICloudStorage> GetAsync(CloudStorageType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

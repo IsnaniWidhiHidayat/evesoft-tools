@@ -3,7 +3,7 @@ using System;
 
 namespace Evesoft.Dialogue.YarnSpinner
 {
-    internal class YarnSpinnerDialogueLine : iDialogueLine ,IDisposable
+    internal class YarnSpinnerDialogueLine : IDialogueLine ,IDisposable
     {
         #region private
         private string _text;

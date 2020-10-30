@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 namespace Evesoft.IAP.Unity
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class UnityProductMetadata:iProductMetadata
+    internal class UnityProductMetadata:IProductMetadata
     {
         #region private
         UnityEngine.Purchasing.ProductMetadata _metaData;

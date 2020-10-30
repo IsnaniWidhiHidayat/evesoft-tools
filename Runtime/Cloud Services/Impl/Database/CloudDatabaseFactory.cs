@@ -7,7 +7,7 @@ namespace Evesoft.CloudService
 {
     public static class CloudDatabaseFactory
     {
-        public static bool IsNullOrEmpty(this iCloudDatabaseReference obj)
+        public static bool IsNullOrEmpty(this ICloudDatabaseReference obj)
         {
             if(obj.IsNull())
                 return true;
@@ -20,7 +20,7 @@ namespace Evesoft.CloudService
 
         private static IDictionary<CloudDatabaseType,object> databases = new Dictionary<CloudDatabaseType,object>();
 
-        public static iCloudDatabase Create(iCloudDatabaseConfig config)
+        public static ICloudDatabase Create(ICloudDatabaseConfig config)
         {
             if(config.IsNull())
                 return null;
@@ -33,13 +33,13 @@ namespace Evesoft.CloudService
                 case CloudDatabaseType.FirebaseRealtimeDatabase:
                 {
                     if(!databases.ContainsKey(service))
-                        databases[service] = new Dictionary<string,iCloudDatabase>();
+                        databases[service] = new Dictionary<string,ICloudDatabase>();
                         
                     var db = config.GetConfig<string>(Firebase.FirebaseCloudDatabaseConfig.DB);
                     if(db.IsNullOrEmpty())
                         db = "default";
 
-                    var dic = databases[service] as Dictionary<string,iCloudDatabase>;
+                    var dic = databases[service] as Dictionary<string,ICloudDatabase>;
                     if(dic.ContainsKey(db))
                         return dic[db];
 
@@ -54,7 +54,7 @@ namespace Evesoft.CloudService
                 }
             }
         }
-        public static iCloudDatabase Get(CloudDatabaseType type,params string[] param)
+        public static ICloudDatabase Get(CloudDatabaseType type,params string[] param)
         {
             switch(type)
             {
@@ -63,7 +63,7 @@ namespace Evesoft.CloudService
                 {
                     if(databases.ContainsKey(type))
                     {
-                        var services = databases[type] as Dictionary<string,iCloudDatabase>;
+                        var services = databases[type] as Dictionary<string,ICloudDatabase>;
                         var db       = param.IsNullOrEmpty()? "default" : param.First() ;
                         if(services.ContainsKey(db))
                             return services[db];
@@ -79,7 +79,7 @@ namespace Evesoft.CloudService
                 }
             }
         }
-        public static async Task<iCloudDatabase> GetAsync(CloudDatabaseType type)
+        public static async Task<ICloudDatabase> GetAsync(CloudDatabaseType type)
         {
             await new WaitUntil(()=> !Get(type).IsNull());
             return Get(type);

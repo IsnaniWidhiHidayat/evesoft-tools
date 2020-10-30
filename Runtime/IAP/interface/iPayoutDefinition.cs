@@ -1,7 +1,7 @@
 #if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
-    public interface iPayoutDefinition
+    public interface IPayoutDefinition
     {
         PayoutType type { get; }
         string typeString { get; }

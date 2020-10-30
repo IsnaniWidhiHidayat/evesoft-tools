@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudDatabase
+    public interface ICloudDatabase
     {
-        Task<(iCloudDatabaseReference,Exception)> Connect(IDictionary<string,object> parameter);
-        Task<Exception> Disconnect(iCloudDatabaseReference reference);
+        Task<(ICloudDatabaseReference,Exception)> Connect(IDictionary<string,object> parameter);
+        Task<Exception> Disconnect(ICloudDatabaseReference reference);
     }
 }
 #endif

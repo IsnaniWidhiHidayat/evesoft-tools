@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Evesoft.CloudService.GoogleSignIn
 {
     [CreateAssetMenu(menuName = nameof(Evesoft) +"/"+ nameof(Evesoft.CloudService) +"/" + nameof(GoogleAuthConfig),fileName = nameof(GoogleAuthConfig))]
-    public class GoogleAuthConfigAsset : SerializedScriptableObject, iCloudAuthConfig
+    public class GoogleAuthConfigAsset : SerializedScriptableObject, ICloudAuthConfig
     {
         [SerializeField,HideInInspector]
         private GoogleAuthConfig _config;

@@ -1,6 +1,6 @@
 namespace Evesoft.Dialogue
 {
-    public interface iDialogueData
+    public interface IDialogueData
     {
         T GetValue<T>(string key);
     }

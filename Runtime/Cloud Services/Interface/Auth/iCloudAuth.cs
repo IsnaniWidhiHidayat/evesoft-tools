@@ -4,11 +4,11 @@ using System;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudAuth
+    public interface ICloudAuth
     {
         bool inited{get;}
-        iUserAuth currentUser{get;}
-        Task<(iUserAuth,Exception)> Login(iCloudAuthOptions options = null);
+        IUserAuth currentUser{get;}
+        Task<(IUserAuth,Exception)> Login(ICloudAuthOptions options = null);
         void Logout();
     }
 }

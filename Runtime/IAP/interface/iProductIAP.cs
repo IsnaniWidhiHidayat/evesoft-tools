@@ -1,7 +1,7 @@
 #if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
-    public interface iProductIAP
+    public interface IProductIAP
     {
         string id{get;}
         int count{get;}

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace Evesoft.CloudService
 {
-    public interface iCloudRoom
+    public interface ICloudRoom
     {
-        event Action<iCloudRoom,iRoom> onRoomCreated;
-        event Action<iCloudRoom,string> onRoomCreatedFailed;
-        event Action<iCloudRoom,iRoom> onJoinedRoom;
-        event Action<iCloudRoom,string> onJoinedRoomFailed;
-        event Action<iCloudRoom> onLeftRoom;
+        event Action<ICloudRoom,IRoom> onRoomCreated;
+        event Action<ICloudRoom,string> onRoomCreatedFailed;
+        event Action<ICloudRoom,IRoom> onJoinedRoom;
+        event Action<ICloudRoom,string> onJoinedRoomFailed;
+        event Action<ICloudRoom> onLeftRoom;
 
-        iRoom currentRoom{get;}
+        IRoom currentRoom{get;}
         bool inited{get;}
         
         void CreateRoom(Dictionary<string,object> options);

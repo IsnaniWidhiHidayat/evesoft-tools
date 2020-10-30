@@ -1,7 +1,7 @@
 #if ODIN_INSPECTOR 
 namespace Evesoft.IAP
 {
-    public interface iProductMetadata
+    public interface IProductMetadata
     {
         string localizedPriceString { get; }
         string localizedTitle { get; }

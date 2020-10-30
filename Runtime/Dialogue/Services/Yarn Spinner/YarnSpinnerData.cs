@@ -6,7 +6,7 @@ using Yarn.Unity;
 
 namespace Evesoft.Dialogue.YarnSpinner
 {
-    public class YarnSpinnerData : iDialogueData
+    public class YarnSpinnerData : IDialogueData
     {
         #region const
         public const string SCRIPT                 = nameof(SCRIPT);

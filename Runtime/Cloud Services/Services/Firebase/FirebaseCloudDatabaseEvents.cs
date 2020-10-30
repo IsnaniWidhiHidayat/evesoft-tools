@@ -4,7 +4,7 @@ using System;
 
 namespace Evesoft.CloudService.Firebase
 {
-    internal class FirebaseCloudDatabaseEvents : iCloudDatabaseEvents,IDisposable
+    internal class FirebaseCloudDatabaseEvents : ICloudDatabaseEvents,IDisposable
     {
         #region iCloudDatabaseEvents
         public event Action<string, object> onDataAdded;

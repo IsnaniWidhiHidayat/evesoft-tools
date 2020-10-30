@@ -9,10 +9,10 @@ using Sirenix.OdinInspector;
 namespace Evesoft.CloudService.Firebase
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class FirebaseCloudDatabaseReference : iCloudDatabaseReference,IDisposable
+    internal class FirebaseCloudDatabaseReference : ICloudDatabaseReference,IDisposable
     {      
         #region private
-        private iCloudDatabaseEvents _events;
+        private ICloudDatabaseEvents _events;
         private IDictionary<string, object> _reference;
         private IDictionary<string, object> _data;
         private DatabaseReference _dbRef;
@@ -24,7 +24,7 @@ namespace Evesoft.CloudService.Firebase
         #endregion
 
         #region iCloudDatabaseReference
-        public iCloudDatabaseEvents events =>_events;
+        public ICloudDatabaseEvents events =>_events;
 
         [ShowInInspector,ReadOnly,ShowIf(nameof(data))]
         public IDictionary<string, object> data => _data;

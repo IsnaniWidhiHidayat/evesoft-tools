@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Evesoft.Dialogue.YarnSpinner
 {
-    internal class YarnSpinnerConfig : iDialogueConfig
+    internal class YarnSpinnerConfig : IDialogueConfig
     {    
         #region const
         public const string UI         = nameof(UI);
@@ -30,7 +30,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region methods
-        public void SetUI(iDialogueUI ui)
+        public void SetUI(IDialogueUI ui)
         {
             _configs[UI] = ui;
         }

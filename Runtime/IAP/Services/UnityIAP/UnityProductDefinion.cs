@@ -7,12 +7,12 @@ using Sirenix.OdinInspector;
 namespace Evesoft.IAP.Unity
 {
     [Serializable, HideReferenceObjectPicker]
-    internal class UnityProductDefinion : iProductDefinion
+    internal class UnityProductDefinion : IProductDefinion
     {
         #region private
         private UnityEngine.Purchasing.ProductDefinition _definition;
-        private IEnumerable<iPayoutDefinition> _payouts;
-        private iPayoutDefinition _payout;
+        private IEnumerable<IPayoutDefinition> _payouts;
+        private IPayoutDefinition _payout;
         #endregion
 
         #region iProductDefinion
@@ -20,8 +20,8 @@ namespace Evesoft.IAP.Unity
         public string storeSpecificId => !_definition.IsNull()? _definition.storeSpecificId : null;
         public bool enabled => !_definition.IsNull()? _definition.enabled : false;
         public ProductType type => !_definition.IsNull()? (ProductType)(int)_definition.type : default(ProductType);
-        public IEnumerable<iPayoutDefinition> payouts => !_definition.IsNull()? _payouts : null; 
-        public iPayoutDefinition payout => !_definition.IsNull()? _payout : null;
+        public IEnumerable<IPayoutDefinition> payouts => !_definition.IsNull()? _payouts : null; 
+        public IPayoutDefinition payout => !_definition.IsNull()? _payout : null;
         #endregion
 
         #region Constructor
@@ -34,7 +34,7 @@ namespace Evesoft.IAP.Unity
     
             if(!_definition.payouts.IsNull()) 
             {
-                var payouts = default(List<iPayoutDefinition>);
+                var payouts = default(List<IPayoutDefinition>);
                 
                 foreach (var payout in _definition.payouts)
                 {
@@ -42,7 +42,7 @@ namespace Evesoft.IAP.Unity
                         return;
 
                     if(payouts.IsNull())
-                        payouts = new List<iPayoutDefinition>();
+                        payouts = new List<IPayoutDefinition>();
 
                     payouts.Add(new UnityPayoutDefinition(payout));
                 }

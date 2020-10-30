@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Evesoft.CloudService
 {
-    public class iRoom
+    public class IRoom
     {
         // Start is called before the first frame update
         void Start()

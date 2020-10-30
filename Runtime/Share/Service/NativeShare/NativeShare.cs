@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Evesoft.Share.NativeShare
 {
-    public class NativeShare : iShare,IDisposable
+    public class NativeShare : IShare,IDisposable
     {
         #region private
         private global::NativeShare _nativeShare;
@@ -25,7 +25,7 @@ namespace Evesoft.Share.NativeShare
         }
 
         #region iShare
-        public iShare AddTexture(Texture2D texture)
+        public IShare AddTexture(Texture2D texture)
         {
             if(!texture.IsNull())
             {
@@ -41,27 +41,27 @@ namespace Evesoft.Share.NativeShare
 
             return this;
         }
-        public iShare AddFile(string filePath, string mime = null)
+        public IShare AddFile(string filePath, string mime = null)
         {
             _nativeShare.AddFile(filePath,mime);
             return this;        
         }
-        public iShare SetSubject(string subject)
+        public IShare SetSubject(string subject)
         {
             _nativeShare.SetSubject(subject);
             return this;
         }
-        public iShare SetTarget(string androidPackageName, string androidClassName = null)
+        public IShare SetTarget(string androidPackageName, string androidClassName = null)
         {
             _nativeShare.AddTarget(androidClassName,androidClassName);
            return this;
         }
-        public iShare SetText(string text)
+        public IShare SetText(string text)
         {
             _nativeShare.SetText(text);
             return this;
         }
-        public iShare SetTitle(string title)
+        public IShare SetTitle(string title)
         {
             _nativeShare.SetTitle(title);
             return this;

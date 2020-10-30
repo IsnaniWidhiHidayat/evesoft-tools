@@ -8,18 +8,18 @@ using UnityEngine;
 
 namespace Evesoft.CloudService.GooglePlayService
 {
-    internal class GooglePlayServiceAuth : iCloudAuth
+    internal class GooglePlayServiceAuth : ICloudAuth
     {
         #region private
         private bool _inited = false;
-        private iUserAuth _currentUser;
+        private IUserAuth _currentUser;
         #endregion
 
         #region iCloudAuth
         public bool inited => _inited;
-        public iUserAuth currentUser => _currentUser;
+        public IUserAuth currentUser => _currentUser;
 
-        public async Task<(iUserAuth, Exception)> Login(iCloudAuthOptions options = null)
+        public async Task<(IUserAuth, Exception)> Login(ICloudAuthOptions options = null)
         {
             if(!Application.isMobilePlatform)
                 return (null, new PlatformNotSupportedException("Platfrom Not Supported"));
@@ -68,7 +68,7 @@ namespace Evesoft.CloudService.GooglePlayService
         #endregion
 
         #region constructor
-        public GooglePlayServiceAuth(iCloudAuthConfig config)
+        public GooglePlayServiceAuth(ICloudAuthConfig config)
         {
             var cfg = new PlayGamesClientConfiguration.Builder()
             .RequestServerAuthCode(false)

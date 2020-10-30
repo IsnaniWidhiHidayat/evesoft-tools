@@ -6,12 +6,12 @@ using Sirenix.OdinInspector;
 namespace Evesoft.IAP.Unity
 {
     [Serializable,HideReferenceObjectPicker]
-    internal class UnityProduct : iProduct
+    internal class UnityProduct : IProduct
     {
         #region private
         private UnityEngine.Purchasing.Product _unityProduct;
-        private iProductDefinion _definition;
-        private iProductMetadata _metadata;
+        private IProductDefinion _definition;
+        private IProductMetadata _metadata;
         #endregion
 
         #region iProduct
@@ -19,8 +19,8 @@ namespace Evesoft.IAP.Unity
         [ShowInInspector] public bool hasReceipt => !_unityProduct.IsNull()? _unityProduct.hasReceipt : false;
         [ShowInInspector] public string receipt => !_unityProduct.IsNull()? _unityProduct.receipt : null;
         [ShowInInspector] public string transactionID => !_unityProduct.IsNull()? _unityProduct.transactionID : null;
-        [ShowInInspector] public iProductDefinion definition => !_unityProduct.IsNull()? _definition : null;
-        [ShowInInspector] public iProductMetadata metadata => !_unityProduct.IsNull()? _metadata : null;
+        [ShowInInspector] public IProductDefinion definition => !_unityProduct.IsNull()? _definition : null;
+        [ShowInInspector] public IProductMetadata metadata => !_unityProduct.IsNull()? _metadata : null;
         #endregion
         
         #region Constructor
