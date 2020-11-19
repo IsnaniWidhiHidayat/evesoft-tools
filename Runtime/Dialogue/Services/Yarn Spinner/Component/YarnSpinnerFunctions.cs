@@ -137,11 +137,23 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
 
         #region private
         private YarnSpinner _yarnSpinner;
+        private bool _inited;
         #endregion
        
         #region methods
+        private void Start()
+        {
+            _yarnSpinner = DialogueFactory.Get(DialogueType.YarnSpinner) as YarnSpinner;
+            if(_yarnSpinner.IsNull())
+                return;
+
+            Init(_yarnSpinner);
+        }
         internal void Init(YarnSpinner yarnSpinner)
         {
+            if(_inited)
+                return;
+
             _yarnSpinner = yarnSpinner;
    
             foreach (var function in registerFunctions)
@@ -195,6 +207,8 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                     }
                 }
             }           
+
+            _inited = true;
         }
         #endregion
         
