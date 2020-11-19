@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using Yarn;
-using System.Threading.Tasks;
 
 namespace Evesoft.Dialogue.YarnSpinner.Component
 {
@@ -135,6 +133,122 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         #region field
         [OdinSerialize,ListDrawerSettings(Expanded = true)]
         internal List<RegisterFunction> registerFunctions = new List<RegisterFunction>();
+        #endregion
+
+        #region private
+        private YarnSpinner _yarnSpinner;
+        #endregion
+       
+        #region methods
+        internal void Init(YarnSpinner yarnSpinner)
+        {
+            _yarnSpinner = yarnSpinner;
+   
+            foreach (var function in registerFunctions)
+            {
+                switch(function.type)
+                {
+                    case Component.RegisterFunction.Type.Function:
+                    {
+                        if(function.function.IsNull())
+                            break;
+
+                        yarnSpinner.dialogeRunner.AddFunction(function.name,function.paramCount,(values)=>
+                        {
+                            function.function.Invoke(values.ToObjects());
+                        });
+                        yarnSpinner.AddEditorRegisteredFunctions(0,function.name,function.paramCount);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.ReturningFunction:
+                    {
+                        if(function.returnfunction.IsNull())
+                            break;
+
+                        yarnSpinner.dialogeRunner.AddFunction(function.name,function.paramCount,(values)=>
+                        {
+                            function.returnfunction.Invoke(values.ToObjects());
+                        });
+                        yarnSpinner.AddEditorRegisteredFunctions(1,function.name,function.paramCount);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.Commmand:
+                    {
+                        if(function.command.IsNull())
+                            break;
+
+                        yarnSpinner.dialogeRunner.AddCommandHandler(function.name,function.command.Invoke);
+                        yarnSpinner.AddEditorRegisteredCommand(0,function.name);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.BlockingCommand:
+                    {
+                        if(function.blockingCommand.IsNull())
+                            break;
+
+                        yarnSpinner.dialogeRunner.AddCommandHandler(function.name,function.blockingCommand.Invoke);
+                        yarnSpinner.AddEditorRegisteredCommand(1,function.name);
+                        break;
+                    }
+                }
+            }           
+        }
+        #endregion
+        
+        #region callbacks
+        private void OnDestroy()
+        {
+            foreach (var function in registerFunctions)
+            {
+                switch(function.type)
+                {
+                    case Component.RegisterFunction.Type.Function:
+                    {
+                        if(function.function.IsNull())
+                            break;
+
+                        _yarnSpinner.dialogeRunner.RemoveFunction(function.name);
+                        _yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.ReturningFunction:
+                    {
+                        if(function.returnfunction.IsNull())
+                            break;
+
+                        _yarnSpinner.dialogeRunner.RemoveFunction(function.name);
+                        _yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.Commmand:
+                    {
+                        if(function.command.IsNull())
+                            break;
+
+                        _yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
+                        _yarnSpinner.RemoveEditorRegisteredCommand(function.name);
+                        break;
+                    }
+
+                    case Component.RegisterFunction.Type.BlockingCommand:
+                    {
+                        if(function.blockingCommand.IsNull())
+                            break;
+
+                        _yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
+                        _yarnSpinner.RemoveEditorRegisteredCommand(function.name);
+                        break;
+                    }
+                }
+            } 
+
+            _yarnSpinner = null;
+        }   
         #endregion
     }
 }

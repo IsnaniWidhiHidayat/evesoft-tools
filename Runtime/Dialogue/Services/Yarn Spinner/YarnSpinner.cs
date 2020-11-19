@@ -10,10 +10,14 @@ namespace Evesoft.Dialogue.YarnSpinner
     {
         #region private
         private DialogueRunner _dialogeRunner;
+        private Component.YarnSpinnerVariableStorage _storage;
+        private Component.YarnSpinnerUI _UI;
         #endregion       
 
         #region property
-        public DialogueRunner dialogeRunner => _dialogeRunner;
+        internal DialogueRunner dialogeRunner => _dialogeRunner;
+        internal Component.YarnSpinnerVariableStorage storage => _storage;
+        internal Component.YarnSpinnerUI ui => _UI;
 
         #if UNITY_EDITOR
         public IDictionary<string,string> functions{get;private set;}
@@ -36,7 +40,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region editor methods
-        private void AddRegisteredFunctions(byte type,string name,int paramCount)
+        internal void AddEditorRegisteredFunctions(byte type,string name,int paramCount)
         {
             #if UNITY_EDITOR
             if(functions.IsNull())
@@ -45,7 +49,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             functions[name] = string.Format("{2}{0}(params object[{1}] param)",name,paramCount,type == 0 ?"" : "object ");
             #endif
         }
-        private void RemoveRegisteredFunctions(string name)
+        internal void RemoveEditorRegisteredFunctions(string name)
         {
             #if UNITY_EDITOR
             if(functions.IsNullOrEmpty())
@@ -54,7 +58,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             functions.Remove(name);
             #endif
         }
-        private void AddRegisteredCommand(byte type,string name)
+        internal void AddEditorRegisteredCommand(byte type,string name)
         {
             #if UNITY_EDITOR
             if(commands.IsNull())
@@ -63,7 +67,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             commands[name] = string.Format("{0}(params string[] param{1})",name,type == 0?"" : ", Action onComplete");
             #endif
         }
-        private void RemoveRegisteredCommand(string name)
+        internal void RemoveEditorRegisteredCommand(string name)
         {
             #if UNITY_EDITOR
             if(commands.IsNullOrEmpty())
@@ -115,7 +119,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                     (var name,var handler) = command;
                     _dialogeRunner.AddCommandHandler(name,handler);
 
-                    AddRegisteredCommand(0,name);
+                    AddEditorRegisteredCommand(0,name);
                 }
             }
                 
@@ -128,7 +132,7 @@ namespace Evesoft.Dialogue.YarnSpinner
                     (var name,var handler) = command;
                     _dialogeRunner.AddCommandHandler(name,handler);
 
-                    AddRegisteredCommand(1,name);
+                    AddEditorRegisteredCommand(1,name);
                 }
             }
 
@@ -141,10 +145,10 @@ namespace Evesoft.Dialogue.YarnSpinner
                     (var name,var paramCount,var func) = function;
                     _dialogeRunner.AddFunction(name,paramCount,(values)=>
                     {
-                       func.Invoke(ConverToObjects(values));
+                       func.Invoke(values.ToObjects());
                     });
 
-                    AddRegisteredFunctions(0,name,paramCount);
+                    AddEditorRegisteredFunctions(0,name,paramCount);
                 }
             }
                
@@ -157,10 +161,10 @@ namespace Evesoft.Dialogue.YarnSpinner
                     (var name,var paramCount,var func) = function;
                     _dialogeRunner.AddFunction(name,paramCount,(values)=>
                     {
-                        return func?.Invoke(ConverToObjects(values));
+                        return func?.Invoke(values.ToObjects());
                     });
 
-                    AddRegisteredFunctions(1,name,paramCount);
+                    AddEditorRegisteredFunctions(1,name,paramCount);
                 } 
             }
         }      
@@ -170,26 +174,52 @@ namespace Evesoft.Dialogue.YarnSpinner
                 return;
 
             //Remove Command Handler
-            var names = data.GetValue<IList<string>>(YarnSpinnerData.REMOVE_COMMAND);
-            if(!names.IsNullOrEmpty())
+            var commandHandlers = data.GetValue<IList<(string,DialogueRunner.CommandHandler)>>(YarnSpinnerData.COMMAND);
+            if(!commandHandlers.IsNullOrEmpty())
             {
-                foreach (var name in names)
+                foreach (var command in commandHandlers)
                 {
+                    (var name,var handler) = command;
                     _dialogeRunner.RemoveCommandHandler(name);
-                    RemoveRegisteredCommand(name);
+                    RemoveEditorRegisteredCommand(name);
                 }
             }
                 
-            //Remove Function
-            names = data.GetValue<IList<string>>(YarnSpinnerData.REMOVE_FUNCTIONS);
-            if(!names.IsNullOrEmpty())
+            //Remove BlokingCommand Handler
+            var blokingCommandHandlers = data.GetValue<IList<(string,DialogueRunner.BlockingCommandHandler)>>(YarnSpinnerData.BLOKING_COMMAND);
+            if(!blokingCommandHandlers.IsNullOrEmpty())
             {
-                foreach (var name in names)
+                foreach (var command in blokingCommandHandlers)
                 {
-                    _dialogeRunner.RemoveFunction(name);
-                    RemoveRegisteredFunctions(name);
+                    (var name,var handler) = command;
+                    _dialogeRunner.RemoveCommandHandler(name);
+                    RemoveEditorRegisteredCommand(name);
                 }
             }
+
+            //Remove Function
+            var functions = data.GetValue<IList<(string,int,Action<object[]>)>>(YarnSpinnerData.FUNCTION);
+            if(!functions.IsNullOrEmpty())
+            { 
+                foreach (var function in functions)
+                {
+                    (var name,var paramCount,var func) = function;
+                    _dialogeRunner.RemoveFunction(name);
+                    RemoveEditorRegisteredFunctions(name);
+                }
+            }
+               
+            //Remove Returning Functions;
+            var returningFunction = data.GetValue<IList<(string,int,Func<object[],object>)>>(YarnSpinnerData.RETURNING_FUNCTION);
+            if(!returningFunction.IsNullOrEmpty())
+            {
+                foreach (var function in returningFunction)
+                {
+                    (var name,var paramCount,var func) = function;
+                    _dialogeRunner.RemoveFunction(name);
+                    RemoveEditorRegisteredFunctions(name);
+                } 
+            }     
         }
         public void StartDialogue(string node = null)
         {
@@ -197,6 +227,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         }      
         public void ResetDialogue()
         {
+            _storage?.ResetToDefaults();
             _dialogeRunner?.ResetDialogue();
         }
         public void StopDialogue()
@@ -225,14 +256,14 @@ namespace Evesoft.Dialogue.YarnSpinner
             SetEvents(_dialogeRunner);
 
             //Set Storage
-            var storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
-            storage.SetDefaultVariable(variables);
-            _dialogeRunner.variableStorage  = storage;
+            _storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
+            _storage.SetDefaultVariable(variables);
+            _dialogeRunner.variableStorage  = _storage;
 
             //Set UI
-            var UI = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerUI>();
-            UI.SetUI(ui);
-            _dialogeRunner.dialogueUI  = UI;
+            _UI = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerUI>();
+            _UI.SetUI(ui);
+            _dialogeRunner.dialogueUI  = _UI;
             
             //Set node
             _dialogeRunner.startAutomatically = startAuto;
@@ -244,55 +275,7 @@ namespace Evesoft.Dialogue.YarnSpinner
             if(!yarnFunctions.IsNullOrEmpty())
             {
                 foreach (var item in yarnFunctions)
-                {
-                    if(item.IsNull() || item.registerFunctions.IsNullOrEmpty())
-                        continue;
-
-                    foreach (var function in item.registerFunctions)
-                    {
-                        if(data.IsNull())
-                            data = DialogueDataFactory.CreateYarnSpinnerData();
-
-                        switch(function.type)
-                        {
-                            case Component.RegisterFunction.Type.Function:
-                            {
-                                if(function.function.IsNull())
-                                    break;
-
-                                data.AddFunctions((function.name,function.paramCount,function.function.Invoke));
-                                break;
-                            }
-
-                            case Component.RegisterFunction.Type.ReturningFunction:
-                            {
-                                if(function.returnfunction.IsNull())
-                                    break;
-
-                                data.AddFunctions((function.name,function.paramCount,function.returnfunction.Invoke));
-                                break;
-                            }
-
-                            case Component.RegisterFunction.Type.Commmand:
-                            {
-                                if(function.command.IsNull())
-                                    break;
-
-                                data.AddCommandHandlers((function.name,function.command.Invoke));
-                                break;
-                            }
-
-                            case Component.RegisterFunction.Type.BlockingCommand:
-                            {
-                                if(function.blockingCommand.IsNull())
-                                    break;
-
-                                data.AddCommandHandlers((function.name,function.blockingCommand.Invoke));
-                                break;
-                            }
-                        }
-                    }
-                }
+                    item?.Init(this);
             }
           
             Add(data);
@@ -306,45 +289,6 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region methods
-        private object[] ConverToObjects(Yarn.Value[] data)
-        {
-            if(data.IsNullOrEmpty())
-                return null;
-
-            var result = new object[data.Length];
-            for (int i = 0; i < result.Length; i++)
-            {
-                var value = data[i];
-                switch(value.type)
-                {
-                    case Yarn.Value.Type.Bool:
-                    {
-                        result[i] = value.AsBool;
-                        break;
-                    }
-                    
-                    case Yarn.Value.Type.Number:
-                    {
-                        result[i] = value.AsNumber;
-                        break;
-                    }
-
-                    case Yarn.Value.Type.String:
-                    {
-                        result[i] = value.AsString;
-                        break;
-                    }
-
-                    default:
-                    {
-                        result[i] = null;
-                        break;
-                    }
-                }
-            }
-
-            return result;
-        }
         private void SetEvents(DialogueRunner dialogue)
         {
             RemoveEvents(dialogue);
@@ -377,10 +321,6 @@ namespace Evesoft.Dialogue.YarnSpinner
         #endregion
 
         #region callbacks
-        private void OnDestroy()
-        {
-            RemoveEvents(_dialogeRunner);
-        }
         private void OnNodeStart(string node)
         {
             onDialogueStart?.Invoke(this,node);

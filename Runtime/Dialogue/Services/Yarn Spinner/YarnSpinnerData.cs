@@ -12,10 +12,10 @@ namespace Evesoft.Dialogue.YarnSpinner
         public const string SCRIPT                 = nameof(SCRIPT);
         public const string STRING_TABLE           = nameof(STRING_TABLE);
         public const string COMMAND                = nameof(COMMAND);
-        public const string BLOKING_COMMAND        = nameof(BLOKING_COMMAND);  
-        public const string REMOVE_COMMAND         = nameof(REMOVE_COMMAND);
+        public const string BLOKING_COMMAND        = nameof(BLOKING_COMMAND); 
         public const string FUNCTION               = nameof(FUNCTION);
-        public const string REMOVE_FUNCTIONS       = nameof(REMOVE_FUNCTIONS);
+        // public const string REMOVE_COMMAND         = nameof(REMOVE_COMMAND);
+        // public const string REMOVE_FUNCTIONS       = nameof(REMOVE_FUNCTIONS);
         public const string RETURNING_FUNCTION     = nameof(RETURNING_FUNCTION);
         #endregion
 
@@ -89,24 +89,24 @@ namespace Evesoft.Dialogue.YarnSpinner
             var data = _data[key] as List<(string,int,Func<object[],object>)>;
                 data.AddRange(functions);
         }
-        public void RemoveCommands(params string[] names)
-        {
-            var key = REMOVE_COMMAND;
-            if(!_data.ContainsKey(key))
-                _data[key] = new List<string>();
+        // public void RemoveCommands(params string[] names)
+        // {
+        //     var key = REMOVE_COMMAND;
+        //     if(!_data.ContainsKey(key))
+        //         _data[key] = new List<string>();
 
-            var data = _data[key] as List<string>;
-                data.AddRange(names);
-        }
-        public void RemoveFunctions(params string[] names)
-        {
-            var key = REMOVE_FUNCTIONS;
-            if(!_data.ContainsKey(key))
-                _data[key] = new List<string>();
+        //     var data = _data[key] as List<string>;
+        //         data.AddRange(names);
+        // }
+        // public void RemoveFunctions(params string[] names)
+        // {
+        //     var key = REMOVE_FUNCTIONS;
+        //     if(!_data.ContainsKey(key))
+        //         _data[key] = new List<string>();
 
-            var data = _data[key] as List<string>;
-                data.AddRange(names);
-        }
+        //     var data = _data[key] as List<string>;
+        //         data.AddRange(names);
+        // }
         #endregion
 
         #region constructor
