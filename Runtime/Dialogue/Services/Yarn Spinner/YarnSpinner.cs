@@ -95,7 +95,6 @@ namespace Evesoft.Dialogue.YarnSpinner
         }      
         public void ResetDialogue()
         {
-            _storage?.ResetToDefaults();
             _dialogeRunner?.ResetDialogue();
         }
         public void StopDialogue()
@@ -111,12 +110,6 @@ namespace Evesoft.Dialogue.YarnSpinner
         #region constructor
         internal YarnSpinner()
         { 
-            // var ui        = config.GetConfig<IDialogueUI>(YarnSpinnerConfig.UI);
-            // var startAuto = config.GetConfig<bool>(YarnSpinnerConfig.START_AUTO);
-            // var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
-            // var variables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
-            // var scripts   = config.GetConfig<YarnProgram[]>(YarnSpinnerConfig.SCRIPTS);
-
             //Set dialogue Runner
             _dialogeRunner  = new GameObject(nameof(YarnSpinner)).AddComponent<DialogueRunner>();
             _dialogeRunner.variableStorage = _storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
