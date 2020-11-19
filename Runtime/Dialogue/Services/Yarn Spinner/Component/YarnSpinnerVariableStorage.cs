@@ -50,6 +50,10 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         public override void Clear()
         {
             _variables?.Clear();
+
+            #if UNITY_EDITOR
+            viewVariables?.Clear();
+            #endif
         }       
         #endregion
 
