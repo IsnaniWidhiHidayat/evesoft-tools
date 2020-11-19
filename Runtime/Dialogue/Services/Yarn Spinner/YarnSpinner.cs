@@ -12,7 +12,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         private DialogueRunner _dialogeRunner;
         private Component.YarnSpinnerVariableStorage _storage;
         private Component.YarnSpinnerUI _ui;
-        private List<YarnProgram> _registeredScripts;
+        private List<YarnProgram> _registeredScripts = new List<YarnProgram>();
         #endregion       
 
         #region property
