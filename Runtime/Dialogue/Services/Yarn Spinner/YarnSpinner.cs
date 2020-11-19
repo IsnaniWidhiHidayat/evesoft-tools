@@ -12,6 +12,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         private DialogueRunner _dialogeRunner;
         private Component.YarnSpinnerVariableStorage _storage;
         private Component.YarnSpinnerUI _ui;
+        private List<YarnProgram> _registeredScripts;
         #endregion       
 
         #region property
@@ -118,9 +119,9 @@ namespace Evesoft.Dialogue.YarnSpinner
             //Set Events
             SetEvents(_dialogeRunner);
 
-            _dialogeRunner.startAutomatically = false;
-            _dialogeRunner.startNode = string.Empty;
-            _dialogeRunner.yarnScripts = new YarnProgram[0];
+            _dialogeRunner.startAutomatically   = false;
+            _dialogeRunner.startNode            = string.Empty;
+            _dialogeRunner.yarnScripts          = new YarnProgram[0];
 
             _dialogeRunner.gameObject.hideFlags = HideFlags.HideInHierarchy;
             GameObject.DontDestroyOnLoad(_dialogeRunner.gameObject);
@@ -135,11 +136,18 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             _storage.SetDefaultVariable(variables);
         }
-        internal void SetScripts(YarnProgram[] scripts)
+        internal void SetScripts(params YarnProgram[] scripts)
         {
-            foreach (var item in scripts)
+            if(scripts.IsNullOrEmpty())
+                return;
+
+            foreach (var script in scripts)
             {
-                _dialogeRunner.Add(item);
+                if(_registeredScripts.Contains(script))
+                    continue;
+
+                _dialogeRunner.Add(script);
+                _registeredScripts.Add(script);
             }
         }
         private void SetEvents(DialogueRunner dialogue)
