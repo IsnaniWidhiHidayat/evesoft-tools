@@ -118,6 +118,10 @@ namespace Evesoft.Dialogue.YarnSpinner
             //Set Events
             SetEvents(_dialogeRunner);
 
+            _dialogeRunner.startAutomatically = false;
+            _dialogeRunner.startNode = string.Empty;
+            _dialogeRunner.yarnScripts = new YarnProgram[0];
+
             _dialogeRunner.gameObject.hideFlags = HideFlags.HideInHierarchy;
             GameObject.DontDestroyOnLoad(_dialogeRunner.gameObject);
         }
@@ -138,7 +142,6 @@ namespace Evesoft.Dialogue.YarnSpinner
                 _dialogeRunner.Add(item);
             }
         }
-
         private void SetEvents(DialogueRunner dialogue)
         {
             RemoveEvents(dialogue);
