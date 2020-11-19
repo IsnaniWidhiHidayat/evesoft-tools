@@ -11,13 +11,13 @@ namespace Evesoft.Dialogue.YarnSpinner
         #region private
         private DialogueRunner _dialogeRunner;
         private Component.YarnSpinnerVariableStorage _storage;
-        private Component.YarnSpinnerUI _UI;
+        private Component.YarnSpinnerUI _ui;
         #endregion       
 
         #region property
         internal DialogueRunner dialogeRunner => _dialogeRunner;
         internal Component.YarnSpinnerVariableStorage storage => _storage;
-        internal Component.YarnSpinnerUI ui => _UI;
+        internal Component.YarnSpinnerUI ui => _ui;
 
         #if UNITY_EDITOR
         public IDictionary<string,string> functions{get;private set;}
@@ -89,138 +89,6 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             return _dialogeRunner.NodeExists(name);
         }
-        public void Add(IDialogueData data)
-        {
-            if(data.IsNull())
-                return;
-
-            //Add Yarn Program
-            var scripts = data.GetValue<IList<YarnProgram>>(YarnSpinnerData.SCRIPT);
-            if(!scripts.IsNullOrEmpty())
-            {
-                foreach (var script in scripts)
-                    _dialogeRunner.Add(script);
-            }
-
-            //Add stringTable
-            var tables = data.GetValue<IList<IDictionary<string,Yarn.Compiler.StringInfo>>>(YarnSpinnerData.STRING_TABLE);
-            if(!tables.IsNullOrEmpty())
-            {
-                foreach (var table in tables)
-                    _dialogeRunner.AddStringTable(table);
-            }
-                
-            //Add Command Handler
-            var commandHandlers = data.GetValue<IList<(string,DialogueRunner.CommandHandler)>>(YarnSpinnerData.COMMAND);
-            if(!commandHandlers.IsNullOrEmpty())
-            {
-                foreach (var command in commandHandlers)
-                {
-                    (var name,var handler) = command;
-                    _dialogeRunner.AddCommandHandler(name,handler);
-
-                    AddEditorRegisteredCommand(0,name);
-                }
-            }
-                
-            //Add BlokingCommand Handler
-            var blokingCommandHandlers = data.GetValue<IList<(string,DialogueRunner.BlockingCommandHandler)>>(YarnSpinnerData.BLOKING_COMMAND);
-            if(!blokingCommandHandlers.IsNullOrEmpty())
-            {
-                foreach (var command in blokingCommandHandlers)
-                {
-                    (var name,var handler) = command;
-                    _dialogeRunner.AddCommandHandler(name,handler);
-
-                    AddEditorRegisteredCommand(1,name);
-                }
-            }
-
-            //Add Function
-            var functions = data.GetValue<IList<(string,int,Action<object[]>)>>(YarnSpinnerData.FUNCTION);
-            if(!functions.IsNullOrEmpty())
-            { 
-                foreach (var function in functions)
-                {
-                    (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,(values)=>
-                    {
-                       func.Invoke(values.ToObjects());
-                    });
-
-                    AddEditorRegisteredFunctions(0,name,paramCount);
-                }
-            }
-               
-            //Add Returning Functions;
-            var returningFunction = data.GetValue<IList<(string,int,Func<object[],object>)>>(YarnSpinnerData.RETURNING_FUNCTION);
-            if(!returningFunction.IsNullOrEmpty())
-            {
-                foreach (var function in returningFunction)
-                {
-                    (var name,var paramCount,var func) = function;
-                    _dialogeRunner.AddFunction(name,paramCount,(values)=>
-                    {
-                        return func?.Invoke(values.ToObjects());
-                    });
-
-                    AddEditorRegisteredFunctions(1,name,paramCount);
-                } 
-            }
-        }      
-        public void Remove(IDialogueData data)
-        {
-            if(data.IsNull())
-                return;
-
-            //Remove Command Handler
-            var commandHandlers = data.GetValue<IList<(string,DialogueRunner.CommandHandler)>>(YarnSpinnerData.COMMAND);
-            if(!commandHandlers.IsNullOrEmpty())
-            {
-                foreach (var command in commandHandlers)
-                {
-                    (var name,var handler) = command;
-                    _dialogeRunner.RemoveCommandHandler(name);
-                    RemoveEditorRegisteredCommand(name);
-                }
-            }
-                
-            //Remove BlokingCommand Handler
-            var blokingCommandHandlers = data.GetValue<IList<(string,DialogueRunner.BlockingCommandHandler)>>(YarnSpinnerData.BLOKING_COMMAND);
-            if(!blokingCommandHandlers.IsNullOrEmpty())
-            {
-                foreach (var command in blokingCommandHandlers)
-                {
-                    (var name,var handler) = command;
-                    _dialogeRunner.RemoveCommandHandler(name);
-                    RemoveEditorRegisteredCommand(name);
-                }
-            }
-
-            //Remove Function
-            var functions = data.GetValue<IList<(string,int,Action<object[]>)>>(YarnSpinnerData.FUNCTION);
-            if(!functions.IsNullOrEmpty())
-            { 
-                foreach (var function in functions)
-                {
-                    (var name,var paramCount,var func) = function;
-                    _dialogeRunner.RemoveFunction(name);
-                    RemoveEditorRegisteredFunctions(name);
-                }
-            }
-               
-            //Remove Returning Functions;
-            var returningFunction = data.GetValue<IList<(string,int,Func<object[],object>)>>(YarnSpinnerData.RETURNING_FUNCTION);
-            if(!returningFunction.IsNullOrEmpty())
-            {
-                foreach (var function in returningFunction)
-                {
-                    (var name,var paramCount,var func) = function;
-                    _dialogeRunner.RemoveFunction(name);
-                    RemoveEditorRegisteredFunctions(name);
-                } 
-            }     
-        }
         public void StartDialogue(string node = null)
         {
             _dialogeRunner?.StartDialogue(node);
@@ -234,61 +102,55 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             _dialogeRunner?.Stop();
         }
-        public void Clean()
+        public void Clear()
         {
            _dialogeRunner?.Clear();
         } 
         #endregion
 
         #region constructor
-        internal YarnSpinner(IDialogueConfig config)
+        internal YarnSpinner()
         { 
-            var ui        = config.GetConfig<IDialogueUI>(YarnSpinnerConfig.UI);
-            var startAuto = config.GetConfig<bool>(YarnSpinnerConfig.START_AUTO);
-            var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
-            var variables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
-            var data      = config.GetConfig<YarnSpinnerData>(YarnSpinnerConfig.DATA);
+            // var ui        = config.GetConfig<IDialogueUI>(YarnSpinnerConfig.UI);
+            // var startAuto = config.GetConfig<bool>(YarnSpinnerConfig.START_AUTO);
+            // var startNode = config.GetConfig<string>(YarnSpinnerConfig.START_NODE);
+            // var variables = config.GetConfig<IDictionary<string,object>>(YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
+            // var scripts   = config.GetConfig<YarnProgram[]>(YarnSpinnerConfig.SCRIPTS);
 
             //Set dialogue Runner
             _dialogeRunner  = new GameObject(nameof(YarnSpinner)).AddComponent<DialogueRunner>();
-            
+            _dialogeRunner.variableStorage = _storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
+            _dialogeRunner.dialogueUI      = _ui      = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerUI>();
+
             //Set Events
             SetEvents(_dialogeRunner);
 
-            //Set Storage
-            _storage = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerVariableStorage>();
-            _storage.SetDefaultVariable(variables);
-            _dialogeRunner.variableStorage  = _storage;
-
-            //Set UI
-            _UI = _dialogeRunner.gameObject.AddComponent<Component.YarnSpinnerUI>();
-            _UI.SetUI(ui);
-            _dialogeRunner.dialogueUI  = _UI;
-            
-            //Set node
-            _dialogeRunner.startAutomatically = startAuto;
-            _dialogeRunner.startNode          = startNode;
-            _dialogeRunner.yarnScripts        = new YarnProgram[0];
-
-            //Add Function by component attached
-            var yarnFunctions = GameObject.FindObjectsOfType<Component.YarnSpinnerFunctions>();
-            if(!yarnFunctions.IsNullOrEmpty())
-            {
-                foreach (var item in yarnFunctions)
-                    item?.Init(this);
-            }
-          
-            Add(data);
-
-            //Hide Game Object
             _dialogeRunner.gameObject.hideFlags = HideFlags.HideInHierarchy;
-
-            //dont destroy
             GameObject.DontDestroyOnLoad(_dialogeRunner.gameObject);
         }
         #endregion
 
         #region methods
+        internal void SetUI(IDialogueUI ui){
+            _ui.SetUI(ui);
+        }
+        internal void SetDefaultVariables(IDictionary<string,object> variables)
+        {
+            _storage.SetDefaultVariable(variables);
+        }
+        internal void SetStartNode(string startNode)
+        {
+            _dialogeRunner.startNode  = startNode;
+        }
+        internal void SetStartAuto(bool startAuto)
+        {
+            _dialogeRunner.startAutomatically = startAuto;
+        }
+        internal void SetScripts(YarnProgram[] scripts)
+        {
+            _dialogeRunner.yarnScripts = scripts;
+        }
+
         private void SetEvents(DialogueRunner dialogue)
         {
             RemoveEvents(dialogue);

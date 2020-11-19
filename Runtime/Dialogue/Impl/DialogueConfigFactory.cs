@@ -7,32 +7,17 @@ namespace Evesoft.Dialogue
     public static class DialogueConfigFactory
     {
         #if YARN_SPINNER
-        public static IDialogueConfig CreateYarnSpinnerConfig(IDialogueUI ui,IDictionary<string,object> defaultVariables = null,YarnProgram[] scripts = null,(string,int,Action<object[]>)[] functions = null,(string,int,Func<object[],object>)[] returningFunctions = null,(string,Yarn.Unity.DialogueRunner.CommandHandler)[] commands = null,(string,Yarn.Unity.DialogueRunner.BlockingCommandHandler)[] blokingCommands = null)
+        public static IDialogueConfig CreateYarnSpinnerConfig(IDialogueUI ui,YarnProgram[] scripts,IDictionary<string,object> defaultVariables = null)
         {
             var config =  new YarnSpinner.YarnSpinnerConfig();
+            if(!ui.IsNull())
                 config.SetUI(ui);
 
-                if(!defaultVariables.IsNullOrEmpty())
-                    config.SetDefaultValue(defaultVariables);
+            if(!defaultVariables.IsNullOrEmpty())
+                config.SetDefaultValue(defaultVariables);
 
-                var data = DialogueDataFactory.CreateYarnSpinnerData();
-        
-                if(!scripts.IsNullOrEmpty())
-                    data.AddScripts(scripts);
-
-                if(!functions.IsNullOrEmpty())
-                    data.AddFunctions(functions);
-
-                if(!returningFunctions.IsNullOrEmpty())
-                    data.AddFunctions(returningFunctions);
-
-                if(!commands.IsNullOrEmpty())
-                    data.AddCommandHandlers(commands);
-
-                if(!blokingCommands.IsNullOrEmpty())
-                    data.AddCommandHandlers(blokingCommands);
-
-                config.SetData(data);
+            if(!scripts.IsNullOrEmpty())
+                config.SetScripts(scripts);
 
             return config;
         }   

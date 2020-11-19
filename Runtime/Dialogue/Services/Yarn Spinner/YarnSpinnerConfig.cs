@@ -11,7 +11,7 @@ namespace Evesoft.Dialogue.YarnSpinner
         public const string START_NODE = nameof(START_NODE);
         public const string START_AUTO = nameof(START_AUTO);
         public const string DEFAULT_VARIABLES_STORAGE = nameof(DEFAULT_VARIABLES_STORAGE);
-        public const string DATA       = nameof(DATA);
+        public const string SCRIPTS       = nameof(SCRIPTS);
         #endregion
 
         #region private
@@ -46,9 +46,9 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             _configs[DEFAULT_VARIABLES_STORAGE] = values;
         }      
-        public void SetData(YarnSpinnerData data)
+        public void SetScripts(YarnProgram[] scripts)
         {
-            _configs[DATA] = data;
+            _configs[SCRIPTS] = scripts;
         }
         #endregion
 

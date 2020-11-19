@@ -136,26 +136,27 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
         #endregion
 
         #region private
-        private YarnSpinner _yarnSpinner;
-        private bool _inited;
+        private bool _isFunctionAdded;
         #endregion
        
         #region methods
         private void Start()
         {
-            _yarnSpinner = DialogueFactory.Get(DialogueType.YarnSpinner) as YarnSpinner;
-            if(_yarnSpinner.IsNull())
-                return;
-
-            Init(_yarnSpinner);
+            var yarnSpinner = DialogueFactory.Get(DialogueType.YarnSpinner) as YarnSpinner;  
+            if(yarnSpinner.IsNull())
+            {
+                DialogueFactory.onCreate += OnDialogueCreate;
+            }
+            else
+            {
+                OnDialogueCreate(yarnSpinner);
+            }
         }
-        internal void Init(YarnSpinner yarnSpinner)
+        private void AddToYarnFunctions(YarnSpinner yarnSpinner)
         {
-            if(_inited)
+            if(yarnSpinner.IsNull())
                 return;
 
-            _yarnSpinner = yarnSpinner;
-   
             foreach (var function in registerFunctions)
             {
                 switch(function.type)
@@ -206,15 +207,13 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                         break;
                     }
                 }
-            }           
-
-            _inited = true;
+            }    
         }
-        #endregion
-        
-        #region callbacks
-        private void OnDestroy()
+        private void RemoveFromFunctions(YarnSpinner yarnSpinner)
         {
+            if(yarnSpinner.IsNull())
+                return;
+                
             foreach (var function in registerFunctions)
             {
                 switch(function.type)
@@ -224,8 +223,8 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                         if(function.function.IsNull())
                             break;
 
-                        _yarnSpinner.dialogeRunner.RemoveFunction(function.name);
-                        _yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
+                        yarnSpinner.dialogeRunner.RemoveFunction(function.name);
+                        yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
                         break;
                     }
 
@@ -234,8 +233,8 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                         if(function.returnfunction.IsNull())
                             break;
 
-                        _yarnSpinner.dialogeRunner.RemoveFunction(function.name);
-                        _yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
+                        yarnSpinner.dialogeRunner.RemoveFunction(function.name);
+                        yarnSpinner.RemoveEditorRegisteredFunctions(function.name);
                         break;
                     }
 
@@ -244,8 +243,8 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                         if(function.command.IsNull())
                             break;
 
-                        _yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
-                        _yarnSpinner.RemoveEditorRegisteredCommand(function.name);
+                        yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
+                        yarnSpinner.RemoveEditorRegisteredCommand(function.name);
                         break;
                     }
 
@@ -254,15 +253,32 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
                         if(function.blockingCommand.IsNull())
                             break;
 
-                        _yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
-                        _yarnSpinner.RemoveEditorRegisteredCommand(function.name);
+                        yarnSpinner.dialogeRunner.RemoveCommandHandler(function.name);
+                        yarnSpinner.RemoveEditorRegisteredCommand(function.name);
                         break;
                     }
                 }
             } 
 
-            _yarnSpinner = null;
+        }
+        #endregion
+        
+        #region callbacks
+        private void OnDestroy()
+        {
+            DialogueFactory.onCreate -= OnDialogueCreate;
+
+            var yarnSpinner = DialogueFactory.Get(DialogueType.YarnSpinner) as YarnSpinner;
+            RemoveFromFunctions(yarnSpinner);
         }   
+        private void OnDialogueCreate(IDialogue dialogue)
+        {
+            var yarnSpinner = dialogue as YarnSpinner;
+            if(yarnSpinner.IsNull())
+                return;
+
+            AddToYarnFunctions(yarnSpinner);
+        }
         #endregion
     }
 }

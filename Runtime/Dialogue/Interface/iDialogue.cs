@@ -15,8 +15,6 @@ namespace Evesoft.Dialogue
         void StartDialogue(string node);
         void ResetDialogue();
         void StopDialogue();
-        void Clean();
-        void Add(IDialogueData data);
-        void Remove(IDialogueData data);
+        void Clear();
     }
 }
