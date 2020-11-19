@@ -23,8 +23,6 @@ namespace Evesoft.Dialogue
                 case DialogueType.YarnSpinner:
                 {
                     var ui          = config.GetConfig<IDialogueUI>(YarnSpinner.YarnSpinnerConfig.UI);
-                    var startAuto   = config.GetConfig<bool>(YarnSpinner.YarnSpinnerConfig.START_AUTO);
-                    var startNode   = config.GetConfig<string>(YarnSpinner.YarnSpinnerConfig.START_NODE);
                     var variables   = config.GetConfig<IDictionary<string,object>>(YarnSpinner.YarnSpinnerConfig.DEFAULT_VARIABLES_STORAGE);
                     var scripts     = config.GetConfig<YarnProgram[]>(YarnSpinner.YarnSpinnerConfig.SCRIPTS);
                     var yarnSpinner = default(YarnSpinner.YarnSpinner);
@@ -43,9 +41,7 @@ namespace Evesoft.Dialogue
                     yarnSpinner.SetUI(ui);
                     yarnSpinner.SetDefaultVariables(variables);
                     yarnSpinner.SetScripts(scripts);
-                    yarnSpinner.SetStartNode(startNode);
-                    yarnSpinner.SetStartAuto(startAuto);
-                    
+                 
                     dialogue[service] = yarnSpinner;
 
                     if(isnew)

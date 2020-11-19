@@ -131,17 +131,12 @@ namespace Evesoft.Dialogue.YarnSpinner
         {
             _storage.SetDefaultVariable(variables);
         }
-        internal void SetStartNode(string startNode)
-        {
-            _dialogeRunner.startNode  = startNode;
-        }
-        internal void SetStartAuto(bool startAuto)
-        {
-            _dialogeRunner.startAutomatically = startAuto;
-        }
         internal void SetScripts(YarnProgram[] scripts)
         {
-            _dialogeRunner.yarnScripts = scripts;
+            foreach (var item in scripts)
+            {
+                _dialogeRunner.Add(item);
+            }
         }
 
         private void SetEvents(DialogueRunner dialogue)
