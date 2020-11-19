@@ -181,7 +181,7 @@ namespace Evesoft.Dialogue.YarnSpinner.Component
 
                         yarnSpinner.dialogeRunner.AddFunction(function.name,function.paramCount,(values)=>
                         {
-                            function.returnfunction.Invoke(values.ToObjects());
+                            return function.returnfunction.Invoke(values.ToObjects());
                         });
                         yarnSpinner.AddEditorRegisteredFunctions(1,function.name,function.paramCount);
                         break;
