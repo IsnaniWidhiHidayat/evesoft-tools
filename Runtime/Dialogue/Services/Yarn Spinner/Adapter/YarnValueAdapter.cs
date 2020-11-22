@@ -1,3 +1,4 @@
+#if ODIN_INSPECTOR && YARN_SPINNER
 namespace Evesoft.Dialogue.YarnSpinner
 {
     public static class YarnValueAdapter
@@ -43,3 +44,4 @@ namespace Evesoft.Dialogue.YarnSpinner
         }        
     }
 }
+#endif
