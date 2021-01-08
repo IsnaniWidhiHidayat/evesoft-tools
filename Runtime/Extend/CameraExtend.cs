@@ -9,14 +9,9 @@ namespace Evesoft
         {
             Vector2 camSize = camera.OrthographicSize();
             var pos = camera.transform.position;
-            var rect = new Rect(pos.x - (camSize.x/2f), pos.y - (camSize.y/2f), camSize.x, camSize.y);
+            var rect = new Rect(pos.x - (camSize.x/2f), pos.y + (camSize.y/2f), camSize.x, camSize.y);
             return rect;
         }       
-        public static Rect OrthographicRect(this Camera camera, Vector3 offset)
-        {
-            Vector2 camSize = camera.OrthographicSize();
-            return new Rect(offset.x - (camSize.x / 2f), offset.y - (camSize.y / 2f), camSize.x, camSize.y);
-        }
         public static Vector2 OrthographicSize(this Camera camera)
         {
             float height = 2f * camera.orthographicSize;
